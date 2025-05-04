@@ -43,6 +43,16 @@ app.get('/db-check', async (req, res) => {
   }
 });
 
+app.get("/questions", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM questions ORDER BY id ASC");
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching questions:", err);
+    res.status(500).json({ error: "Failed to fetch questions" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
