@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { Pool } from 'pg';
+import { queryGemini } from "./services/gemini";
 
 dotenv.config();
 
@@ -55,4 +56,17 @@ app.get("/questions", async (req, res) => {
 
 app.listen(3001, () => {
   console.log('Server is running on http://localhost:3001');
+});
+
+
+
+app.post("/ask", async (req, res) => {
+  const { prompt } = req.body;
+  try {
+    const response = await queryGemini(prompt);
+    res.json({ result: response });
+  } catch (err) {
+    console.error("Gemini error:", err);
+    res.status(500).json({ error: "LLM request failed" });
+  }
 });
