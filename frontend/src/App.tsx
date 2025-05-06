@@ -11,11 +11,12 @@ const App: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/questions")
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/questions`)
       .then((res) => res.json())
       .then((data) => setQuestions(data))
       .catch((err) => console.error("Error fetching questions:", err));
   }, []);
+  
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
