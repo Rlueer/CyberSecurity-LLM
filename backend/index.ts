@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { Pool } from 'pg';
-import { queryGemini } from "./services/gemini";
+import { queryGemini } from "./src/services/gemini";
 
 dotenv.config();
 
