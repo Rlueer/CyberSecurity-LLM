@@ -13,6 +13,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     fetch("http://localhost:3001/questions")
+    
       .then((res) => res.json())
       .then((data) => setQuestions(data))
       .catch((err) => console.error("Error fetching questions:", err));

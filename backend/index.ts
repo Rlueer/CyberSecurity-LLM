@@ -18,6 +18,9 @@ const pool = new Pool({
   database: process.env.PGDATABASE,
   connectionString: process.env.DATABASE_URL,
 });
+
+console.log("[DEBUG] GEMINI_API_KEY:", process.env.GEMINI_API_KEY);
+
 pool.connect()
   .then(() => console.log("✅ Database connected"))
   .catch((err) => console.error("❌ Failed to connect to database", err));

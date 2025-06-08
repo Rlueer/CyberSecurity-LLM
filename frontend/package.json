@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

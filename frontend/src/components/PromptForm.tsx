@@ -18,7 +18,7 @@ const PromptForm: React.FC = () => {
       });
 
       const data = await res.json();
-      setResponse(data.result);
+      setResponse(data.answer);
     } catch (err) {
       setResponse("❌ Hata oluştu.");
       console.error(err);
