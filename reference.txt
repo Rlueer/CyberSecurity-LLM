@@ -1,0 +1,21 @@
+### 🔹 A. Soru Hazırlığı ve Yapısal Tasarım
+
+- [ ]  5–10 domain belirle (örneğin: Identity, Patch, Monitoring, etc.)
+- [ ]  Her domain için:
+    - [ ]  3 seviye (Foundational, Managed, Optimized)
+    - [ ]  Her seviye için 2–3 **focus question**
+- [ ]  5–10 adet **situational question** belirle (risk profilini etkiler)
+- [ ]  Her soru için:
+    - question_text
+    - domain
+    - maturity_level
+    - question_type: "yesno", "open", "multiple_choice"
+    - hint (opsiyonel)
+    - expected_keywords (open sorular için)
+    - score_map: { "yes": 100, "no": 50, "unknown": 0 }
+    - followup_rules: (JSON içinde hangi cevap → hangi soruya geçileceğini tanımlar)
+    
+https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.04162018.pdf
+https://advisera.com/27001academy/knowledgebase/what-is-iso-27002/
+
+https://www.energy.gov/ceser/cybersecurity-capability-maturity-model-c2m2
