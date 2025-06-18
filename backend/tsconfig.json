@@ -5,6 +5,10 @@
     "rootDir": "./",
     "outDir": "./dist",
     "strict": true,
-    "esModuleInterop": true
-  }
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src", "scripts", "questions/**/*.json"]
 }
+
