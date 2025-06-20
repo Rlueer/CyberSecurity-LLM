@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { Pool } from 'pg';
 import { queryGemini } from "./src/services/gemini";
-import { createPromptWithQuestionContext, extractScore } from "./routes/answerUtils";
+import { createPromptWithQuestionContext,extractLlmResponse, extractScore } from "./routes/answerUtils";
 
 // ... (interface tanımları aynı)
 interface FollowupRule {
@@ -72,14 +72,13 @@ app.get("/questions", async (req, res) => {
 app.post("/ask", async (req, res) => {
   console.log("🔥 /ask endpoint'ine istek geldi");
   
-  // 1. Değişiklik: previous_question_id request body'sinden okunuyor.
   const { prompt, previous_question_id } = req.body;
   console.log("📦 Request body:", { prompt: prompt?.substring(0, 50) + '...', previous_question_id });
 
   const userId = 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'; // 🔐 Geçici kullanıcı
 
   try {
-    // Eğer cevap verilecek bir önceki soru yoksa, bu ilk sorudur.
+    // Mevcut ilk soru getirme mantığı aynı kalıyor.
     if (!previous_question_id) {
       console.log("🆕 İlk soru getiriliyor...");
       const firstQuestionRes = await pool.query("SELECT * FROM questions ORDER BY id ASC LIMIT 1");
@@ -91,7 +90,6 @@ app.post("/ask", async (req, res) => {
 
       const firstQuestion = firstQuestionRes.rows[0];
       
-      // İlk soruya henüz cevap verilmediği için sadece sorunun metnini döndür.
       res.json({
         result: "Lütfen bu soruya cevap vererek başlayın.",
         score: null,
@@ -100,34 +98,44 @@ app.post("/ask", async (req, res) => {
         next_question_id: null,
         note: "Bu ilk soru."
       });
-      return
+      return;
     }
 
-    // 2. Değişiklik: Artık en son cevabı değil, ID'si verilen soruyu çekiyoruz.
+    // Cevaplanan soruyu getirme mantığı aynı kalıyor.
     const prevQuestionRes = await pool.query<Question>("SELECT * FROM questions WHERE id = $1", [previous_question_id]);
 
     if (prevQuestionRes.rows.length === 0) {
       res.status(404).json({ error: `Soru ID ${previous_question_id} bulunamadı.` });
-    
-      return;}
+      return;
+    }
     
     const previousQuestion = prevQuestionRes.rows[0];
     console.log("✅ Cevaplanan soru:", previousQuestion.question_text?.substring(0, 50) + "...");
     
-    // 3. Değişiklik: Skor, doğru sorunun metni ile kullanıcının cevabına göre hesaplanıyor.
+    // --- YENİ MANTIK BURADA BAŞLIYOR ---
+
+    // 3. Değişiklik: LLM'den sadece skor değil, JSON objesi (skor, yorum, görev) istenir.
     const enhancedPrompt = createPromptWithQuestionContext(previousQuestion, prompt);
     const response = await queryGemini(enhancedPrompt);
-    const score = extractScore(response);
+    
+    // ESKİ YAPI: const score = extractScore(response);
+    // YENİ YAPI: LLM'den gelen JSON'ı ayrıştırarak tüm verileri al.
+    const { score, comment, task } = extractLlmResponse(response);
+    
     console.log("🎯 Hesaplanan Skor:", score);
+    console.log("💬 AI Yorumu:", comment);
+    console.log("📝 AI Görevi:", task);
 
-    // 4. Değişiklik: Cevap, doğru `question_id` ile veritabanına kaydediliyor.
+    // 4. Değişiklik (GÜNCELLENDİ): Cevabı, yeni alanlarla birlikte veritabanına kaydet.
     await pool.query(
-      "INSERT INTO answers (user_id, question_id, answer_text, llm_score) VALUES ($1, $2, $3, $4)",
-      [userId, previous_question_id, prompt, score]
+      "INSERT INTO answers (user_id, question_id, answer_text, llm_score, ai_comment, ai_task) VALUES ($1, $2, $3, $4, $5, $6)",
+      [userId, previous_question_id, prompt, score, comment, task] // Yeni verileri ekle
     );
     console.log(`✅ Cevap (Soru ID: ${previous_question_id}) veritabanına kaydedildi.`);
 
-    // 5. Değişiklik: Sıradaki soru, doğru sorunun kurallarına ve yeni skora göre belirleniyor.
+    // --- YENİ MANTIK BURADA BİTİYOR ---
+
+    // 5. Değişiklik: Sıradaki soruyu belirleme mantığı aynı kalıyor, çünkü skora göre çalışıyor.
     const followup = previousQuestion.followup_rules?.find((rule) =>
       score >= rule.min_score && score <= rule.max_score
     );
@@ -142,9 +150,12 @@ app.post("/ask", async (req, res) => {
         }
     }
     
+    // Dönen JSON yanıtı GÜNCELLENDİ: Yeni alanları frontend'e göndermek için ekle.
     res.json({
       result: response,
       score,
+      comment, // YENİ: AI yorumunu yanıta ekle
+      task,    // YENİ: AI görevini yanıta ekle
       answered_question_id: previous_question_id,
       next_question_id: next_question_id,
       next_question_text: next_question_text,

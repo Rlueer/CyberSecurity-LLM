@@ -2,42 +2,47 @@ import express from "express";
 import { Pool } from "pg";
 import { queryGemini } from "../src/services/gemini";
 import dotenv from "dotenv";
+import { createPromptWithQuestionContext, extractLlmResponse ,extractScore } from "./answerUtils"; 
+
 
 dotenv.config();
 
 const router = express.Router();
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
+
 router.post("/answer", async (req, res) => {
   const { user_id, question_id, answer_text } = req.body;
 
   try {
-    // 1. Soru bilgilerini al
+    // ... (The part for getting the question from the DB remains the same)
     const qRes = await pool.query("SELECT * FROM questions WHERE id = $1", [question_id]);
     if (qRes.rows.length === 0) {
       res.status(404).json({ error: "Question not found" });
-      return; // Sadece return, response dönmeyin
+      return;
     }
-
     const question = qRes.rows[0];
 
-    // 2. LLM'e prompt hazırla ve gönder
+    // 2. Prepare prompt and get structured response from LLM
     const prompt = createPromptWithQuestionContext(question, answer_text);
     const llmResult = await queryGemini(prompt);
-    const score = extractScore(llmResult);
+    // Use the new parsing function
+    const { score, comment, task } = extractLlmResponse(llmResult);
 
     console.log("🎯 Extracted Score:", score);
+    console.log("💬 AI Comment:", comment);
+    console.log("📝 AI Task:", task);
 
-    // 3. Cevabı veritabanına kaydet
+
+    // 3. Save the answer, score, and new fields to the database
     await pool.query(
-      "INSERT INTO answers (user_id, question_id, answer_text, llm_score) VALUES ($1, $2, $3, $4)",
-      [user_id, question_id, answer_text, score]
+      "INSERT INTO answers (user_id, question_id, answer_text, llm_score, ai_comment, ai_task) VALUES ($1, $2, $3, $4, $5, $6)",
+      [user_id, question_id, answer_text, score, comment, task]
     );
 
-    // 4. followup_rules kontrolü
+    // ... (The followup_rules logic remains the same)
     let next_question_id = null;
     let note = null;
-
     if (Array.isArray(question.followup_rules)) {
       const matchedRule = question.followup_rules.find(
         (rule: any) => score >= rule.min_score && score <= rule.max_score
@@ -48,9 +53,12 @@ router.post("/answer", async (req, res) => {
       }
     }
 
-    // 5. Sonuç dön
+
+    // 5. Return the result including the new fields
     res.json({
       score,
+      comment, // Add new field
+      task,    // Add new field
       next_question_id,
       note
     });
@@ -61,41 +69,6 @@ router.post("/answer", async (req, res) => {
   }
 });
 
-// Prompt şablonu oluşturur
-function createPromptWithQuestionContext(question: any, answer_text: string): string {
-  return `
-You are a cybersecurity auditor scoring organizational maturity.
 
-Question Domain: ${question.domain_name}
-NIST Function: ${question.nist_function}
-Related NIST Category: ${question.related_nist_category}
-ISO/IEC 27001 Controls: ${question.iso27001_controls?.join(", ")}
-Criticality Level: ${question.criticality}
-Maturity Level: ${question.maturity_level}
-
-Question:
-${question.question_text}
-
-Hint:
-${question.hint}
-
-Expected Keywords:
-${question.expected_keywords?.join(", ")}
-
-Instructions for Scoring:
-${question.llm_scoring_instructions}
-
-User's Answer:
-${answer_text}
-
-Return only a score from 0 to 100.
-`.trim();
-}
-
-// LLM cevabından ilk sayıyı al
-function extractScore(llmText: string): number {
-  const match = llmText.match(/\d+/);
-  return match ? Math.min(100, Math.max(0, parseInt(match[0], 10))) : 0;
-}
 
 export default router;
