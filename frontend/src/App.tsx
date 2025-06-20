@@ -30,7 +30,9 @@ const App: React.FC = () => {
         // Look for a user response to this question
         const response = allMessages.find(m => 
           m.type === 'user_response' && 
-          m.answeredQuestionId === lastVisible.question?.id
+          m.answeredQuestionId === lastVisible.question?.id &&
+          m.activeAttemptIndex !== undefined && 
+          m.activeAttemptIndex >= 0 // Only include messages with valid active attempt
         );
         
         if (response) {
@@ -274,24 +276,21 @@ const App: React.FC = () => {
     }
   };
 
-  // NON-DESTRUCTIVE: Only adds new attempt to existing message
-  const handleEditMessage = async (messageId: string, newText: string) => {
+  // BRANCH LOGIC: Create new branch when editing
+  const handleEditMessage = useCallback(async (messageId: string, newText: string) => {
     const message = messages.find(m => m.id === messageId);
-    if (!message || !message.answeredQuestionId || !message.attempts) return;
+    if (!message || !message.answeredQuestionId) return;
 
     setIsLoading(true);
     setEditingMessageId(null);
 
     try {
-      const dbAnswerIdToUpdate = message.attempts[message.activeAttemptIndex || 0]?.db_answer_id;
-
       const res = await fetch("http://localhost:3001/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           prompt: newText,
-          previous_question_id: message.answeredQuestionId,
-          answer_id_to_edit: dbAnswerIdToUpdate
+          previous_question_id: message.answeredQuestionId
         }),
       });
       
@@ -311,15 +310,17 @@ const App: React.FC = () => {
         const updatedMessages = [...currentMessages];
         const messageToUpdate = updatedMessages.find(m => m.id === messageId);
         
-        if (messageToUpdate && messageToUpdate.attempts) {
-          // Add new attempt and make it active
-          messageToUpdate.attempts.push(newAttempt);
-          messageToUpdate.activeAttemptIndex = messageToUpdate.attempts.length - 1;
+        if (messageToUpdate) {
+          // BRANCH LOGIC: Replace attempts completely (start new branch)
+          messageToUpdate.attempts = [newAttempt];
+          messageToUpdate.activeAttemptIndex = 0;
 
-          // Add next question to permanent store if it doesn't exist
+          // Add next question if it doesn't exist and is needed
           if (apiResponse.next_question_id !== null) {
-            const nextQuestionExists = updatedMessages.some(m => 
-              m.type === 'question' && m.question?.id === apiResponse.next_question_id
+            const nextQuestionExists = updatedMessages.some(m =>
+              m.type === 'question' &&
+              m.question?.id === apiResponse.next_question_id &&
+              m.sender === 'AI'
             );
             
             if (!nextQuestionExists) {
@@ -345,29 +346,28 @@ const App: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [messages, questions]);
 
-  // NON-DESTRUCTIVE: Only changes active attempt index
+  // BRANCH NAVIGATION: Switch between different attempts (branches)
   const handleNavigateAttempt = (messageId: string, direction: 'prev' | 'next') => {
-    setMessages(currentMessages => {
-      const updatedMessages = [...currentMessages];
-      const msg = updatedMessages.find(m => m.id === messageId);
-      
-      if (!msg || !msg.attempts || msg.activeAttemptIndex === undefined) {
-        return currentMessages;
-      }
+    const message = messages.find(m => m.id === messageId);
+    if (!message || !message.attempts || message.attempts.length <= 1) return;
 
-      const newIndex = msg.activeAttemptIndex + (direction === 'next' ? 1 : -1);
-      if (newIndex < 0 || newIndex >= msg.attempts.length) {
-        return currentMessages;
-      }
+    const currentIndex = message.activeAttemptIndex ?? 0;
+    const newIndex = direction === 'next'
+      ? (currentIndex + 1) % message.attempts.length
+      : (currentIndex - 1 + message.attempts.length) % message.attempts.length;
 
-      msg.activeAttemptIndex = newIndex;
-      return updatedMessages;
-    });
+    setMessages(currentMessages =>
+      currentMessages.map(m =>
+        m.id === messageId
+          ? { ...m, activeAttemptIndex: newIndex }
+          : m
+      )
+    );
   };
 
-  // NON-DESTRUCTIVE: Navigate to previous question by changing active attempts
+  // TIMELINE NAVIGATION: Go back by deactivating the last response
   const handlePreviousQuestion = () => {
     // Find the last user response in the visible timeline
     const visibleResponses = visibleMessages.filter(m => m.type === 'user_response');
@@ -375,13 +375,13 @@ const App: React.FC = () => {
 
     const lastResponse = visibleResponses[visibleResponses.length - 1];
     
-    // Find this response in the permanent store and "deactivate" it by removing its active attempt
+    // Find this response in the permanent store and "deactivate" it
     setMessages(currentMessages => {
       const updatedMessages = [...currentMessages];
       const responseToModify = updatedMessages.find(m => m.id === lastResponse.id);
       
-      if (responseToModify && responseToModify.attempts && responseToModify.attempts.length > 0) {
-        // Set to an invalid attempt index to effectively "hide" this response from visible timeline
+      if (responseToModify) {
+        // Set to invalid attempt index to hide from visible timeline
         responseToModify.activeAttemptIndex = -1;
       }
 
@@ -391,10 +391,7 @@ const App: React.FC = () => {
 
   return (
     <div className="bg-[#0f0f23] text-gray-200 font-sans h-screen flex flex-col">
-      <Header 
-        onPrevious={handlePreviousQuestion} 
-        canGoBack={visibleMessages.some(m => m.type === 'user_response')} 
-      />
+      <Header />
       <div className="flex flex-1 overflow-hidden min-h-0">
         <ChatPanel
           messages={visibleMessages}  // Only pass visible messages to UI

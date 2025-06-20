@@ -45,3 +45,10 @@ export interface AnswerAttempt {
   db_answer_id: number;
   next_question_id: number | null;
 }
+
+interface Fork {
+  id: string;
+  parentMessageId: string | null; // Hangi mesajdan dallandı
+  messages: Message[]; // Bu daldaki tüm mesajlar
+  isActive: boolean; // Şu anda görüntülenen dal mı
+}

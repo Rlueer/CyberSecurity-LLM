@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Message } from '../types';
 import QuestionCard from './QuestionCard';
-import FeedbackMessage from './FeedBackMessage'; // Corrected import filename
+import FeedbackMessage from './FeedBackMessage';
 
-// EditForm component remains the same.
 const EditForm: React.FC<{
   originalText: string;
   onSave: (newText: string) => void;
@@ -26,8 +25,6 @@ const EditForm: React.FC<{
   );
 };
 
-
-// Props are now non-optional for better type safety
 interface ChatPanelProps {
     messages: Message[];
     onSendMessage: (prompt: string) => void;
@@ -72,7 +69,6 @@ const ChatPanel: React.FC<ChatPanelProps> = ({
       
       <div ref={chatWindowRef} className="flex-1 p-6 overflow-y-auto bg-[#0f0f23] font-mono">
         {messages.map((msg) => {
-          // --- AI Message Rendering ---
           if (msg.type === 'question' || msg.type === 'error') {
             return (
               <div key={msg.id} className="mb-4 animate-fadeIn">
@@ -80,10 +76,9 @@ const ChatPanel: React.FC<ChatPanelProps> = ({
                   <div className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-blue-500 text-white flex-shrink-0">AI</div>
                   <span className="font-semibold text-sm">Security Analyst</span>
                 </div>
-                {msg.type === 'question' && msg.question ? (
+                {msg.question ? (
                   <QuestionCard question={msg.question}/>
                 ) : (
-                  // This will render both final completion message and error messages
                   <div className={`p-4 rounded-lg border-l-4 ${msg.type === 'error' ? 'bg-red-900/50 border-red-500' : 'bg-indigo-900/50 border-indigo-500'}`}>
                     <p>{msg.text}</p>
                   </div>
@@ -92,15 +87,12 @@ const ChatPanel: React.FC<ChatPanelProps> = ({
             );
           }
 
-          // --- User Response & Feedback Rendering ---
           if (msg.type === 'user_response') {
             const activeAttempt = msg.attempts?.[msg.activeAttemptIndex ?? 0];
-            // If for some reason there's no active attempt, don't render anything for this message
             if (!activeAttempt) return null;
 
             return (
               <div key={msg.id} className="mb-4 animate-fadeIn">
-                {/* The user's response bubble */}
                 <div className="mb-2 group">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-green-600 text-white flex-shrink-0">You</div>
@@ -122,7 +114,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({
                         onClick={() => setEditingMessageId(msg.id)} 
                         className="p-1 text-gray-500 hover:text-white transition opacity-0 group-hover:opacity-100"
                         title="Edit Answer"
-                        disabled={isLoading} // Disable edit button while loading
+                        disabled={isLoading}
                       >
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd"></path></svg>
                       </button>
@@ -130,22 +122,22 @@ const ChatPanel: React.FC<ChatPanelProps> = ({
                   )}
                 </div>
                 
-                {/* The feedback and navigation section, rendered right after the response */}
                 <FeedbackMessage 
                   messageId={msg.id}
                   attempt={activeAttempt}
                   attemptCount={msg.attempts?.length ?? 0}
                   activeAttemptIndex={msg.activeAttemptIndex ?? 0}
-                  onNavigate={onNavigateAttempt} isLoading={false}                />
+                  onNavigate={onNavigateAttempt}
+                  isLoading={isLoading}
+                />
               </div>
             );
           }
-          return null; // Should not happen
+          return null;
         })}
         {isLoading && <div className="text-center text-gray-400 py-2">Analyst is thinking...</div>}
       </div>
       
-      {/* Input Area (no changes needed here) */}
       <div className="p-4 border-t border-[#2d2d5f] bg-[#16213e]">
         <div className="flex gap-3 items-end">
           <textarea 

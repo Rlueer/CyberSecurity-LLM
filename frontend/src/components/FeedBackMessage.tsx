@@ -9,7 +9,7 @@ interface FeedbackMessageProps {
   attemptCount: number;
   activeAttemptIndex: number;
   onNavigate: (messageId: string, direction: 'prev' | 'next') => void;
-  isLoading: boolean; // NEW: To disable controls during API calls
+  isLoading: boolean;
 }
 
 const FeedbackMessage: React.FC<FeedbackMessageProps> = ({ messageId, attempt, attemptCount, activeAttemptIndex, onNavigate, isLoading }) => {
@@ -37,12 +37,12 @@ const FeedbackMessage: React.FC<FeedbackMessageProps> = ({ messageId, attempt, a
               )}
             </div>
             
-            {/* Answer Version Navigation */}
+            {/* BU SATIR BUTONLARIN GÖRÜNMESİNİ SAĞLAR: Sadece attemptCount > 1 ise render edilir. */}
             {attemptCount > 1 && (
               <div className="flex items-center gap-2">
                 <button 
                   onClick={() => onNavigate(messageId, 'prev')} 
-                  disabled={!canGoPrev || isLoading} // UPDATED
+                  disabled={!canGoPrev || isLoading}
                   className="p-1 rounded-md text-gray-400 hover:bg-gray-700 disabled:text-gray-600 disabled:bg-transparent disabled:cursor-not-allowed transition"
                   title="Previous Version"
                 >
@@ -53,7 +53,7 @@ const FeedbackMessage: React.FC<FeedbackMessageProps> = ({ messageId, attempt, a
                 </span>
                 <button 
                   onClick={() => onNavigate(messageId, 'next')} 
-                  disabled={!canGoNext || isLoading} // UPDATED
+                  disabled={!canGoNext || isLoading}
                   className="p-1 rounded-md text-gray-400 hover:bg-gray-700 disabled:text-gray-600 disabled:bg-transparent disabled:cursor-not-allowed transition"
                   title="Next Version"
                 >
