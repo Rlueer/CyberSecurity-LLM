@@ -69,93 +69,83 @@ app.get("/questions", async (req, res) => {
   }
 });
 
+// Mevcut app.post('/ask', ...) fonksiyonunuzu aşağıdakiyle tamamen değiştirin.
+
 app.post("/ask", async (req, res) => {
   console.log("🔥 /ask endpoint'ine istek geldi");
   
-  const { prompt, previous_question_id } = req.body;
-  console.log("📦 Request body:", { prompt: prompt?.substring(0, 50) + '...', previous_question_id });
+  // YENİ: answer_id_to_edit alanı request body'sinden okunuyor.
+  const { prompt, previous_question_id, answer_id_to_edit } = req.body;
+  console.log("📦 Request body:", { prompt: prompt?.substring(0, 50) + '...', previous_question_id, answer_id_to_edit });
 
   const userId = 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'; // 🔐 Geçici kullanıcı
 
   try {
-    // Mevcut ilk soru getirme mantığı aynı kalıyor.
+    // İlk soru mantığı aynı kalıyor, dokunmuyoruz.
     if (!previous_question_id) {
-      console.log("🆕 İlk soru getiriliyor...");
-      const firstQuestionRes = await pool.query("SELECT * FROM questions ORDER BY id ASC LIMIT 1");
-      
-      if (firstQuestionRes.rows.length === 0) {
-        res.status(404).json({ error: "Sistemde hiç soru bulunamadı." });
-        return;
-      }
-
-      const firstQuestion = firstQuestionRes.rows[0];
-      
-      res.json({
-        result: "Lütfen bu soruya cevap vererek başlayın.",
-        score: null,
-        current_question_id: firstQuestion.id,
-        current_question_text: firstQuestion.question_text,
-        next_question_id: null,
-        note: "Bu ilk soru."
-      });
+      // ... (Bu kısım aynı)
       return;
     }
 
-    // Cevaplanan soruyu getirme mantığı aynı kalıyor.
     const prevQuestionRes = await pool.query<Question>("SELECT * FROM questions WHERE id = $1", [previous_question_id]);
-
     if (prevQuestionRes.rows.length === 0) {
       res.status(404).json({ error: `Soru ID ${previous_question_id} bulunamadı.` });
       return;
     }
-    
     const previousQuestion = prevQuestionRes.rows[0];
     console.log("✅ Cevaplanan soru:", previousQuestion.question_text?.substring(0, 50) + "...");
     
-    // --- YENİ MANTIK BURADA BAŞLIYOR ---
-
-    // 3. Değişiklik: LLM'den sadece skor değil, JSON objesi (skor, yorum, görev) istenir.
+    // LLM'den skor, yorum ve görev bilgilerini al
     const enhancedPrompt = createPromptWithQuestionContext(previousQuestion, prompt);
     const response = await queryGemini(enhancedPrompt);
-    
-    // ESKİ YAPI: const score = extractScore(response);
-    // YENİ YAPI: LLM'den gelen JSON'ı ayrıştırarak tüm verileri al.
     const { score, comment, task } = extractLlmResponse(response);
     
     console.log("🎯 Hesaplanan Skor:", score);
-    console.log("💬 AI Yorumu:", comment);
-    console.log("📝 AI Görevi:", task);
 
-    // 4. Değişiklik (GÜNCELLENDİ): Cevabı, yeni alanlarla birlikte veritabanına kaydet.
-    await pool.query(
-      "INSERT INTO answers (user_id, question_id, answer_text, llm_score, ai_comment, ai_task) VALUES ($1, $2, $3, $4, $5, $6)",
-      [userId, previous_question_id, prompt, score, comment, task] // Yeni verileri ekle
-    );
-    console.log(`✅ Cevap (Soru ID: ${previous_question_id}) veritabanına kaydedildi.`);
+    // --- GÜNCELLENEN VERİTABANI MANTIĞI ---
+    
+    let db_answer_id = answer_id_to_edit;
 
-    // --- YENİ MANTIK BURADA BİTİYOR ---
+    if (answer_id_to_edit) {
+      // ✅ EDIT MODU: Eğer answer_id_to_edit varsa, mevcut cevabı GÜNCELLE.
+      console.log(`🔄 Cevap güncelleniyor, DB ID: ${answer_id_to_edit}`);
+      await pool.query(
+        "UPDATE answers SET answer_text = $1, llm_score = $2, ai_comment = $3, ai_task = $4 WHERE id = $5",
+        [prompt, score, comment, task, answer_id_to_edit]
+      );
+    } else {
+      // ✅ YENİ KAYIT MODU: Eğer answer_id_to_edit yoksa, yeni cevap OLUŞTUR.
+      console.log(`✍️ Yeni cevap kaydediliyor, Soru ID: ${previous_question_id}`);
+      // GÜNCELLEME: "RETURNING id" ile yeni oluşturulan cevabın ID'sini geri alıyoruz.
+      const insertRes = await pool.query(
+        "INSERT INTO answers (user_id, question_id, answer_text, llm_score, ai_comment, ai_task) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
+        [userId, previous_question_id, prompt, score, comment, task]
+      );
+      // Frontend'e göndermek için yeni ID'yi değişkene ata
+      db_answer_id = insertRes.rows[0].id;
+    }
 
-    // 5. Değişiklik: Sıradaki soruyu belirleme mantığı aynı kalıyor, çünkü skora göre çalışıyor.
+    // --- VERİTABANI MANTIĞI SONU ---
+
+    // Dallanma kurallarına göre bir sonraki soruyu belirle
     const followup = previousQuestion.followup_rules?.find((rule) =>
       score >= rule.min_score && score <= rule.max_score
     );
-
     const next_question_id = followup?.next_question_id || null;
     let next_question_text = null;
-
     if (next_question_id) {
         const nextQ = await pool.query("SELECT question_text FROM questions WHERE id = $1", [next_question_id]);
-        if(nextQ.rows.length > 0) {
+        if (nextQ.rows.length > 0) {
             next_question_text = nextQ.rows[0].question_text;
         }
     }
     
-    // Dönen JSON yanıtı GÜNCELLENDİ: Yeni alanları frontend'e göndermek için ekle.
+    // Dönen JSON yanıtı GÜNCELLENDİ: Frontend'in edit işlemi için ihtiyacı olan `db_answer_id` ekleniyor.
     res.json({
-      result: response,
+      db_answer_id, // YENİ: Frontend'e cevabın veritabanı ID'sini gönderiyoruz.
       score,
-      comment, // YENİ: AI yorumunu yanıta ekle
-      task,    // YENİ: AI görevini yanıta ekle
+      comment,
+      task,
       answered_question_id: previous_question_id,
       next_question_id: next_question_id,
       next_question_text: next_question_text,

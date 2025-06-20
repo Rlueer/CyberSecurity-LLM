@@ -14,18 +14,34 @@ export interface Question {
   tags: string[];
 }
 
+// Message interface'ini güncelleyin
 export interface Message {
   id: string;
   sender: 'AI' | 'User';
-  text: string;
+  text: string; // For AI messages, this remains the primary text.
   type: 'question' | 'user_response' | 'feedback' | 'error';
   question?: Question;
+  
+  // Fields for 'user_response' type
+  answeredQuestionId?: number;
+  attempts?: AnswerAttempt[]; // An array of all attempts for this question
+  activeAttemptIndex?: number; // Which attempt is currently visible
+
+  // Fields for 'feedback' type (these are now derived from the active attempt)
   ai_comment?: string;
   ai_task?: string;
 }
-
 export interface DomainStatus {
   name: string;
   status: 'Complete' | 'In Progress' | 'Pending';
   score: number;
+}
+
+export interface AnswerAttempt {
+  text: string;
+  score: number;
+  ai_comment: string;
+  ai_task: string;
+  db_answer_id: number;
+  next_question_id: number | null;
 }
