@@ -5,6 +5,14 @@ import Header from './components/Header';
 import ChatPanel from './components/ChatPanel';
 import Sidebar from './components/Sidebar';
 
+
+const getProficiencyLabel = (score: number): 'Mature' | 'Developing' | 'Foundational' => {
+    if (score >= 75) return 'Mature';
+    if (score >= 40) return 'Developing';
+    return 'Foundational';
+  };
+
+
 const App: React.FC = () => {
   // This is now the PERMANENT message store - we never delete from this
   const [messages, setMessages] = useState<Message[]>([]);
@@ -13,6 +21,18 @@ const App: React.FC = () => {
   const [overallScore, setOverallScore] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
+  // NEW: State to hold the total number of unique domains
+  const [totalDomains, setTotalDomains] = useState(0);
+  // State for the main progress counter
+  const [mainProgress, setMainProgress] = useState<{ current: number; total: number }>({ current: 0, total: 0 });
+
+  
+  const [domainProgress, setDomainProgress] = useState<{
+    current: number;
+    total: number;
+    estimate: number;
+  }>({ current: 0, total: 0, estimate: 0 });
+
 
   // CORE NEW FUNCTION: The "Timeline Walker" 
   // This calculates which messages should be visible based on active attempt selections
@@ -81,109 +101,244 @@ const App: React.FC = () => {
 
   // Initial data fetching
   useEffect(() => {
-    fetch("http://localhost:3001/questions")
-      .then(res => {
-        if (!res.ok) throw new Error(`Network response was not ok: ${res.statusText}`);
-        return res.json();
-      })
-      .then(data => {
-        if (!Array.isArray(data) || data.length === 0) {
-          throw new Error("Fetched data is not valid.");
-        }
-        
-        setQuestions(data);
-        const firstQuestion = data[0];
-        
-        // Initialize with the first question
-        setMessages([{
-          id: uuidv4(),
-          sender: 'AI',
-          type: 'question',
-          question: firstQuestion,
-          text: ""
-        }]);
+        fetch("http://localhost:3001/questions")
+            .then(res => {
+                if (!res.ok) throw new Error(`Network response was not ok: ${res.statusText}`);
+                return res.json();
+            })
+            .then((data: Question[]) => {
+                if (!Array.isArray(data) || data.length === 0) {
+                    throw new Error("Fetched data is not valid.");
+                }
+                
+                setQuestions(data);
+                const uniqueDomains = [...new Set(data.map(q => q.domain_name))];
+                setTotalDomains(uniqueDomains.length);
 
-        // Initialize domain statuses
-        const initialDomains: DomainStatus[] = [...new Set(data.map(q => q.domain_name))]
-          .map(name => ({
-            name,
-            status: name === firstQuestion.domain_name ? 'In Progress' : 'Pending',
-            score: 0
-          }));
-        setDomainStatuses(initialDomains);
-      })
-      .catch(err => {
-        console.error("Error fetching questions:", err);
-        setMessages([{
-          id: uuidv4(),
-          sender: 'AI',
-          type: 'error',
-          text: "Backend'e bağlanılamadı."
-        }]);
-      })
-      .finally(() => setIsLoading(false));
-  }, []);
+                const firstQuestion = data.find(q => q.id === 1) || data[0];
+                
+                // Add the first question with a timestamp
+                setMessages([{
+                    id: uuidv4(),
+                    sender: 'AI',
+                    type: 'question',
+                    question: firstQuestion,
+                    text: "",
+                    timestamp: Date.now()
+                }]);
+                
+                // FIX: Initialize DomainStatus with all required properties to prevent type errors.
+                const initialDomains: DomainStatus[] = uniqueDomains.map(name => ({
+                  name,
+                  status: 'Pending',
+                  score: 0, 
+                  proficiency: 'Pending',
+                  answeredInDomain: 0,
+                  timeTaken: null
+                }));
+                setDomainStatuses(initialDomains);
+            })
+            .catch(err => {
+                console.error("Error fetching questions:", err);
+            })
+            .finally(() => setIsLoading(false));
+    }, []);
+
+
+  useEffect(() => {
+        if (questions.length === 0 || totalDomains === 0) return;
+
+        // 1. Calculate overall assessment progress
+        const answeredQuestionsCount = visibleMessages.filter(m => m.type === 'user_response').length;
+        setMainProgress({
+            current: answeredQuestionsCount,
+            total: totalDomains * 3
+        });
+        
+        const lastQuestionMsg = [...visibleMessages].reverse().find(m => m.type === 'question' && m.question);
+        const currentDomainName = lastQuestionMsg?.question?.domain_name;
+
+        // 2. Calculate the status of each domain
+        const newStatuses: DomainStatus[] = [...new Set(questions.map(q => q.domain_name))].map(domainName => {
+            const domainResponsesInPath = visibleMessages.filter(m => 
+                m.type === 'user_response' && questions.find(q => q.id === m.answeredQuestionId)?.domain_name === domainName
+            );
+            
+            const answeredInDomain = Math.min(domainResponsesInPath.length, 3);
+            
+            let status: 'Complete' | 'In Progress' | 'Pending' = 'Pending';
+            if (domainName === currentDomainName && answeredInDomain < 3) {
+                status = 'In Progress';
+            } else if (answeredInDomain >= 3) {
+                status = 'Complete';
+            } else if (answeredInDomain > 0 && domainName !== currentDomainName) {
+                status = 'Complete';
+            }
+
+            // Calculate time taken for completed domains
+            let timeTaken = null;
+            if (status === 'Complete' && answeredInDomain > 0) {
+                const domainQuestionsInPath = visibleMessages.filter(m => m.type === 'question' && m.question?.domain_name === domainName);
+                if (domainQuestionsInPath.length > 0) {
+                    const firstQuestionTimestamp = domainQuestionsInPath[0].timestamp;
+                    const lastResponseTimestamp = domainResponsesInPath[answeredInDomain - 1].timestamp;
+                    const diffMs = lastResponseTimestamp - firstQuestionTimestamp;
+                    timeTaken = Math.max(1, Math.ceil(diffMs / 60000)); // Show at least 1 minute
+                }
+            }
+
+            // Calculate score for the domain
+            const totalQuestionsInDomainDB = questions.filter(q => q.domain_name === domainName).length;
+            const questionWeight = totalQuestionsInDomainDB > 0 ? 100 / totalQuestionsInDomainDB : 0;
+            let domainScore = 0;
+            domainResponsesInPath.forEach(msg => {
+                const activeAttempt = msg.attempts?.[msg.activeAttemptIndex || 0];
+                if (activeAttempt) {
+                    domainScore += (activeAttempt.score / 100) * questionWeight;
+                }
+            });
+            
+            const proficiency = status === 'Complete' ? getProficiencyLabel(domainScore) : (status === 'In Progress' ? 'In Progress' : 'Pending');
+
+            // FIX: Return a complete DomainStatus object with all required properties.
+            return { name: domainName, status, score: Math.min(100, domainScore), proficiency, answeredInDomain, timeTaken };
+        });
+
+        setDomainStatuses(newStatuses);
+        
+        // 3. Calculate overall score
+        const completedDomains = newStatuses.filter(d => d.status === 'Complete');
+        const totalScore = completedDomains.reduce((acc, curr) => acc + curr.score, 0);
+        setOverallScore(completedDomains.length > 0 ? totalScore / completedDomains.length : 0);
+
+    }, [visibleMessages, questions, totalDomains]);
 
   // UPDATED: Score calculation now works with visible messages only
-  const recalculateScores = useCallback((currentVisibleMessages: Message[], allQuestions: Question[]) => {
-    if (allQuestions.length === 0) return;
+const recalculateScores = useCallback((currentVisibleMessages: Message[], allQuestions: Question[]) => {
+  if (allQuestions.length === 0) return;
 
-    const domainData: { [key: string]: { score: number; answeredQuestions: Set<number> } } = {};
-    const domains = [...new Set(allQuestions.map(q => q.domain_name))];
+  const domainData: { [key: string]: { score: number; answeredQuestions: Set<number> } } = {};
+  const domains = [...new Set(allQuestions.map(q => q.domain_name))];
 
-    domains.forEach(name => {
-      domainData[name] = { score: 0, answeredQuestions: new Set() };
-    });
+  domains.forEach(name => {
+    domainData[name] = { score: 0, answeredQuestions: new Set() };
+  });
 
-    // Only count scores from the visible timeline
-    for (const msg of currentVisibleMessages) {
-      if (msg.type === 'user_response' && msg.answeredQuestionId && msg.attempts && msg.activeAttemptIndex !== undefined) {
-        const question = allQuestions.find(q => q.id === msg.answeredQuestionId);
-        if (question) {
-          domainData[question.domain_name].answeredQuestions.add(question.id);
+  for (const msg of currentVisibleMessages) {
+    if (msg.type === 'user_response' && msg.answeredQuestionId && msg.attempts && msg.activeAttemptIndex !== undefined) {
+      const question = allQuestions.find(q => q.id === msg.answeredQuestionId);
+      if (question) {
+        domainData[question.domain_name].answeredQuestions.add(question.id);
+      }
+    }
+  }
+
+  domains.forEach(name => {
+    const totalQuestionsInDomain = allQuestions.filter(q => q.domain_name === name).length;
+    const questionWeight = 100 / (totalQuestionsInDomain || 1);
+    let domainScore = 0;
+
+    currentVisibleMessages
+      .filter(m => m.type === 'user_response' && m.answeredQuestionId && domainData[name].answeredQuestions.has(m.answeredQuestionId))
+      .forEach(msg => {
+        const activeAttempt = msg.attempts?.[msg.activeAttemptIndex || 0];
+        if (activeAttempt) {
+          domainScore += (activeAttempt.score / 100) * questionWeight;
         }
+      });
+    
+    domainData[name].score = domainScore;
+  });
+
+  const lastQuestionMsg = [...currentVisibleMessages].reverse().find(m => m.type === 'question' && m.question);
+  const currentDomainName = lastQuestionMsg?.question?.domain_name;
+
+  const newDomainStatuses: DomainStatus[] = domains.map(name => {
+    const data = domainData[name];
+    const answeredCount = data.answeredQuestions.size;
+    const totalCount = allQuestions.filter(q => q.domain_name === name).length;
+    let status: 'Complete' | 'In Progress' | 'Pending' = 'Pending';
+
+    if (answeredCount > 0) {
+      status = (answeredCount >= totalCount || name !== currentDomainName) ? 'Complete' : 'In Progress';
+    } else if (name === currentDomainName) {
+      status = 'In Progress';
+    }
+
+    // ✅ Calculate time taken for completed domains
+    let timeTaken = null;
+    if (status === 'Complete' && answeredCount > 0) {
+      const domainQuestionsInPath = currentVisibleMessages.filter(m => 
+        m.type === 'question' && m.question?.domain_name === name
+      );
+      const domainResponsesInPath = currentVisibleMessages.filter(m => 
+        m.type === 'user_response' && allQuestions.find(q => q.id === m.answeredQuestionId)?.domain_name === name
+      );
+      
+      const firstQuestionTimestamp = domainQuestionsInPath[0]?.timestamp;
+      const lastResponseTimestamp = domainResponsesInPath[domainResponsesInPath.length - 1]?.timestamp;
+
+      if (firstQuestionTimestamp && lastResponseTimestamp) {
+        const diffMs = lastResponseTimestamp - firstQuestionTimestamp;
+        timeTaken = Math.ceil(diffMs / 60000); // To nearest minute
       }
     }
 
-    domains.forEach(name => {
-      const totalQuestionsInDomain = allQuestions.filter(q => q.domain_name === name).length;
-      const questionWeight = 100 / (totalQuestionsInDomain || 1);
-      let domainScore = 0;
+    // ✅ Calculate proficiency based on status and score
+    const proficiency = status === 'Complete' 
+      ? getProficiencyLabel(data.score) 
+      : (status === 'In Progress' ? 'In Progress' : 'Pending');
 
-      currentVisibleMessages
-        .filter(m => m.type === 'user_response' && m.answeredQuestionId && domainData[name].answeredQuestions.has(m.answeredQuestionId))
-        .forEach(msg => {
-          const activeAttempt = msg.attempts?.[msg.activeAttemptIndex || 0];
-          if (activeAttempt) {
-            domainScore += (activeAttempt.score / 100) * questionWeight;
-          }
-        });
-      
-      domainData[name].score = domainScore;
+    // YENİ: Aktif domain için ilerleme ve süre hesaplaması
+    if (status === 'In Progress') {
+      const remaining = totalCount - answeredCount;
+      const estimate = remaining * 2; // Her soruya ortalama 2 dakika
+      setDomainProgress({
+        current: answeredCount + 1,
+        total: totalCount,
+        estimate: estimate
+      });
+    }
+
+    // ✅ Return complete DomainStatus object
+    return { 
+      name, 
+      score: Math.min(100, data.score), 
+      status,
+      proficiency: proficiency as 'Mature' | 'Developing' | 'Foundational' | 'In Progress' | 'Pending',
+      answeredInDomain: answeredCount,
+      timeTaken: timeTaken
+    };
+  });
+
+  const totalScore = newDomainStatuses.reduce((acc, curr) => acc + curr.score, 0);
+  setOverallScore(totalScore / (newDomainStatuses.length || 1));
+  setDomainStatuses(newDomainStatuses);
+
+  // YENİ: Kümülatif ve yol-bazlı ilerleme sayacı mantığı
+  if (currentDomainName) {
+    const completedDomainsCount = newDomainStatuses.filter(d => d.status === 'Complete').length;
+    
+    // Görünen mesajlar içinden aktif domaine ait cevaplanmış soru sayısı
+    const answeredInCurrentDomainPath = currentVisibleMessages.filter(msg => 
+      msg.type === 'user_response' && allQuestions.find(q => q.id === msg.answeredQuestionId)?.domain_name === currentDomainName
+    ).length;
+    
+    const currentStepNumerator = (completedDomainsCount * 3) + answeredInCurrentDomainPath + 1;
+    const currentStepDenominator = (completedDomainsCount + 1) * 3;
+
+    const remainingInPath = 3 - (answeredInCurrentDomainPath + 1);
+    const estimate = (remainingInPath < 0 ? 0 : remainingInPath) * 2; // Her soruya 2 dakika
+
+    setDomainProgress({
+      current: currentStepNumerator,
+      total: currentStepDenominator,
+      estimate: estimate
     });
+  }
 
-    const lastQuestionMsg = [...currentVisibleMessages].reverse().find(m => m.type === 'question' && m.question);
-    const currentDomainName = lastQuestionMsg?.question?.domain_name;
+}, []);
 
-    const newDomainStatuses: DomainStatus[] = domains.map(name => {
-      const data = domainData[name];
-      const answeredCount = data.answeredQuestions.size;
-      const totalCount = allQuestions.filter(q => q.domain_name === name).length;
-      let status: 'Complete' | 'In Progress' | 'Pending' = 'Pending';
-
-      if (answeredCount > 0) {
-        status = (answeredCount >= totalCount || name !== currentDomainName) ? 'Complete' : 'In Progress';
-      } else if (name === currentDomainName) {
-        status = 'In Progress';
-      }
-
-      return { name, score: Math.min(100, data.score), status };
-    });
-
-    const totalScore = newDomainStatuses.reduce((acc, curr) => acc + curr.score, 0);
-    setOverallScore(totalScore / (newDomainStatuses.length || 1));
-    setDomainStatuses(newDomainStatuses);
-  }, []);
 
   // Recalculate scores whenever visible messages change
   useEffect(() => {
@@ -201,16 +356,17 @@ const App: React.FC = () => {
       sender: 'User',
       type: 'user_response',
       answeredQuestionId: currentQuestionId,
-      attempts: [{ 
-        text: prompt, 
-        score: 0, 
-        ai_comment: "...", 
-        ai_task: "...", 
-        db_answer_id: -1, 
-        next_question_id: null 
+      attempts: [{
+        text: prompt,
+        score: 0,
+        ai_comment: "...",
+        ai_task: "...",
+        db_answer_id: -1,
+        next_question_id: null
       }],
       activeAttemptIndex: 0,
-      text: ""
+      text: "",
+      timestamp: Date.now()
     };
 
     // Add to permanent store
@@ -258,7 +414,8 @@ const App: React.FC = () => {
                 sender: 'AI',
                 type: 'question',
                 question: nextQuestion,
-                text: ""
+                text: "",
+                timestamp: Date.now()
               });
             }
           }
@@ -331,7 +488,8 @@ const App: React.FC = () => {
                   sender: 'AI',
                   type: 'question',
                   question: nextQuestion,
-                  text: ""
+                  text: "",
+                  timestamp: Date.now()
                 });
               }
             }
@@ -403,7 +561,12 @@ const App: React.FC = () => {
           onEditMessage={handleEditMessage}
           onNavigateAttempt={handleNavigateAttempt}
         />
-        <Sidebar statuses={domainStatuses} overallScore={overallScore} />
+        {/* YENİ: Sidebar'a domainProgress prop'u eklendi */}
+        <Sidebar 
+          statuses={domainStatuses} 
+          overallScore={overallScore}
+          mainProgress={domainProgress}
+        />
       </div>
     </div>
   );

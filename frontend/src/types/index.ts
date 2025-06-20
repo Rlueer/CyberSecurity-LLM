@@ -1,5 +1,7 @@
 // Bu dosyayı oluşturun ve aşağıdaki içeriği yapıştırın.
 
+import { ReactNode } from "react";
+
 export interface Question {
   id: number;
   domain_name: string;
@@ -21,6 +23,8 @@ export interface Message {
   text: string; // For AI messages, this remains the primary text.
   type: 'question' | 'user_response' | 'feedback' | 'error';
   question?: Question;
+
+  timestamp: number; 
   
   // Fields for 'user_response' type
   answeredQuestionId?: number;
@@ -35,6 +39,15 @@ export interface DomainStatus {
   name: string;
   status: 'Complete' | 'In Progress' | 'Pending';
   score: number;
+  // widen proficiency to include your in-flight states:
+  proficiency: 'Mature' 
+             | 'Developing' 
+             | 'Foundational' 
+             | 'In Progress' 
+             | 'Pending';
+  answeredInDomain: number;
+  // allow a numeric duration in minutes or null if not yet available
+  timeTaken: number | null;
 }
 
 export interface AnswerAttempt {

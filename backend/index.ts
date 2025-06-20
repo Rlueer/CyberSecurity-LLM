@@ -4,8 +4,7 @@ import dotenv from 'dotenv';
 import { Pool } from 'pg';
 import { queryGemini } from "./src/services/gemini";
 import { createPromptWithQuestionContext,extractLlmResponse, extractScore } from "./routes/answerUtils";
-
-// ... (interface tanımları aynı)
+dotenv.config();
 interface FollowupRule {
   min_score: number;
   max_score: number;
@@ -19,7 +18,7 @@ interface Question {
   followup_rules?: FollowupRule[];
 }
 
-dotenv.config();
+
 
 const app = express();
 const port = 3001;
