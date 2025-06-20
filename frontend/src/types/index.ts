@@ -1,4 +1,4 @@
-// src/types/index.ts
+// Bu dosyayı oluşturun ve aşağıdaki içeriği yapıştırın.
 
 export interface Question {
   id: number;
@@ -14,15 +14,14 @@ export interface Question {
   tags: string[];
 }
 
-// GÜNCELLENDİ: Mesaj tipini daha esnek hale getiriyoruz.
 export interface Message {
-  id: string; // Her mesaja benzersiz bir ID verelim (React key'leri için)
+  id: string;
   sender: 'AI' | 'User';
   text: string;
-  type: 'question' | 'user_response' | 'task_confirmation' | 'error'; // Mesaj türü
+  type: 'question' | 'user_response' | 'feedback' | 'error';
   question?: Question;
-  ai_comment?: string; // Soruya ait AI yorumunu burada tutacağız
-  ai_task?: string;    // Kullanıcıya verilen görevi burada tutacağız
+  ai_comment?: string;
+  ai_task?: string;
 }
 
 export interface DomainStatus {

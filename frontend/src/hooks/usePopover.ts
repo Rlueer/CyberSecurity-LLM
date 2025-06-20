@@ -1,8 +1,10 @@
-// src/hooks/usePopover.ts
+// Bu dosyayı oluşturun ve aşağıdaki içeriği yapıştırın.
+
 import { useState, useRef, useEffect, useCallback } from 'react';
 
 export const usePopover = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [coords, setCoords] = useState<{ top: number; left: number } | null>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
 
@@ -10,20 +12,24 @@ export const usePopover = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        isVisible &&
-        triggerRef.current && !triggerRef.current.contains(event.target as Node) &&
-        popoverRef.current && !popoverRef.current.contains(event.target as Node)
-      ) {
+      if (isVisible && popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
         close();
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isVisible, close]);
 
-  const toggle = () => setIsVisible(prev => !prev);
+  const toggle = () => {
+    if (triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setCoords({
+        top: rect.top - 10,
+        left: rect.left + rect.width / 2,
+      });
+    }
+    setIsVisible(prev => !prev);
+  };
 
-  return { isVisible, toggle, close, triggerRef, popoverRef };
+  return { isVisible, toggle, close, triggerRef, popoverRef, coords };
 };
