@@ -152,7 +152,14 @@
     "hint": "This goes beyond basic segmentation. Explain if you use concepts like micro-segmentation, zero-trust principles, or dynamic firewall rules to strictly control traffic flow.",
     "expected_keywords": ["micro-segmentation", "zero trust", "ztna", "network access control", "nac", "dynamic firewall", "east-west traffic"],
     "llm_scoring_instructions": "Evaluate the response and assign a score from 0 to 100. High scores (75+) indicate the use of advanced, proactive concepts like zero trust or micro-segmentation. Mid-range scores (40-74) suggest strong, well-defined traditional segmentation. Low scores (0-39) suggest basic or no segmentation. Return only a single number.",
-    "followup_rules": [],
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 20,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
     "situational": false,
     "tags": ["zero trust", "segmentation", "network"],
     "task_template_id": "IAM-NET-INTEGRITY-ADV-001",
@@ -171,7 +178,14 @@
     "hint": "Service accounts are used by applications, not people. Explain how you manage these powerful accounts, including password rotation, ownership assignment, and periodic reviews.",
     "expected_keywords": ["service account", "non-human", "api key", "secrets management", "password rotation", "vault", "ownership"],
     "llm_scoring_instructions": "Evaluate the response and assign a score from 0 to 100. High scores (75+) indicate a formal process with dedicated tools for managing secrets, clear ownership, and regular reviews. Mid-range scores (40-74) suggest a manual but consistent process. Low scores (0-39) indicate ad-hoc, insecure, or unmanaged service accounts. Return only a single number.",
-    "followup_rules": [],
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 20,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
     "situational": false,
     "tags": ["service accounts", "secrets management"],
     "task_template_id": "IAM-SERVICE-ACCOUNT-001",
@@ -190,7 +204,14 @@
     "hint": "This is about preventing shared accounts (e.g., 'admin@company.com' used by multiple people). Explain if you have a policy that requires every user to have their own unique account for accountability.",
     "expected_keywords": ["unique identity", "no shared accounts", "individual accountability", "policy", "user agreement"],
     "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a strict, enforced policy against shared accounts, supported by technical controls or regular audits. A mid-range score (40-74) suggests a policy exists but may have exceptions or weak enforcement. A low score (0-39) indicates that shared accounts are common or there is no policy. Return only a single number.",
-    "followup_rules": [],
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 20,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
     "situational": false,
     "tags": ["shared accounts", "accountability", "policy"],
     "task_template_id": "IAM-UNIQUE-ID-001",
@@ -209,7 +230,14 @@
     "hint": "Explain if you create separate network zones (e.g., for servers, workstations, guests) and use firewalls to control traffic between them, preventing threats from spreading.",
     "expected_keywords": ["segmentation", "segregation", "vlan", "firewall rules", "zones", "dmz", "isolate"],
     "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. High scores (75+) describe a well-defined segmentation strategy with multiple security zones enforced by strict firewall rules. Mid-range scores (40-74) suggest some segmentation is in place but is not comprehensive. Low scores (0-39) indicate a mostly 'flat' or unsegmented network. Return only a single number.",
-    "followup_rules": [],
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 20,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
     "situational": false,
     "tags": ["segmentation", "network", "firewall"],
     "task_template_id": "IAM-NETSEG-STD-001",
@@ -228,7 +256,14 @@
     "hint": "Explain the step-by-step process for adding, changing, and—most importantly—disabling user accounts to ensure access is removed promptly when someone leaves.",
     "expected_keywords": ["onboarding", "offboarding", "termination", "deprovisioning", "user lifecycle", "hr integration", "timely"],
     "llm_scoring_instructions": "Evaluate the response and assign a score from 0 to 100. High scores (75+) indicate a formal, automated, or checklist-driven process for promptly managing the entire account lifecycle. Mid-range scores (40-74) suggest a manual but generally consistent process. Low scores (0-39) imply an ad-hoc process with significant delays or gaps, especially in deprovisioning. Return only a single number.",
-    "followup_rules": [],
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 20,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
     "situational": false,
     "tags": ["lifecycle", "onboarding", "offboarding"],
     "task_template_id": "IAM-LIFECYCLE-STD-001",
@@ -247,7 +282,14 @@
     "hint": "Explain the step-by-step process for adding, changing, and—most importantly—disabling user accounts to ensure access is removed promptly when someone leaves.",
     "expected_keywords": ["onboarding", "offboarding", "termination", "deprovisioning", "user lifecycle", "hr integration", "timely"],
     "llm_scoring_instructions": "Evaluate the response and assign a score from 0 to 100. High scores (75+) indicate a formal, automated, or checklist-driven process for promptly managing the entire account lifecycle. Mid-range scores (40-74) suggest a manual but generally consistent process. Low scores (0-39) imply an ad-hoc process with significant delays or gaps, especially in deprovisioning. Return only a single number.",
-    "followup_rules": [],
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 20,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
     "situational": false,
     "tags": ["lifecycle", "onboarding", "offboarding"],
     "task_template_id": "IAM-LIFECYCLE-STD-002",
@@ -266,10 +308,422 @@
     "hint": "Explain how you secure physical locations. Mention things like locks, key cards, visitor logs, and any monitoring of these sensitive areas.",
     "expected_keywords": ["physical access", "server room", "data center", "access cards", "keys", "locks", "visitor log", "cctv"],
     "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. High scores (75+) indicate multiple layers of managed controls (e.g., electronic access, logs, visitor policies). Mid-range scores (40-74) suggest basic but consistent controls like locks and keys. Low scores (0-39) imply weak, inconsistent, or non-existent physical controls for sensitive areas. Return only a single number.",
-    "followup_rules": [],
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 20,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
     "situational": false,
     "tags": ["physical security", "data center", "server room"],
     "task_template_id": "IAM-PHYSICAL-ACCESS-001",
     "referenced_by": "NIST CSF v1.1 - PR.AC-2"
+  },
+  {
+    "id": 20,
+    "domain_name": "Asset Management",
+    "related_nist_category": "ID.AM-1",
+    "nist_function": "Identify",
+    "iso27001_controls": [
+      "A.8.1.1",
+      "A.8.1.2"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe the process your organization uses to inventory and manage both physical and software assets. How do you ensure this inventory is kept accurate and comprehensive throughout the asset lifecycle?",
+    "question_type": "open",
+    "hint": "Explain how you identify, track, and document all hardware (servers, laptops) and software assets from acquisition to disposal. Mention any tools like a CMDB or asset register.",
+    "expected_keywords": [
+      "inventory",
+      "asset register",
+      "CMDB",
+      "discovery scan",
+      "manual audit",
+      "asset lifecycle",
+      "tagging",
+      "software asset management",
+      "SAM"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response for a systematic and consistently applied process for both hardware and software. A high score (75+) indicates a centralized, regularly updated inventory (e.g., CMDB) with automated discovery and full lifecycle tracking. A mid-range score (40-74) suggests a semi-manual process (e.g., spreadsheets) that is mostly accurate but not consistently maintained or comprehensive. A low score (0-39) points to an ad-hoc, incomplete, or non-existent inventory process. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 21,
+        "note": "Mature inventory process. Assess how inventory data informs risk management."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 22,
+        "note": "Inconsistent process. Assess the specifics of asset prioritization."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 27,
+        "note": "Weak process. Assess foundational understanding of external systems."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "asset",
+      "inventory",
+      "hardware",
+      "software"
+    ],
+    "task_template_id": "AM-INVENTORY-COMPREHENSIVE-001",
+    "referenced_by": "NIST CSF v1.1 - ID.AM-1 & ID.AM-2"
+  },
+  {
+    "id": 21,
+    "domain_name": "Asset Management",
+    "related_nist_category": "ID.AM-5",
+    "nist_function": "Identify",
+    "iso27001_controls": [
+      "A.8.2.1",
+      "A.8.1.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "How does your organization classify and prioritize resources like hardware, software, and data based on their business criticality, sensitivity, and value?",
+    "question_type": "open",
+    "hint": "Describe your data classification policy and how you assign value or priority to assets to inform protection efforts. Mention labels like 'Public,' 'Internal,' 'Confidential,' or risk ratings derived from a Business Impact Analysis (BIA).",
+    "expected_keywords": [
+      "data classification",
+      "prioritization",
+      "criticality",
+      "business impact analysis",
+      "BIA",
+      "confidential",
+      "sensitive data",
+      "crown jewels"
+    ],
+    "llm_scoring_instructions": "Score the response based on the formality and integration of the asset classification process. A high score (75+) implies a documented, organization-wide policy that is directly linked to a BIA and is used to drive security controls. A mid-range score (40-74) suggests a classification scheme exists but is applied inconsistently or is not formally tied to risk. A low score (0-39) indicates no formal classification or prioritization process. Return only a single number.",
+    "followup_rules": [
+        {
+            "min_score": 60,
+            "max_score": 100,
+            "next_question_id": 23,
+            "note": "Process is mature. Assess governance aspects."
+        },
+        {
+            "min_score": 0,
+            "max_score": 59,
+            "next_question_id": 25,
+            "note": "Process is inconsistent. Assess a more tactical aspect like data flow mapping."
+        }
+    ],
+    "situational": false,
+    "tags": [
+      "asset",
+      "classification",
+      "prioritization",
+      "risk"
+    ],
+    "task_template_id": "AM-PRIORITIZATION-001",
+    "referenced_by": "NIST CSF v1.1 - ID.AM-5"
+  },
+  {
+    "id": 22,
+    "domain_name": "Asset Management",
+    "related_nist_category": "ID.AM-5",
+    "nist_function": "Identify",
+    "iso27001_controls": [
+      "A.8.2.1"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "How do you determine the relative importance and priority of different assets? For example, how do you decide if a database server is more critical than a web server?",
+    "question_type": "open",
+    "hint": "Explain if you use criteria like business function supported, data sensitivity, or operational impact to prioritize assets for security measures.",
+    "expected_keywords": [
+      "prioritization",
+      "criticality",
+      "business impact",
+      "data sensitivity",
+      "operational impact",
+      "revenue impact"
+    ],
+    "llm_scoring_instructions": "Evaluate the response on whether a defined methodology for prioritization exists. A high score (75+) indicates clear, business-driven criteria are used to rank assets. A mid-range score (40-74) suggests an informal or intuitive prioritization happens but isn't based on a formal process. A low score (0-39) suggests assets are not prioritized or all are treated the same. Return only a single number.",
+    "followup_rules": [
+        {
+            "min_score": 60,
+            "max_score": 100,
+            "next_question_id": 24,
+            "note": "Understands prioritization. Assess asset ownership."
+        },
+        {
+            "min_score": 0,
+            "max_score": 59,
+            "next_question_id": 26,
+            "note": "Weak prioritization. Assess a more basic control like asset disposal."
+        }
+    ],
+    "situational": false,
+    "tags": [
+      "asset",
+      "prioritization"
+    ],
+    "task_template_id": "AM-PRIORITIZATION-BASIC-001",
+    "referenced_by": "NIST CSF v1.1 - ID.AM-5"
+  },
+  {
+    "id": 23,
+    "domain_name": "Asset Management",
+    "related_nist_category": "ID.AM-6",
+    "nist_function": "Identify",
+    "iso27001_controls": [
+      "A.6.1.1",
+      "A.8.1.2"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "How are cybersecurity roles and responsibilities for managing assets established and communicated for the entire workforce, including assigning asset ownership?",
+    "question_type": "open",
+    "hint": "Describe how you define and assign ownership and stewardship for data and systems. Mention responsibility matrices (e.g., RACI), policies, and how these are communicated.",
+    "expected_keywords": [
+      "asset ownership",
+      "data steward",
+      "system owner",
+      "RACI matrix",
+      "roles and responsibilities",
+      "policy"
+    ],
+    "llm_scoring_instructions": "Assess the clarity and formality of defined roles. A high score (75+) indicates that asset ownership is formally documented, assigned, and accepted by individuals, and is integrated into policies. A mid-range score (40-74) suggests roles are defined informally or ownership is at a departmental level rather than individual. A low score (0-39) implies that asset ownership and responsibilities are unclear or not defined. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 30,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "asset",
+      "governance",
+      "roles",
+      "ownership"
+    ],
+    "task_template_id": "AM-ROLES-OWNERSHIP-001",
+    "referenced_by": "NIST CSF v1.1 - ID.AM-6"
+  },
+  {
+    "id": 24,
+    "domain_name": "Asset Management",
+    "related_nist_category": "ID.AM-6",
+    "nist_function": "Identify",
+    "iso27001_controls": [
+        "A.8.1.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "low",
+    "question_text": "Is there a designated owner for each critical asset? How is this ownership documented and communicated?",
+    "question_type": "open",
+    "hint": "Explain if a specific person or team is formally assigned responsibility for critical assets and where this information is recorded (e.g., in your asset inventory or CMDB).",
+    "expected_keywords": [
+        "asset owner",
+        "system owner",
+        "documented",
+        "asset register",
+        "CMDB",
+        "responsibility"
+    ],
+    "llm_scoring_instructions": "Score the response based on the formality of the ownership assignment process. A high score (75+) indicates a clear, documented process where owners are assigned to all critical assets. A mid-range score (40-74) suggests ownership is informal or only assigned for some assets. A low score (0-39) indicates no clear asset ownership. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 30,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+        "asset",
+        "ownership"
+    ],
+    "task_template_id": "AM-OWNERSHIP-DOCUMENTATION-001",
+    "referenced_by": "NIST CSF v1.1 - ID.AM-6"
+  },
+  {
+    "id": 25,
+    "domain_name": "Asset Management",
+    "related_nist_category": "ID.AM-3",
+    "nist_function": "Identify",
+    "iso27001_controls": [
+      "A.13.2.1"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "How does your organization map the flow of sensitive data between assets and across network boundaries?",
+    "question_type": "open",
+    "hint": "Explain if you use data flow diagrams (DFDs) or other methods to map how information moves between systems, especially for PII or confidential corporate data.",
+    "expected_keywords": [
+      "data flow diagram",
+      "DFD",
+      "data mapping",
+      "sensitive data",
+      "PII flow",
+      "network diagram"
+    ],
+    "llm_scoring_instructions": "Evaluate the response based on the presence and detail of data flow mapping. A high score (75+) means the organization uses formal diagrams to map data flows for critical systems and reviews them regularly. A mid-range score (40-74) indicates an informal or high-level understanding of data flows. A low score (0-39) suggests there is no process for mapping data flows. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 30,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "asset",
+      "data flow"
+    ],
+    "task_template_id": "AM-DATA-FLOW-MAPPING-001",
+    "referenced_by": "NIST CSF v1.1 - ID.AM-3"
+  },
+  {
+    "id": 26,
+    "domain_name": "Asset Management",
+    "related_nist_category": "ID.AM-1",
+    "nist_function": "Identify",
+    "iso27001_controls": [
+        "A.8.3.2", "A.11.2.7"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "What is your organization's process for disposing of physical hardware assets like laptops and servers, particularly those that held sensitive data?",
+    "question_type": "open",
+    "hint": "Describe the steps you take to securely decommission hardware, including data sanitization or physical destruction, and how you update your asset inventory.",
+    "expected_keywords": [
+        "disposal",
+        "decommission",
+        "data destruction",
+        "sanitization",
+        "wiping",
+        "physical destruction",
+        "certificate of destruction"
+    ],
+    "llm_scoring_instructions": "Score the response on the security and formality of the disposal process. A high score (75+) indicates a documented, secure process with proof of data destruction. A mid-range score (40-74) suggests an informal process or one that doesn't guarantee data sanitization. A low score (0-39) implies no formal disposal process, increasing data leakage risk. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 30,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+        "asset",
+        "disposal",
+        "lifecycle"
+    ],
+    "task_template_id": "AM-DISPOSAL-HARDWARE-001",
+    "referenced_by": "NIST CSF v1.1 - ID.AM-1"
+  },
+  {
+    "id": 27,
+    "domain_name": "Asset Management",
+    "related_nist_category": "ID.AM-4",
+    "nist_function": "Identify",
+    "iso27001_controls": [
+      "A.11.2.6"
+    ],
+    "maturity_level": 1,
+    "criticality": "low",
+    "question_text": "How do you identify and catalog external information systems that your organization relies on, such as cloud services (IaaS, PaaS, SaaS)?",
+    "question_type": "open",
+    "hint": "Explain if you maintain a list of third-party services, what information you track about them (e.g., purpose, data shared), and who is responsible for managing them.",
+    "expected_keywords": [
+      "external systems",
+      "cloud services",
+      "SaaS",
+      "third-party",
+      "vendor list",
+      "supplier management"
+    ],
+    "llm_scoring_instructions": "Assess if a process exists to track external systems. A high score (75+) means a centralized, regularly reviewed catalog of external services exists. A mid-range score (40-74) suggests lists are maintained by individual departments but not centrally. A low score (0-39) indicates 'shadow IT' is likely prevalent and there is no formal tracking of external systems. Return only a single number.",
+    "followup_rules": [
+        {
+            "min_score": 60,
+            "max_score": 100,
+            "next_question_id": 28,
+            "note": "Understands external systems. Assess dependency mapping."
+        },
+        {
+            "min_score": 0,
+            "max_score": 59,
+            "next_question_id": 29,
+            "note": "Weak process. Assess a more foundational understanding of business mission."
+        }
+    ],
+    "situational": false,
+    "tags": [
+      "asset",
+      "external",
+      "cloud",
+      "vendor"
+    ],
+    "task_template_id": "AM-EXTERNAL-SYSTEMS-001",
+    "referenced_by": "NIST CSF v1.1 - ID.AM-4"
+  },
+  {
+      "id": 28,
+      "domain_name": "Asset Management",
+      "related_nist_category": "ID.BE-4",
+      "nist_function": "Identify",
+      "iso27001_controls": ["A.17.1.1"],
+      "maturity_level": 2,
+      "criticality": "medium",
+      "question_text": "How do you establish and document the dependencies and critical functions for delivery of your organization's key services?",
+      "question_type": "open",
+      "hint": "Explain if you map how business services rely on specific underlying assets (e.g., applications, servers, networks) to understand the impact of an asset failure.",
+      "expected_keywords": ["dependency mapping", "service mapping", "business service", "critical functions", "BIA", "single point of failure"],
+      "llm_scoring_instructions": "Evaluate the response on the systematic mapping of services to assets. A high score (75+) indicates a formal process, often as part of a BIA, to map critical business functions to the IT assets they depend on. A mid-range score (40-74) suggests an informal or tribal-knowledge understanding of dependencies. A low score (0-39) suggests no understanding of how IT asset failures would impact the business. Return only a single number.",
+      "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 30,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+      "situational": false,
+      "tags": ["asset", "dependency", "business environment"],
+      "task_template_id": "AM-DEPENDENCY-MAPPING-001",
+      "referenced_by": "NIST CSF v1.1 - ID.BE-4"
+  },
+  {
+      "id": 29,
+      "domain_name": "Asset Management",
+      "related_nist_category": "ID.BE-3",
+      "nist_function": "Identify",
+      "iso27001_controls": ["A.5.1.1"],
+      "maturity_level": 1,
+      "criticality": "high",
+      "question_text": "Are the priorities for your organization's mission, objectives, and activities established and communicated in a way that informs cybersecurity decisions?",
+      "question_type": "open",
+      "hint": "Explain how the business's main goals (e.g., 'maintain 99.9% uptime for the e-commerce site') are translated into priorities for the security team and asset management.",
+      "expected_keywords": ["mission", "objectives", "business priorities", "security alignment", "risk appetite", "stakeholder communication"],
+      "llm_scoring_instructions": "Assess if business objectives are used to drive security. A high score (75+) indicates that business goals are explicitly communicated and used to prioritize security efforts and asset protection. A mid-range score (40-74) indicates an informal link between business goals and security. A low score (0-39) suggests the security team operates without clear guidance from business leadership on what is most important to protect. Return only a single number.",
+      "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 30,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+      "situational": false,
+      "tags": ["asset", "business environment", "governance"],
+      "task_template_id": "AM-BUSINESS-ALIGNMENT-001",
+      "referenced_by": "NIST CSF v1.1 - ID.BE-3"
   }
 ]
+
