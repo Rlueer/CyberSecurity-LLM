@@ -49,7 +49,33 @@ services:
     depends_on:
       - backend
 
+  redmine-db:
+    image: postgres:15
+    container_name: redmine_postgres_db
+    environment:
+      POSTGRES_DB: redmine_db
+      POSTGRES_USER: redmine_user
+      POSTGRES_PASSWORD: your_strong_password_here
+    volumes:
+      - redmine_db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redmine:
+    image: redmine:5.1
+    container_name: redmine_app
+    ports:
+      - "8080:3000"
+    environment:
+      REDMINE_DB_POSTGRES: redmine-db
+      REDMINE_DB_DATABASE: redmine_db
+      REDMINE_DB_USERNAME: redmine_user
+      REDMINE_DB_PASSWORD: your_strong_password_here
+    depends_on:
+      - redmine-db
+    restart: unless-stopped
+
 volumes:
   postgres_data:
     external: true
     name: docker_postgres_data
+  redmine_db_data:

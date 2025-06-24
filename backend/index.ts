@@ -7,6 +7,7 @@ import { createPromptWithQuestionContext,extractLlmResponse, extractScore } from
 import sectorsRoute from './routes/sectors';
 import PDFDocument from 'pdfkit';
 import stream from 'stream';
+import axios from 'axios';
 dotenv.config();
 interface FollowupRule {
   min_score: number;
@@ -92,9 +93,6 @@ app.get("/questions", async (req, res) => {
   }
 });
 
-// Mevcut app.post('/ask', ...) fonksiyonunuzu aşağıdakiyle tamamen değiştirin.
-
-// Mevcut app.post('/ask', ...) fonksiyonunuzu aşağıdakiyle tamamen değiştirin.
 
 app.post("/ask", async (req, res) => {
   console.log("🔥 /ask endpoint'ine istek geldi");
@@ -103,11 +101,6 @@ app.post("/ask", async (req, res) => {
   const { prompt, previous_question_id, user_id, answer_id_to_edit } = req.body;
   console.log("📦 Request body:", { prompt: prompt?.substring(0, 50) + '...', previous_question_id, user_id, answer_id_to_edit });
 
-  // Güvenlik kontrolü: user_id gelmemişse hata döndür.
-  if (!user_id) {
-    res.status(400).json({ error: 'user_id is required in the request body.' });
-    return;
-    }
 
   try {
     // SPECIAL CASE: Sector classification (Bu kısım aynı kalıyor)
@@ -134,7 +127,11 @@ app.post("/ask", async (req, res) => {
         return
       }
     }
-    
+    if (!user_id) {
+       res.status(400).json({ error: 'user_id is required in the request body for assessment questions.' });
+      return;
+    }
+
     // ... (Soru bulma mantığı aynı)
     const prevQuestionRes = await pool.query<Question>("SELECT * FROM questions WHERE id = $1", [previous_question_id]);
     if (prevQuestionRes.rows.length === 0) {
@@ -254,6 +251,98 @@ app.get('/report/pdf', async (req, res) => {
     res.status(500).json({ error: 'Failed to generate PDF report.' });
   }
 });
+
+
+app.get('/redmine/assign', async (req, res) => {
+    console.log("🔥 /redmine/assign endpoint'ine istek geldi");
+    const userId = req.query.user_id as string;
+    if (!userId) {
+      res.status(400).json({ error: 'user_id is required' });
+      return; 
+    }
+
+    try {
+        // DÜZELTME 1: Sadece Redmine'e atanmamış görevleri seç.
+        // `redmine_issue_id IS NULL` koşulunu ekledik.
+        // UPDATE yapabilmek için cevabın kendi ID'sini (a.id) de sorguya ekledik.
+        const answersRes = await pool.query(
+            `SELECT a.id, a.ai_task, q.question_text
+             FROM answers a
+             JOIN questions q ON a.question_id = q.id
+             WHERE a.user_id = $1 
+               AND a.ai_task IS NOT NULL 
+               AND a.ai_task != '' 
+               AND a.redmine_issue_id IS NULL`, // <-- YENİ KONTROL
+            [userId]
+        );
+
+        const tasksToCreate = answersRes.rows;
+
+        if (tasksToCreate.length === 0) {
+            res.json({ message: 'Atanacak yeni bir görev bulunamadı.' });
+            return; 
+        } 
+
+        // GERÇEK ID'LER (az önce aldığınız sonuçlardan):
+        const redmineProjectId = 1; // "cybersec" projesinin ID'si
+        const trackerId = 1; // "Bug" tracker'ının ID'si
+        const statusId = 1; // "New" status'unun ID'si
+        const priorityId = 2; // Normal öncelik (varsayılan)
+
+        console.log(`Redmine'e atanmak üzere ${tasksToCreate.length} yeni görev bulundu.`);
+        let createdTasksCount = 0;
+
+        for (const task of tasksToCreate) {
+            // Başlık 255 karakterden uzunsa kısalt.
+            const subject = task.ai_task.length > 255 
+                ? task.ai_task.substring(0, 252) + '...' 
+                : task.ai_task;
+
+            const description = `Bu görev, "${userId}" kullanıcısı için yapılan değerlendirme sırasında otomatik oluşturulmuştur.\n\nİlgili Soru: "${task.question_text}"\n\n---\n**Tam Görev Açıklaması:**\n${task.ai_task}`;
+
+            const issueData = {
+                issue: {
+                    project_id: redmineProjectId,
+                    subject: subject,
+                    description: description,
+                    tracker_id: trackerId,
+                    status_id: statusId,
+                    priority_id: priorityId
+                }
+            };
+
+            // Redmine API'sine isteği gönderiyoruz
+            const redmineResponse = await axios.post(`${process.env.REDMINE_URL}/issues.json`, issueData, {
+                headers: {
+                    'X-Redmine-API-Key': process.env.REDMINE_API_KEY,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            // DÜZELTME 2: Redmine'den dönen yeni görevin ID'sini al.
+            if (redmineResponse.data && redmineResponse.data.issue) {
+                const createdIssueId = redmineResponse.data.issue.id;
+                console.log(`Redmine'de ${createdIssueId} ID'li görev oluşturuldu.`);
+
+                // DÜZELTME 3: Kendi veritabanımızı, bu yeni Redmine ID'si ile güncelle.
+                await pool.query(
+                    'UPDATE answers SET redmine_issue_id = $1 WHERE id = $2',
+                    [createdIssueId, task.id] // task.id, bizim 'answers' tablosundaki satırın ID'si
+                );
+                createdTasksCount++;
+            }
+        }
+
+        console.log(`✅ Başarıyla ${createdTasksCount} yeni görev Redmine'e atandı.`);
+        res.json({ message: `Başarıyla ${createdTasksCount} yeni görev Redmine projesine atandı.` });
+
+    } catch (err: any) {
+        console.error('❌ Redmine görev atama hatası:', err.response?.data || err.message);
+        res.status(500).json({ error: 'Redmine\'a görevler atanırken bir hata oluştu.' });
+    }
+});
+
+
 
 app.use('/sectors', sectorsRoute);
 

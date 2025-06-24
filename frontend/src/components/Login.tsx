@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-// DEĞİŞİKLİK: uuid kütüphanesini artık kullanmıyoruz, bu yüzden import satırını sildik.
+
+import { Shield, User, Building2, Info, ChevronDown, Search, ArrowLeft, Loader2, CheckCircle } from 'lucide-react';
 
 const SECTOR_QUESTION_ID = 999;
 
@@ -32,14 +33,15 @@ interface LoginProps {
 
 const DEFAULT_SECTOR = "Education and Research";
 
-async function getSectorFromJob(job: string): Promise<{ sector: string | null; error?: string }> {
+async function getSectorFromJob(job: string, userId: string): Promise<{ sector: string | null; error?: string }> {
   try {
     const response = await fetch('http://localhost:3001/ask', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         prompt: job,
-        previous_question_id: 999 
+        previous_question_id: 999,
+        user_id: userId // DÜZELTME 2: userId'yi isteğin gövdesine ekliyoruz.
       }),
     });
     const data = await response.json();
@@ -88,21 +90,21 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     };
   }, [dropdownRef]);
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmedUsername = username.trim();
     if (!trimmedUsername) return;
 
-    // DEĞİŞİKLİK: userId'yi sizin istediğiniz formatta oluşturuyoruz.
-    // Örnek: qwe-1234567890
-    const randomDigits = Math.random().toString().slice(2, 12); // 10 haneli rastgele sayı
+    const randomDigits = Math.random().toString().slice(2, 12);
     const userId = `${trimmedUsername}-${randomDigits}`;
 
     if (showCustomJob && customJob.trim()) {
       setCustomError('');
       setIsLoadingSector(true);
-      const { sector, error } = await getSectorFromJob(customJob.trim());
+      
+      // DÜZELTME 3: getSectorFromJob fonksiyonunu çağırırken oluşturduğumuz userId'yi iletiyoruz.
+      const { sector, error } = await getSectorFromJob(customJob.trim(), userId);
+      
       setIsLoadingSector(false);
       if (error) {
         setCustomError(error);
@@ -120,118 +122,198 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     setSearch('');
   };
 
-  // ... (JSX kısmı aynı kalıyor, değişiklik yok)
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#0f0f23]">
-      <form onSubmit={handleSubmit} className="bg-[#1e1e3f] p-8 rounded-lg shadow-lg w-full max-w-md flex flex-col gap-6">
-        <h2 className="text-2xl font-bold text-blue-400 mb-2 text-center">Welcome to CyberSecurity Maturity Test </h2>
-        <div>
-          <label className="block text-gray-300 mb-2" htmlFor="username">Username</label>
-          <input
-            id="username"
-            type="text"
-            className="w-full p-3 rounded bg-[#0f0f23] border border-gray-700 text-gray-100 focus:outline-none focus:border-blue-500"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            required
-            autoFocus
-          />
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundSize: '30px 30px'
+        }} />
+      </div>
+
+      <div className="relative w-full max-w-md">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center mb-4">
+            <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-3 rounded-2xl shadow-lg">
+              <Shield className="w-8 h-8 text-white" />
+            </div>
+          </div>
+          <h1 className="text-3xl font-bold text-white mb-2">
+            CyberSecurity-LLM
+          </h1>
+          <p className="text-slate-300 text-sm">
+            Enterprise Security Maturity Assessment
+          </p>
         </div>
 
-        <div className="relative" ref={dropdownRef}>
-          <div className="flex items-center mb-2">
-            <label className="block text-gray-300 mr-2" htmlFor="sector">Sector</label>
+        {/* Login Form */}
+        <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-700/50 rounded-2xl shadow-2xl p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Username Field */}
+            <div className="space-y-2">
+              <label className="flex items-center text-sm font-medium text-slate-200 mb-2">
+                <User className="w-4 h-4 mr-2 text-blue-400" />
+                Username
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  className="w-full p-4 bg-slate-900/50 border border-slate-600 rounded-xl text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  placeholder="Enter your username"
+                  value={username}
+                  onChange={e => setUsername(e.target.value)}
+                  required
+                  autoFocus
+                />
+                {username.trim() && (
+                  <CheckCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-green-400" />
+                )}
+              </div>
+            </div>
+
+            {/* Sector Selection */}
+            <div className="space-y-2" ref={dropdownRef}>
+              <div className="flex items-center justify-between">
+                <label className="flex items-center text-sm font-medium text-slate-200">
+                  <Building2 className="w-4 h-4 mr-2 text-blue-400" />
+                  Industry Sector
+                </label>
+                <div className="relative">
+                  <button
+                    type="button"
+                    className="text-slate-400 hover:text-blue-400 transition-colors"
+                    onMouseEnter={() => setShowInfo(true)}
+                    onMouseLeave={() => setShowInfo(false)}
+                    tabIndex={-1}
+                  >
+                    <Info className="w-4 h-4" />
+                  </button>
+                  {showInfo && (
+                    <div className="absolute right-0 top-6 z-30 w-80 bg-slate-900 border border-blue-500/50 rounded-xl p-4 shadow-2xl">
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        {sectorInfo}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {!showCustomJob ? (
+                <div className="relative">
+                  <button
+                    type="button"
+                    className="w-full p-4 bg-slate-900/50 border border-slate-600 rounded-xl text-slate-100 text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 flex justify-between items-center hover:bg-slate-900/70"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  >
+                    <span className="truncate">{sector}</span>
+                    <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform duration-200 ${isDropdownOpen ? 'transform rotate-180' : ''}`} />
+                  </button>
+
+                  {isDropdownOpen && (
+                    <div className="absolute z-20 mt-2 w-full bg-slate-900 border border-slate-600 rounded-xl shadow-2xl overflow-hidden">
+                      <div className="p-3 border-b border-slate-700">
+                        <div className="relative">
+                          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                          <input
+                            type="text"
+                            placeholder="Search sectors..."
+                            className="w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            value={search}
+                            onChange={e => setSearch(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <div className="max-h-64 overflow-y-auto">
+                        {filteredSectors.map(s => (
+                          <button
+                            key={s}
+                            type="button"
+                            className="w-full p-3 text-left hover:bg-slate-800 text-slate-200 text-sm transition-colors duration-150 border-b border-slate-800 last:border-b-0"
+                            onClick={() => handleSectorSelect(s)}
+                          >
+                            {s}
+                          </button>
+                        ))}
+                        {filteredSectors.length === 0 && (
+                          <div className="p-4 text-center text-slate-400 text-sm">
+                            No sectors found
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    className="mt-3 text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors duration-200 flex items-center group"
+                    onClick={() => setShowCustomJob(true)}
+                  >
+                    <span>My job is not listed</span>
+                    <ChevronDown className="w-4 h-4 ml-1 transform rotate-[-90deg] group-hover:translate-x-1 transition-transform duration-200" />
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <div className="relative">
+                    <textarea
+                      className="w-full p-4 bg-slate-900/50 border border-slate-600 rounded-xl text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                      placeholder="Please describe your job title, role, or industry sector..."
+                      value={customJob}
+                      onChange={e => setCustomJob(e.target.value)}
+                      rows={3}
+                    />
+                  </div>
+                  {customError && (
+                    <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
+                      <p className="text-red-400 text-sm">{customError}</p>
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    className="text-slate-400 hover:text-slate-300 text-sm font-medium transition-colors duration-200 flex items-center group"
+                    onClick={() => { 
+                      setShowCustomJob(false); 
+                      setCustomJob(''); 
+                      setCustomError(''); 
+                    }}
+                  >
+                    <ArrowLeft className="w-4 h-4 mr-1 group-hover:-translate-x-1 transition-transform duration-200" />
+                    Back to sector list
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Submit Button */}
             <button
-              type="button"
-              className="ml-1 text-blue-400 hover:text-blue-200 relative"
-              onMouseEnter={() => setShowInfo(true)}
-              onMouseLeave={() => setShowInfo(false)}
-              tabIndex={-1}
+              type="submit"
+              className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold rounded-xl px-6 py-4 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              disabled={!username.trim() || isLoadingSector || (showCustomJob && !customJob.trim())}
             >
-              <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" stroke="currentColor" strokeWidth="2" fill="none"/><text x="10" y="15" textAnchor="middle" fontSize="12" fill="currentColor">i</text></svg>
-              {showInfo && (
-                <span className="absolute left-6 top-0 z-20 w-64 bg-gray-900 text-gray-200 text-xs rounded-lg p-3 shadow-lg border border-blue-400">
-                  {sectorInfo}
-                </span>
+              {isLoadingSector ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <span>Processing...</span>
+                </>
+              ) : (
+                <>
+                  <Shield className="w-5 h-5" />
+                  <span>{showCustomJob && customJob.trim() ? 'Continue Assessment' : 'Start Assessment'}</span>
+                </>
               )}
             </button>
-          </div>
-
-          <button
-            type="button"
-            className="w-full p-3 rounded bg-[#0f0f23] border border-gray-700 text-gray-100 text-left focus:outline-none focus:border-blue-500 flex justify-between items-center"
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          >
-            <span>{sector}</span>
-            <svg className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'transform rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-          </button>
-
-          {isDropdownOpen && (
-            <div className="absolute z-10 mt-1 w-full bg-[#1e1e3f] border border-gray-700 rounded-lg shadow-lg">
-              <input
-                type="text"
-                placeholder="Search sector..."
-                className="w-full p-2 bg-[#0f0f23] border-b border-gray-700 text-gray-100 focus:outline-none"
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-              />
-              <ul className="max-h-48 overflow-y-auto">
-                {filteredSectors.map(s => (
-                  <li
-                    key={s}
-                    className="p-3 hover:bg-blue-600 cursor-pointer text-gray-200"
-                    onClick={() => handleSectorSelect(s)}
-                  >
-                    {s}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {!showCustomJob && (
-             <button
-                type="button"
-                className="mt-3 w-full text-blue-400 hover:underline text-sm text-left"
-                onClick={() => setShowCustomJob(true)}
-             >
-                My job is not listed
-             </button>
-          )}
+          </form>
         </div>
-        
-        {showCustomJob && (
-            <div className="flex flex-col gap-2">
-              <label className="block text-gray-300 -mb-1">Describe your job</label>
-              <textarea
-                className="w-full p-3 rounded bg-[#0f0f23] border border-gray-700 text-gray-100 focus:outline-none focus:border-blue-500"
-                placeholder="Please describe your job title or field..."
-                value={customJob}
-                onChange={e => setCustomJob(e.target.value)}
-                rows={2}
-              />
-              {customError && <span className="text-red-400 text-xs">{customError}</span>}
-              <button
-                type="button"
-                className="text-blue-400 hover:underline text-sm self-start"
-                onClick={() => { setShowCustomJob(false); setCustomJob(''); setCustomError(''); }}
-              >
-                Back to sector list
-              </button>
-            </div>
-          )}
 
-        <button
-          type="submit"
-          className="bg-blue-600 text-white font-medium rounded-lg px-5 py-3 transition hover:bg-blue-700 disabled:bg-gray-500 disabled:cursor-not-allowed flex items-center justify-center"
-          disabled={!username.trim() || isLoadingSector || (showCustomJob && !customJob.trim())}
-        >
-          {isLoadingSector ? (
-            <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
-          ) : null}
-          {showCustomJob && customJob.trim() ? 'Continue' : 'Enter'}
-        </button>
-      </form>
+        {/* Footer */}
+        <div className="text-center mt-6">
+          <p className="text-slate-400 text-xs">
+            Secure • Professional • Adaptive Assessment Platform
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

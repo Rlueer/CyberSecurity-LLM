@@ -574,12 +574,25 @@ const recalculateScores = useCallback((currentVisibleMessages: Message[], allQue
     if (!user) return;
     try {
       const response = await fetch(`http://localhost:3001/redmine/assign?user_id=${encodeURIComponent(user.userId)}`);
+      
+      // DEĞİŞİKLİK: Cevap başarılı değilse, hata mesajını JSON'dan okuyup gösterelim.
+      if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Bilinmeyen bir sunucu hatası oluştu.');
+      }
+
       const data = await response.json();
-      alert(data.message || 'Redmine tasks assigned!');
+      alert(data.message || 'Redmine görevleri başarıyla atandı!');
+
     } catch (err) {
-      alert('Failed to assign Redmine tasks.');
+      // Artık daha anlamlı bir hata mesajı göstereceğiz.
+      if (err instanceof Error) {
+          alert(`Hata: ${err.message}`);
+      } else {
+          alert('Redmine görevleri atanırken bir hata oluştu.');
+      }
     }
-  };
+};
 
   if (!user) {
     return <Login onLogin={(username, sector, userId) => setUser({ username, sector, userId })} />;
