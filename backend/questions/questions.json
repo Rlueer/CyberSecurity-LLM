@@ -724,6 +724,23 @@
       "tags": ["asset", "business environment", "governance"],
       "task_template_id": "AM-BUSINESS-ALIGNMENT-001",
       "referenced_by": "NIST CSF v1.1 - ID.BE-3"
+  },
+  {
+    "id": 999,
+    "domain_name": "Sector Classification",
+    "related_nist_category": "",
+    "nist_function": "",
+    "iso27001_controls": [],
+    "maturity_level": 0,
+    "criticality": "low",
+    "question_text": "Given a job or profession, match it to the most appropriate sector from the following list. Return only the exact sector name:\n\nSmall and Medium Enterprises (SMEs), Large Enterprises, Finance and Insurance, Healthcare and Pharmaceuticals, Public Sector and Government, Critical Infrastructure, Energy and Utilities, Transportation and Logistics, Telecommunications, Information Technology and Software, Cloud and SaaS Providers, Manufacturing and Industry, Education and Research, Retail and E-Commerce, Construction and Real Estate, Legal and Consulting Services, Media and Entertainment, Agriculture and Food, Defense and Aerospace, Non-Profit and NGOs.",
+    "question_type": "open",
+    "hint": "Return only the exact sector name from the list.",
+    "expected_keywords": [],
+    "llm_scoring_instructions": "Return only the exact sector name from the list.",
+    "followup_rules": [],
+    "situational": false,
+    "tags": []
   }
 ]
 

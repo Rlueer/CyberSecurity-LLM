@@ -4,6 +4,7 @@ import { Question, Message, DomainStatus, AnswerAttempt } from './types';
 import Header from './components/Header';
 import ChatPanel from './components/ChatPanel';
 import Sidebar from './components/Sidebar';
+import Login from './components/Login';
 
 
 const getProficiencyLabel = (score: number): 'Mature' | 'Developing' | 'Foundational' => {
@@ -33,6 +34,8 @@ const App: React.FC = () => {
     estimate: number;
   }>({ current: 0, total: 0, estimate: 0 });
 
+  // Login state
+  const [user, setUser] = useState<{ username: string; sector: string } | null>(null);
 
   // CORE NEW FUNCTION: The "Timeline Walker" 
   // This calculates which messages should be visible based on active attempt selections
@@ -547,9 +550,13 @@ const recalculateScores = useCallback((currentVisibleMessages: Message[], allQue
     });
   };
 
+  if (!user) {
+    return <Login onLogin={(username, sector) => setUser({ username, sector })} />;
+  }
+
   return (
     <div className="bg-[#0f0f23] text-gray-200 font-sans h-screen flex flex-col">
-      <Header />
+      <Header username={user.username} sector={user.sector} />
       <div className="flex flex-1 overflow-hidden min-h-0">
         <ChatPanel
           messages={visibleMessages}  // Only pass visible messages to UI

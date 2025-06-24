@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { Pool } from 'pg';
 import { queryGemini } from "./src/services/gemini";
 import { createPromptWithQuestionContext,extractLlmResponse, extractScore } from "./routes/answerUtils";
+import sectorsRoute from './routes/sectors';
 dotenv.config();
 interface FollowupRule {
   min_score: number;
@@ -18,7 +19,28 @@ interface Question {
   followup_rules?: FollowupRule[];
 }
 
-
+const SECTORS = [
+  "Small and Medium Enterprises (SMEs)",
+  "Large Enterprises",
+  "Finance and Insurance",
+  "Healthcare and Pharmaceuticals",
+  "Public Sector and Government",
+  "Critical Infrastructure",
+  "Energy and Utilities",
+  "Transportation and Logistics",
+  "Telecommunications",
+  "Information Technology and Software",
+  "Cloud and SaaS Providers",
+  "Manufacturing and Industry",
+  "Education and Research",
+  "Retail and E-Commerce",
+  "Construction and Real Estate",
+  "Legal and Consulting Services",
+  "Media and Entertainment",
+  "Agriculture and Food",
+  "Defense and Aerospace",
+  "Non-Profit and NGOs"
+];
 
 const app = express();
 const port = 3001;
@@ -80,6 +102,32 @@ app.post("/ask", async (req, res) => {
   const userId = 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'; // 🔐 Geçici kullanıcı
 
   try {
+    // SPECIAL CASE: Sector classification
+    if (previous_question_id === 999) {
+      const sectorPrompt = `
+      Given a job or profession, match it to the most appropriate sector from the following list.
+      Return only the exact sector name from the list, nothing else.
+
+      Sectors:
+      ${SECTORS.join(', ')}
+
+      Job/Profession: ${prompt}
+            `.trim();
+
+      const llmResult = await queryGemini(sectorPrompt);
+      console.log("[SECTOR LLM RAW RESPONSE]:", llmResult);
+
+      // Try to find a sector match
+      const found = SECTORS.find(s => llmResult.toLowerCase().includes(s.toLowerCase()));
+      if (found) {
+        res.json({ comment: found, score: 100, task: "" });
+        return;
+      } else {
+        res.json({ comment: "Could not match to a sector.", score: 0, task: "" });
+        return
+      }
+    }
+
     // İlk soru mantığı aynı kalıyor, dokunmuyoruz.
     if (!previous_question_id) {
       // ... (Bu kısım aynı)
@@ -157,6 +205,7 @@ app.post("/ask", async (req, res) => {
   }
 });
 
+app.use('/sectors', sectorsRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
