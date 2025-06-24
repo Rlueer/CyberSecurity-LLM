@@ -35,7 +35,7 @@ const App: React.FC = () => {
   }>({ current: 0, total: 0, estimate: 0 });
 
   // Login state
-  const [user, setUser] = useState<{ username: string; sector: string } | null>(null);
+  const [user, setUser] = useState<{ username: string; sector: string; userId: string } | null>(null);
 
   // CORE NEW FUNCTION: The "Timeline Walker" 
   // This calculates which messages should be visible based on active attempt selections
@@ -350,7 +350,7 @@ const recalculateScores = useCallback((currentVisibleMessages: Message[], allQue
 
   // NON-DESTRUCTIVE: Only adds to permanent message store
   const handleSendMessage = async (prompt: string) => {
-    if (!currentQuestionId || isLoading) return;
+    if (!currentQuestionId || isLoading || !user) return;
     setIsLoading(true);
 
     // Create optimistic message
@@ -379,7 +379,7 @@ const recalculateScores = useCallback((currentVisibleMessages: Message[], allQue
       const res = await fetch("http://localhost:3001/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, previous_question_id: currentQuestionId })
+        body: JSON.stringify({ prompt, previous_question_id: currentQuestionId, user_id: user.userId })
       });
       
       if (!res.ok) throw new Error(`API error: ${res.statusText}`);
@@ -550,8 +550,39 @@ const recalculateScores = useCallback((currentVisibleMessages: Message[], allQue
     });
   };
 
+  // PDF and Redmine handlers
+  const handleCreatePdfReport = async () => {
+    if (!user) return;
+    try {
+      const response = await fetch(`http://localhost:3001/report/pdf?user_id=${encodeURIComponent(user.userId)}`);
+      if (!response.ok) throw new Error('Failed to generate PDF');
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `assessment-report-${user.username}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      //alert('Failed ssssssto download PDF report.');
+    }
+  };
+
+  const handleAssignRedmineTasks = async () => {
+    if (!user) return;
+    try {
+      const response = await fetch(`http://localhost:3001/redmine/assign?user_id=${encodeURIComponent(user.userId)}`);
+      const data = await response.json();
+      alert(data.message || 'Redmine tasks assigned!');
+    } catch (err) {
+      alert('Failed to assign Redmine tasks.');
+    }
+  };
+
   if (!user) {
-    return <Login onLogin={(username, sector) => setUser({ username, sector })} />;
+    return <Login onLogin={(username, sector, userId) => setUser({ username, sector, userId })} />;
   }
 
   return (
@@ -573,6 +604,8 @@ const recalculateScores = useCallback((currentVisibleMessages: Message[], allQue
           statuses={domainStatuses} 
           overallScore={overallScore}
           mainProgress={domainProgress}
+          onCreatePdfReport={handleCreatePdfReport}
+          onAssignRedmineTasks={handleAssignRedmineTasks}
         />
       </div>
     </div>

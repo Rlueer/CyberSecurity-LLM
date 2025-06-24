@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+// DEĞİŞİKLİK: uuid kütüphanesini artık kullanmıyoruz, bu yüzden import satırını sildik.
 
-const SECTOR_QUESTION_ID = 999; // Dummy sektör sorusunun id'si
+const SECTOR_QUESTION_ID = 999;
 
 const SECTORS = [
   "Small and Medium Enterprises (SMEs)",
@@ -26,7 +27,7 @@ const SECTORS = [
 ];
 
 interface LoginProps {
-  onLogin: (username: string, sector: string) => void;
+  onLogin: (username: string, sector: string, userId: string) => void;
 }
 
 const DEFAULT_SECTOR = "Education and Research";
@@ -38,14 +39,12 @@ async function getSectorFromJob(job: string): Promise<{ sector: string | null; e
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         prompt: job,
-        previous_question_id: 999
+        previous_question_id: 999 
       }),
     });
     const data = await response.json();
     if (data && data.comment) {
-      // AI cevabını SECTORS ile eşleştir
       const found = SECTORS.find(s => data.comment.toLowerCase().includes(s.toLowerCase()));
-      // AI sektörü bulamadıysa veya skor 0 ise hata döndür
       if (!found || data.score === 0) {
         return { sector: null, error: 'Could not match your job to a sector. Please rephrase or try again.' };
       }
@@ -63,25 +62,20 @@ const sectorInfo =
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [username, setUsername] = useState('');
-  const [sector, setSector] = useState(SECTORS[13]); // Retail and E-Commerce as default
+  const [sector, setSector] = useState(SECTORS[13]);
   const [search, setSearch] = useState('');
   const [showCustomJob, setShowCustomJob] = useState(false);
   const [customJob, setCustomJob] = useState('');
   const [isLoadingSector, setIsLoadingSector] = useState(false);
   const [customError, setCustomError] = useState('');
   const [showInfo, setShowInfo] = useState(false);
-  
-  // YENİ: Açılır menünün (dropdown) görünürlüğünü kontrol eden state
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  
-  // YENİ: Dropdown dışına tıklandığında menüyü kapatmak için ref'ler
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const filteredSectors = SECTORS.filter(s =>
     s.toLowerCase().includes(search.toLowerCase())
   );
   
-  // YENİ: Dışarıya tıklamayı dinleyen useEffect
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -97,7 +91,14 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username.trim()) return;
+    const trimmedUsername = username.trim();
+    if (!trimmedUsername) return;
+
+    // DEĞİŞİKLİK: userId'yi sizin istediğiniz formatta oluşturuyoruz.
+    // Örnek: qwe-1234567890
+    const randomDigits = Math.random().toString().slice(2, 12); // 10 haneli rastgele sayı
+    const userId = `${trimmedUsername}-${randomDigits}`;
+
     if (showCustomJob && customJob.trim()) {
       setCustomError('');
       setIsLoadingSector(true);
@@ -107,18 +108,19 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         setCustomError(error);
         return;
       }
-      onLogin(username.trim(), sector!);
+      onLogin(trimmedUsername, sector!, userId);
     } else {
-      onLogin(username.trim(), sector);
+      onLogin(trimmedUsername, sector, userId);
     }
   };
 
   const handleSectorSelect = (selectedSector: string) => {
     setSector(selectedSector);
     setIsDropdownOpen(false);
-    setSearch(''); // Aramayı temizle
+    setSearch('');
   };
 
+  // ... (JSX kısmı aynı kalıyor, değişiklik yok)
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#0f0f23]">
       <form onSubmit={handleSubmit} className="bg-[#1e1e3f] p-8 rounded-lg shadow-lg w-full max-w-md flex flex-col gap-6">
@@ -136,7 +138,6 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           />
         </div>
 
-        {/* DEĞİŞİKLİK: Sektör seçim alanı tamamen yeniden tasarlandı */}
         <div className="relative" ref={dropdownRef}>
           <div className="flex items-center mb-2">
             <label className="block text-gray-300 mr-2" htmlFor="sector">Sector</label>
@@ -199,7 +200,6 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           )}
         </div>
         
-        {/* DEĞİŞİKLİK: Özel iş alanı artık ayrı bir koşullu blok */}
         {showCustomJob && (
             <div className="flex flex-col gap-2">
               <label className="block text-gray-300 -mb-1">Describe your job</label>

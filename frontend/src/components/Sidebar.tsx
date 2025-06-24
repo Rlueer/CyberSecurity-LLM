@@ -12,9 +12,11 @@ interface SidebarProps {
     current: number;
     total: number;
   };
+  onCreatePdfReport?: () => void;
+  onAssignRedmineTasks?: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ statuses, overallScore, mainProgress }) => {
+const Sidebar: React.FC<SidebarProps> = ({ statuses, overallScore, mainProgress, onCreatePdfReport, onAssignRedmineTasks }) => {
   const getStatusDotColor = (status: DomainStatus['status']) => ({
     'Complete': 'bg-green-500',
     'In Progress': 'bg-blue-500', 
@@ -52,6 +54,22 @@ const Sidebar: React.FC<SidebarProps> = ({ statuses, overallScore, mainProgress 
             <span className='text-lg font-bold text-white ml-2'>{mainProgress.current} / {mainProgress.total}</span>
           </div>
         </div>
+      </div>
+      
+      {/* --- PDF/Redmine Buttons --- */}
+      <div className="p-6 border-b border-[#2d2d5f] flex flex-col gap-3">
+        <button
+          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition"
+          onClick={onCreatePdfReport}
+        >
+          Create PDF Report
+        </button>
+        <button
+          className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition"
+          onClick={onAssignRedmineTasks}
+        >
+          Assign Redmine Tasks
+        </button>
       </div>
       
       {/* --- Active Domain Section --- */}
