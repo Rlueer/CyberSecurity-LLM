@@ -726,6 +726,4677 @@
       "referenced_by": "NIST CSF v1.1 - ID.BE-3"
   },
   {
+    "id": 30,
+    "domain_name": "Awareness & Training",
+    "related_nist_category": "PR.AT-1",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.7.2.2"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe your organization's cybersecurity awareness and training program for all general users.",
+    "question_type": "open",
+    "hint": "Explain how you educate all employees about cybersecurity threats and their responsibilities for protecting information. Mention topics covered, frequency, and methods (e.g., online modules, phishing simulations).",
+    "expected_keywords": [
+      "security awareness",
+      "training program",
+      "all employees",
+      "annual training",
+      "phishing simulation",
+      "onboarding",
+      "acceptable use"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, mandatory, and recurring training program for all users that covers key topics and is tracked for completion. A mid-range score (40-74) suggests an ad-hoc or inconsistent program. A low score (0-39) implies little to no formal awareness training for general staff. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 31,
+        "note": "User has a mature general training program. Assess specialized training for privileged users."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 32,
+        "note": "General training is inconsistent. Assess if targeted training exists for high-risk groups like executives."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 36,
+        "note": "General training is weak or non-existent. Assess for any informal awareness activities."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "training",
+      "awareness",
+      "phishing",
+      "all users"
+    ],
+    "task_template_id": "AT-GENERAL-USER-TRAINING-001",
+    "referenced_by": "NIST CSF v1.1 - PR.AT-1"
+  },
+  {
+    "id": 31,
+    "domain_name": "Awareness & Training",
+    "related_nist_category": "PR.AT-2",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.6.1.1",
+      "A.7.2.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe the specialized training provided to privileged users regarding their specific cybersecurity roles and responsibilities.",
+    "question_type": "open",
+    "hint": "Privileged users are those with elevated access, like system administrators. Explain what extra training they receive beyond the general awareness program to handle their high-risk roles securely.",
+    "expected_keywords": [
+      "privileged access",
+      "admin training",
+      "specialized",
+      "role-based training",
+      "secure configuration",
+      "incident response"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, role-based training program for all privileged users that covers advanced topics relevant to their duties. A mid-range score (40-74) suggests informal or inconsistent training. A low score (0-39) indicates privileged users receive no training beyond the general program. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 33,
+        "note": "Privileged user training is mature. Assess how program effectiveness is measured."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 34,
+        "note": "Privileged user training is weak. Assess if third-party awareness is addressed."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "training",
+      "privileged access",
+      "role-based"
+    ],
+    "task_template_id": "AT-PRIVILEGED-USER-TRAINING-001",
+    "referenced_by": "NIST CSF v1.1 - PR.AT-2"
+  },
+  {
+    "id": 32,
+    "domain_name": "Awareness & Training",
+    "related_nist_category": "PR.AT-4",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.6.1.1",
+      "A.7.2.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe the cybersecurity training and awareness activities specifically provided to senior executives.",
+    "question_type": "open",
+    "hint": "Explain what training is given to leadership to inform them about cybersecurity risks, their responsibilities, and how to lead the organization securely.",
+    "expected_keywords": [
+      "executive training",
+      "leadership",
+      "board of directors",
+      "risk management",
+      "threat intelligence briefing",
+      "business impact"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates regular, tailored briefings for senior executives on risk management and their specific responsibilities. A mid-range score (40-74) suggests ad-hoc briefings or that executives only participate in general training. A low score (0-39) indicates no specific training for executives. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 31,
+        "note": "Executive training is strong. Now assess privileged user training."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 35,
+        "note": "Executive training is weak. Assess if specialized security personnel are trained."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "training",
+      "executive",
+      "leadership",
+      "governance"
+    ],
+    "task_template_id": "AT-EXECUTIVE-TRAINING-001",
+    "referenced_by": "NIST CSF v1.1 - PR.AT-4"
+  },
+  {
+    "id": 33,
+    "domain_name": "Awareness & Training",
+    "related_nist_category": "PR.IP-7",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.16.1.6"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe how you measure the effectiveness of your cybersecurity training programs and use those metrics to drive continuous improvement.",
+    "question_type": "open",
+    "hint": "How do you know your training is working? Explain if you use metrics like phishing simulation click-rates, quiz scores, or reductions in security incidents to evaluate and improve your program.",
+    "expected_keywords": [
+      "metrics",
+      "effectiveness",
+      "kpi",
+      "phishing click-rate",
+      "continuous improvement",
+      "feedback",
+      "reporting"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that the organization uses formal metrics to measure training effectiveness and has a documented process for using that data to improve the program. A mid-range score (40-74) suggests that some metrics are tracked but the improvement process is informal. A low score (0-39) indicates no measurement of training effectiveness. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 40,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "metrics",
+      "continuous improvement",
+      "effectiveness"
+    ],
+    "task_template_id": "AT-EFFECTIVENESS-MEASUREMENT-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-7"
+  },
+  {
+    "id": 34,
+    "domain_name": "Awareness & Training",
+    "related_nist_category": "PR.AT-3",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.7.2.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "low",
+    "question_text": "Describe how you ensure third-party stakeholders (like suppliers, contractors, or partners) are aware of their cybersecurity roles and responsibilities when working with your organization.",
+    "question_type": "open",
+    "hint": "Explain how you communicate your security policies and expectations to external parties who have access to your systems or data.",
+    "expected_keywords": [
+      "third-party",
+      "vendor",
+      "supplier",
+      "contractor",
+      "security requirements",
+      "contractual agreement"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that security responsibilities are formally communicated to all third parties, typically via contractual agreements and onboarding processes. A mid-range score (40-74) suggests informal or inconsistent communication. A low score (0-39) indicates no process for informing third parties of their security duties. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 40,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "third-party",
+      "vendor management",
+      "policy"
+    ],
+    "task_template_id": "AT-THIRD-PARTY-AWARENESS-001",
+    "referenced_by": "NIST CSF v1.1 - PR.AT-3"
+  },
+  {
+    "id": 35,
+    "domain_name": "Awareness & Training",
+    "related_nist_category": "PR.AT-5",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.6.1.1",
+      "A.7.2.2"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "Describe any specific training provided to your physical security and cybersecurity personnel to ensure they understand their distinct but related roles and responsibilities.",
+    "question_type": "open",
+    "hint": "Explain if and how you train your security guards and IT security team to collaborate, for example, on responding to a physical breach of a server room.",
+    "expected_keywords": [
+      "physical security",
+      "cybersecurity personnel",
+      "collaboration",
+      "integrated security",
+      "joint training",
+      "incident response"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that there is a formal, joint training program that addresses the interaction between physical and cybersecurity teams. A mid-range score (40-74) suggests informal collaboration or separate training programs with no integration. A low score (0-39) indicates no specific, integrated training for these teams. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 40,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "training",
+      "physical security",
+      "collaboration"
+    ],
+    "task_template_id": "AT-INTEGRATED-SECURITY-TRAINING-001",
+    "referenced_by": "NIST CSF v1.1 - PR.AT-5"
+  },
+  {
+    "id": 36,
+    "domain_name": "Awareness & Training",
+    "related_nist_category": "PR.AT-1",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.7.2.2"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "In what ways, if any, are your employees informed about common cybersecurity threats like phishing or the importance of strong passwords?",
+    "question_type": "open",
+    "hint": "Even if you don't have a formal program, describe any informal methods used, such as sending email reminders, posters in the office, or discussions in team meetings.",
+    "expected_keywords": [
+      "phishing",
+      "malware",
+      "passwords",
+      "email reminders",
+      "posters",
+      "informal"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates consistent, albeit informal, communication on key threats. A mid-range score (40-74) suggests very rare or inconsistent communication. A low score (0-39) indicates a complete absence of communication about cybersecurity threats. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 40,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "awareness",
+      "informal",
+      "phishing"
+    ],
+    "task_template_id": "AT-INFORMAL-AWARENESS-001",
+    "referenced_by": "NIST CSF v1.1 - PR.AT-1"
+  },
+  {
+    "id": 40,
+    "domain_name": "Data Security",
+    "related_nist_category": "PR.DS-1",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.8.2.3"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe the technical controls and processes your organization uses to protect data-at-rest.",
+    "question_type": "open",
+    "hint": "Explain how you protect data that is stored on systems, such as servers, laptops, and databases. Mention controls like encryption, access control lists, and physical security.",
+    "expected_keywords": [
+      "data-at-rest",
+      "encryption",
+      "full disk encryption",
+      "database encryption",
+      "access control",
+      "permissions"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100 based on the maturity of their data-at-rest protection. A high score (75+) indicates that encryption and strong access controls are systematically applied to all sensitive data-at-rest. A mid-range score (40-74) suggests that controls are applied inconsistently or only to certain systems. A low score (0-39) implies little to no protection for data-at-rest. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 41,
+        "note": "User has mature controls for data-at-rest. Assess for managed controls like data loss prevention."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 42,
+        "note": "User has inconsistent controls. Assess another foundational control like protecting data-in-transit."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 47,
+        "note": "User has weak or no controls. Assess the most basic availability control: capacity management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "data security",
+      "data-at-rest",
+      "encryption"
+    ],
+    "task_template_id": "DS-DATA-AT-REST-001",
+    "referenced_by": "NIST CSF v1.1 - PR.DS-1"
+  },
+  {
+    "id": 41,
+    "domain_name": "Data Security",
+    "related_nist_category": "PR.DS-5",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.8.2.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe the measures and tools your organization has implemented to prevent data leaks.",
+    "question_type": "open",
+    "hint": "Explain what tools or processes you use to detect and block unauthorized transfers of sensitive data outside of your organization, for example, through email, web uploads, or USB drives.",
+    "expected_keywords": [
+      "data loss prevention",
+      "dlp",
+      "data leakage",
+      "exfiltration",
+      "monitoring",
+      "email filtering",
+      "endpoint protection"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a comprehensive DLP program with automated tools and policies for network and endpoint data. A mid-range score (40-74) suggests some DLP controls are in place but are not comprehensive. A low score (0-39) indicates no specific measures to prevent data leaks. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 43,
+        "note": "Data leak prevention is strong. Assess for optimized controls like development environment separation."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 44,
+        "note": "Data leak prevention is weak. Assess how data destruction is handled."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "data security",
+      "dlp",
+      "data leakage"
+    ],
+    "task_template_id": "DS-DATA-LEAK-PREVENTION-001",
+    "referenced_by": "NIST CSF v1.1 - PR.DS-5"
+  },
+  {
+    "id": 42,
+    "domain_name": "Data Security",
+    "related_nist_category": "PR.DS-2",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.13.1.1",
+      "A.13.2.1"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe the controls you use to protect data while it is in-transit over the network.",
+    "question_type": "open",
+    "hint": "Explain how you protect data as it travels between systems, for example, between a user's web browser and your website, or between different servers. Mention controls like TLS/SSL and VPNs.",
+    "expected_keywords": [
+      "data-in-transit",
+      "encryption",
+      "tls",
+      "ssl",
+      "https",
+      "vpn"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that all data in transit is encrypted using strong, modern protocols. A mid-range score (40-74) suggests that encryption is used for some but not all data in transit. A low score (0-39) indicates little to no encryption of data in transit. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 45,
+        "note": "Data-in-transit protection is strong. Assess for managed controls like software integrity checking."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 46,
+        "note": "Data-in-transit protection is weak. Assess how assets are managed at end-of-life."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "data security",
+      "data-in-transit",
+      "encryption",
+      "tls"
+    ],
+    "task_template_id": "DS-DATA-IN-TRANSIT-001",
+    "referenced_by": "NIST CSF v1.1 - PR.DS-2"
+  },
+  {
+    "id": 43,
+    "domain_name": "Data Security",
+    "related_nist_category": "PR.DS-7",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.12.1.4"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe how you ensure that your development and testing environments are kept separate from the production environment.",
+    "question_type": "open",
+    "hint": "Explain the technical and procedural controls you use to prevent development activities from impacting your live systems and to prevent production data from being used in less secure testing environments.",
+    "expected_keywords": [
+      "environment separation",
+      "development",
+      "testing",
+      "production",
+      "dev/test/prod",
+      "data masking"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates strict logical and physical separation of environments, with formal procedures for promoting code and managing data. A mid-range score (40-74) suggests some separation but with informal procedures. A low score (0-39) indicates a lack of separation. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 50,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "data security",
+      "devsecops",
+      "environment separation"
+    ],
+    "task_template_id": "DS-ENVIRONMENT-SEPARATION-001",
+    "referenced_by": "NIST CSF v1.1 - PR.DS-7"
+  },
+  {
+    "id": 44,
+    "domain_name": "Data Security",
+    "related_nist_category": "PR.IP-6",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.8.3.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe your policy and procedures for securely destroying data when it is no longer needed.",
+    "question_type": "open",
+    "hint": "Explain how you ensure that data is permanently deleted from systems and media, in accordance with your data retention policy. Mention methods like cryptographic erasure or physical destruction.",
+    "expected_keywords": [
+      "data destruction",
+      "data disposal",
+      "secure deletion",
+      "cryptographic erasure",
+      "physical destruction"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal policy and documented procedures for secure data destruction, with verification. A mid-range score (40-74) suggests an informal process. A low score (0-39) indicates no secure data destruction process. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 50,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "data security",
+      "data destruction",
+      "data disposal"
+    ],
+    "task_template_id": "DS-DATA-DESTRUCTION-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-6"
+  },
+  {
+    "id": 45,
+    "domain_name": "Data Security",
+    "related_nist_category": "PR.DS-6",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.12.2.1",
+      "A.12.5.1"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe the integrity checking mechanisms you use to verify software, firmware, and information integrity.",
+    "question_type": "open",
+    "hint": "Explain what tools or processes you use to ensure that your software and data have not been tampered with. Mention methods like file integrity monitoring, code signing, or checksums.",
+    "expected_keywords": [
+      "integrity",
+      "file integrity monitoring",
+      "fim",
+      "checksum",
+      "hashing",
+      "code signing"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that automated integrity checking mechanisms are used for critical systems and data. A mid-range score (40-74) suggests that integrity checks are performed manually or inconsistently. A low score (0-39) indicates no integrity checking mechanisms are in use. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 50,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "data security",
+      "integrity",
+      "fim"
+    ],
+    "task_template_id": "DS-INTEGRITY-CHECKING-001",
+    "referenced_by": "NIST CSF v1.1 - PR.DS-6"
+  },
+  {
+    "id": 46,
+    "domain_name": "Data Security",
+    "related_nist_category": "PR.DS-3",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.8.3.1",
+      "A.8.3.2",
+      "A.8.3.3"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "Describe how your organization's assets are formally managed throughout removal, transfers, and disposition.",
+    "question_type": "open",
+    "hint": "Explain what procedures are in place to ensure that when a device is retired or moved, any sensitive data is securely handled or erased.",
+    "expected_keywords": [
+      "asset disposition",
+      "media sanitization",
+      "data removal",
+      "secure wipe"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, documented process for managing assets at their end-of-life, including secure data removal. A mid-range score (40-74) suggests an informal process. A low score (0-39) indicates no formal process for asset disposition. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 50,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "data security",
+      "asset disposition",
+      "media sanitization"
+    ],
+    "task_template_id": "DS-ASSET-DISPOSITION-001",
+    "referenced_by": "NIST CSF v1.1 - PR.DS-3"
+  },
+  {
+    "id": 47,
+    "domain_name": "Data Security",
+    "related_nist_category": "PR.DS-4",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.12.1.3"
+    ],
+    "maturity_level": 1,
+    "criticality": "low",
+    "question_text": "Describe how your organization ensures it has adequate capacity to maintain the availability of its systems and data.",
+    "question_type": "open",
+    "hint": "Explain how you monitor system performance and plan for future needs to prevent outages caused by a lack of resources, such as storage space or processing power.",
+    "expected_keywords": [
+      "capacity planning",
+      "performance monitoring",
+      "availability",
+      "resource management"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a proactive capacity planning and monitoring process. A mid-range score (40-74) suggests a reactive approach to capacity management. A low score (0-39) indicates no capacity planning. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 40,
+        "max_score": 100,
+        "next_question_id": 48,
+        "note": "Some capacity management exists. Assess a managed control like hardware integrity checking."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "data security",
+      "availability",
+      "capacity planning"
+    ],
+    "task_template_id": "DS-CAPACITY-PLANNING-001",
+    "referenced_by": "NIST CSF v1.1 - PR.DS-4"
+  },
+  {
+    "id": 48,
+    "domain_name": "Data Security",
+    "related_nist_category": "PR.DS-8",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.11.2.4"
+    ],
+    "maturity_level": 2,
+    "criticality": "low",
+    "question_text": "Describe the integrity checking mechanisms you use to verify hardware integrity.",
+    "question_type": "open",
+    "hint": "Explain what tools or processes you use to ensure that your hardware has not been tampered with. Mention methods like secure boot or physical tamper seals.",
+    "expected_keywords": [
+      "hardware integrity",
+      "secure boot",
+      "tamper detection",
+      "supply chain security"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that automated mechanisms like secure boot are used to verify hardware integrity. A mid-range score (40-74) suggests that manual or procedural checks are in place. A low score (0-39) indicates no hardware integrity checking mechanisms are in use. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 50,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "data security",
+      "hardware integrity",
+      "secure boot"
+    ],
+    "task_template_id": "DS-HARDWARE-INTEGRITY-001",
+    "referenced_by": "NIST CSF v1.1 - PR.DS-8"
+  },
+  {
+    "id": 50,
+    "domain_name": "Inform. Protec. Processes & Procedures",
+    "related_nist_category": "PR.IP-1",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.12.1.2",
+      "A.14.2.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe your process for creating, maintaining, and enforcing baseline configurations for your systems, incorporating security principles like the concept of least functionality.",
+    "question_type": "open",
+    "hint": "Explain how you establish a secure starting point (a 'gold image' or baseline) for systems and ensure they remain in that secure state. Mention if you disable unnecessary ports and services.",
+    "expected_keywords": [
+      "baseline configuration",
+      "hardening",
+      "gold image",
+      "configuration management",
+      "least functionality",
+      "cis benchmarks"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, automated process for creating, enforcing, and monitoring secure baselines across all systems. A mid-range score (40-74) suggests baselines exist but are not consistently applied or monitored. A low score (0-39) implies no formal baseline configuration management. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 51,
+        "note": "User has a mature baseline process. Assess the integration of security into the SDLC."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 52,
+        "note": "Baseline process is inconsistent. Assess the configuration change control process."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 57,
+        "note": "Baseline process is weak. Assess the foundational existence of response and recovery plans."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "configuration management",
+      "hardening",
+      "baselines"
+    ],
+    "task_template_id": "IP-BASELINE-CONFIG-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-1"
+  },
+  {
+    "id": 51,
+    "domain_name": "Inform. Protec. Processes & Procedures",
+    "related_nist_category": "PR.IP-2",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.14.2.1",
+      "A.14.2.5"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe how security is integrated into your System Development Life Cycle (SDLC) to manage systems from development to decommissioning.",
+    "question_type": "open",
+    "hint": "Explain what security activities are part of your development process, such as security requirements definition, threat modeling, secure coding training, and security testing.",
+    "expected_keywords": [
+      "sdlc",
+      "secure development",
+      "devsecops",
+      "threat modeling",
+      "security requirements",
+      "code review",
+      "sast",
+      "dast"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that security is formally integrated into every phase of the SDLC with documented procedures and automated tools. A mid-range score (40-74) suggests security activities are included but are ad-hoc or only in later phases. A low score (0-39) implies little to no security consideration in the development lifecycle. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 53,
+        "note": "Secure SDLC is mature. Assess how information protection processes are improved."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 54,
+        "note": "Secure SDLC is weak. Assess the vulnerability management plan."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "sdlc",
+      "devsecops",
+      "secure coding"
+    ],
+    "task_template_id": "IP-SECURE-SDLC-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-2"
+  },
+  {
+    "id": 52,
+    "domain_name": "Inform. Protec. Processes & Procedures",
+    "related_nist_category": "PR.IP-3",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.12.1.2",
+      "A.14.2.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe your configuration change control process, including how changes are proposed, reviewed, approved, and documented.",
+    "question_type": "open",
+    "hint": "Explain the formal process you follow to make changes to production systems to prevent unauthorized or disruptive modifications.",
+    "expected_keywords": [
+      "change management",
+      "change control",
+      "cab",
+      "change advisory board",
+      "approval process",
+      "testing",
+      "rollback plan"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, documented change control process with a Change Advisory Board (CAB), risk assessment, and testing for all changes. A mid-range score (40-74) suggests an informal or inconsistent process. A low score (0-39) indicates no formal change control process. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 55,
+        "note": "Change control is strong. Assess the testing of response and recovery plans."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 56,
+        "note": "Change control is weak. Assess the foundational backup process."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "change management",
+      "change control",
+      "itil"
+    ],
+    "task_template_id": "IP-CHANGE-CONTROL-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-3"
+  },
+  {
+    "id": 53,
+    "domain_name": "Inform. Protec. Processes & Procedures",
+    "related_nist_category": "PR.IP-7",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.16.1.6"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe your process for continuously improving your information protection procedures based on lessons learned, metrics, and changes in the threat landscape.",
+    "question_type": "open",
+    "hint": "Explain how your security policies and procedures evolve. Mention how you incorporate feedback from incidents, audit findings, or new threat intelligence.",
+    "expected_keywords": [
+      "continuous improvement",
+      "lessons learned",
+      "metrics",
+      "kpi",
+      "threat intelligence",
+      "policy review"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal process for regular review and improvement of protection procedures, driven by metrics and lessons learned. A mid-range score (40-74) suggests improvements are made reactively. A low score (0-39) indicates that procedures are static and rarely updated. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 60,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "continuous improvement",
+      "lessons learned",
+      "governance"
+    ],
+    "task_template_id": "IP-PROCESS-IMPROVEMENT-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-7"
+  },
+  {
+    "id": 54,
+    "domain_name": "Inform. Protec. Processes & Procedures",
+    "related_nist_category": "PR.IP-12",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.12.6.1"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe your vulnerability management plan and how it is implemented, including how you identify, assess, and remediate vulnerabilities.",
+    "question_type": "open",
+    "hint": "Explain your process for finding and fixing security weaknesses. Mention vulnerability scanning, how you prioritize fixes based on risk, and any timelines you have for patching.",
+    "expected_keywords": [
+      "vulnerability management",
+      "patch management",
+      "vulnerability scanning",
+      "cvss",
+      "remediation",
+      "sla"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, documented vulnerability management program with regular scanning, risk-based prioritization, and defined remediation timelines (SLAs). A mid-range score (40-74) suggests an informal or inconsistent process. A low score (0-39) indicates a purely reactive or non-existent process. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 60,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "vulnerability management",
+      "patch management",
+      "scanning"
+    ],
+    "task_template_id": "IP-VULN-MANAGEMENT-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-12"
+  },
+  {
+    "id": 55,
+    "domain_name": "Inform. Protec. Processes & Procedures",
+    "related_nist_category": "PR.IP-10",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.17.1.3"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how your organization tests its response and recovery plans.",
+    "question_type": "open",
+    "hint": "Explain the frequency and types of tests you conduct, such as tabletop exercises, walkthroughs, or full-scale simulations, to ensure your plans are effective.",
+    "expected_keywords": [
+      "testing",
+      "tabletop exercise",
+      "simulation",
+      "disaster recovery test",
+      "incident response test",
+      "lessons learned"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that regular, comprehensive tests of both response and recovery plans are conducted, with formal lessons learned that are used to improve the plans. A mid-range score (40-74) suggests infrequent or informal testing. A low score (0-39) indicates no testing of plans. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 60,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "incident response",
+      "disaster recovery",
+      "testing"
+    ],
+    "task_template_id": "IP-PLAN-TESTING-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-10"
+  },
+  {
+    "id": 56,
+    "domain_name": "Inform. Protec. Processes & Procedures",
+    "related_nist_category": "PR.IP-4",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.12.3.1"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe your process for conducting, maintaining, and testing backups of your information.",
+    "question_type": "open",
+    "hint": "Explain how often you back up data, where backups are stored, how long they are kept, and how you test them to ensure you can successfully restore data.",
+    "expected_keywords": [
+      "backups",
+      "recovery",
+      "rpo",
+      "rto",
+      "backup testing",
+      "restore test",
+      "off-site storage"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal backup policy with a regular schedule, off-site storage, and periodic, successful restore tests. A mid-range score (40-74) suggests backups are performed but testing is inconsistent. A low score (0-39) indicates no reliable backup process. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 60,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "backups",
+      "disaster recovery",
+      "data protection"
+    ],
+    "task_template_id": "IP-BACKUPS-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-4"
+  },
+  {
+    "id": 57,
+    "domain_name": "Inform. Protec. Processes & Procedures",
+    "related_nist_category": "PR.IP-9",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.16.1.1",
+      "A.17.1.1"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe the response plans (e.g., Incident Response, Business Continuity) and recovery plans (e.g., Disaster Recovery) you have in place and how they are managed.",
+    "question_type": "open",
+    "hint": "Explain what documented plans your organization has to handle security incidents and service disruptions, who is responsible for them, and where they are kept.",
+    "expected_keywords": [
+      "incident response plan",
+      "irp",
+      "disaster recovery plan",
+      "drp",
+      "business continuity plan",
+      "bcp",
+      "documented plan"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that formal, documented, and accessible response and recovery plans exist and are maintained. A mid-range score (40-74) suggests that plans exist but are informal or outdated. A low score (0-39) indicates no documented plans. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 40,
+        "max_score": 100,
+        "next_question_id": 58,
+        "note": "Some planning exists. Assess if cybersecurity is integrated into HR practices."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "incident response",
+      "disaster recovery",
+      "planning"
+    ],
+    "task_template_id": "IP-PLANNING-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-9"
+  },
+  {
+    "id": 58,
+    "domain_name": "Inform. Protec. Processes & Procedures",
+    "related_nist_category": "PR.IP-11",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.7.1.1",
+      "A.7.3.1"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "Describe how cybersecurity considerations are included in your human resources practices, such as personnel screening, onboarding, and termination.",
+    "question_type": "open",
+    "hint": "Explain what security-related steps are part of your HR processes, for example, background checks, signing acceptable use policies, and ensuring timely removal of access upon termination.",
+    "expected_keywords": [
+      "hr security",
+      "personnel screening",
+      "background checks",
+      "onboarding",
+      "termination",
+      "offboarding",
+      "acceptable use policy"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that cybersecurity is formally integrated into all key HR processes from hiring to termination. A mid-range score (40-74) suggests some integration but with gaps (e.g., no formal offboarding security checklist). A low score (0-39) indicates no integration of security into HR practices. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 60,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "hr",
+      "personnel security",
+      "onboarding",
+      "offboarding"
+    ],
+    "task_template_id": "IP-HR-SECURITY-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-11"
+  },
+  {
+    "id": 60,
+    "domain_name": "Maintenance",
+    "related_nist_category": "PR.MA-1",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.11.2.4",
+      "A.11.2.5"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "Describe your process for performing and logging maintenance and repairs of organizational assets, including how the tools used for these activities are approved and controlled.",
+    "question_type": "open",
+    "hint": "Explain how you manage routine maintenance, who is authorized to perform it, how it's logged, and how you ensure that maintenance tools (like laptops or USB drives) are secure and malware-free.",
+    "expected_keywords": [
+      "maintenance logs",
+      "repair records",
+      "approved tools",
+      "controlled tools",
+      "authorized personnel",
+      "change management"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, documented process for all maintenance, including logging, authorization, and strict control over maintenance tools. A mid-range score (40-74) suggests an informal or inconsistent process where logging might be incomplete or tool control is weak. A low score (0-39) implies no formal maintenance procedures. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 61,
+        "note": "User has a mature local maintenance process. Assess the more complex process for remote maintenance."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 64,
+        "note": "Local maintenance is inconsistent. Drill down into the specific control of maintenance tools."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 66,
+        "note": "Local maintenance process is weak. Assess if any documentation exists at all."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "maintenance",
+      "logging",
+      "asset management"
+    ],
+    "task_template_id": "MA-LOCAL-MAINTENANCE-001",
+    "referenced_by": "NIST CSF v1.1 - PR.MA-1"
+  },
+  {
+    "id": 61,
+    "domain_name": "Maintenance",
+    "related_nist_category": "PR.MA-2",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.11.2.4",
+      "A.15.1.1",
+      "A.15.2.1"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe how remote maintenance of organizational assets is approved, logged, and performed in a manner that prevents unauthorized access.",
+    "question_type": "open",
+    "hint": "Explain the specific procedures for when a vendor or employee needs to perform maintenance from outside your network. Mention security controls like multi-factor authentication, VPNs, and session monitoring.",
+    "expected_keywords": [
+      "remote maintenance",
+      "vendor access",
+      "vpn",
+      "mfa",
+      "session logging",
+      "monitoring",
+      "approval process"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, documented process for all remote maintenance, requiring multi-factor authentication, encrypted connections, and detailed logging. A mid-range score (40-74) suggests an informal process or inconsistent application of security controls. A low score (0-39) implies remote maintenance is performed without adequate security controls. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 62,
+        "note": "Remote maintenance is well-managed. Assess advanced third-party security management."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 63,
+        "note": "Remote maintenance is weak. Assess the underlying change control process."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "maintenance",
+      "remote access",
+      "vendor management"
+    ],
+    "task_template_id": "MA-REMOTE-MAINTENANCE-001",
+    "referenced_by": "NIST CSF v1.1 - PR.MA-2"
+  },
+  {
+    "id": 62,
+    "domain_name": "Maintenance",
+    "related_nist_category": "ID.SC-3",
+    "nist_function": "Identify",
+    "iso27001_controls": [
+      "A.15.1.2"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe how you ensure that third-party vendors performing maintenance adhere to your organization's security policies and procedures through contractual agreements.",
+    "question_type": "open",
+    "hint": "Explain how you incorporate your security requirements into contracts with maintenance providers, and how you verify they are meeting these obligations.",
+    "expected_keywords": [
+      "third-party",
+      "vendor",
+      "contract",
+      "security requirements",
+      "right to audit",
+      "sla",
+      "supply chain"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that specific, detailed security requirements are included in all vendor contracts for maintenance, with clear verification and audit clauses. A mid-range score (40-74) suggests general security clauses exist but lack detail or verification. A low score (0-39) indicates no security requirements in vendor contracts. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 70,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "maintenance",
+      "vendor management",
+      "supply chain",
+      "contracts"
+    ],
+    "task_template_id": "MA-VENDOR-CONTRACTS-001",
+    "referenced_by": "NIST CSF v1.1 - ID.SC-3"
+  },
+  {
+    "id": 63,
+    "domain_name": "Maintenance",
+    "related_nist_category": "PR.IP-3",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.12.1.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe your configuration change control process that governs all maintenance activities, ensuring changes are authorized, tested, and documented.",
+    "question_type": "open",
+    "hint": "Explain the formal process you follow to approve and track changes made during maintenance to prevent unauthorized or disruptive modifications.",
+    "expected_keywords": [
+      "change management",
+      "change control",
+      "cab",
+      "approval",
+      "testing",
+      "documentation",
+      "rollback plan"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that all maintenance activities are subject to a formal change control process. A mid-range score (40-74) suggests an informal process or that only major changes are tracked. A low score (0-39) indicates no change control process for maintenance. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 70,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "maintenance",
+      "change management",
+      "governance"
+    ],
+    "task_template_id": "MA-CHANGE-CONTROL-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-3"
+  },
+  {
+    "id": 64,
+    "domain_name": "Maintenance",
+    "related_nist_category": "PR.MA-1",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.11.2.5"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "Describe how you control and approve the tools (both hardware and software) used for system maintenance to prevent the introduction of malware or other risks.",
+    "question_type": "open",
+    "hint": "Explain your rules for what tools can be used for maintenance. For example, do you require tools to be scanned for malware? Do you maintain a list of approved software?",
+    "expected_keywords": [
+      "approved tools",
+      "controlled tools",
+      "malware scan",
+      "whitelisting",
+      "usb control"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a strict, documented policy for approving, scanning, and controlling all maintenance tools. A mid-range score (40-74) suggests informal rules are in place. A low score (0-39) indicates no control over maintenance tools. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 61,
+        "note": "Tool control is strong. Now assess the remote maintenance process."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 65,
+        "note": "Tool control is weak. Assess foundational physical access controls."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "maintenance",
+      "tool control",
+      "malware"
+    ],
+    "task_template_id": "MA-TOOL-CONTROL-001",
+    "referenced_by": "NIST CSF v1.1 - PR.MA-1"
+  },
+  {
+    "id": 65,
+    "domain_name": "Maintenance",
+    "related_nist_category": "PR.AC-2",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.11.1.1",
+      "A.11.1.2"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "Describe the physical access controls in place to secure locations where maintenance is performed, such as server rooms or wiring closets.",
+    "question_type": "open",
+    "hint": "Explain how you restrict and monitor physical access to sensitive areas to ensure only authorized personnel can perform maintenance.",
+    "expected_keywords": [
+      "physical access",
+      "server room",
+      "access cards",
+      "logs",
+      "cctv",
+      "visitor escort"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates multiple layers of physical controls with logging and monitoring. A mid-range score (40-74) suggests basic controls like locks are in place but without robust monitoring. A low score (0-39) indicates weak or no physical controls for maintenance areas. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 70,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "maintenance",
+      "physical security"
+    ],
+    "task_template_id": "MA-PHYSICAL-ACCESS-001",
+    "referenced_by": "NIST CSF v1.1 - PR.AC-2"
+  },
+  {
+    "id": 66,
+    "domain_name": "Maintenance",
+    "related_nist_category": "PR.MA-1",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.11.2.5"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "In what ways, if any, are maintenance activities on critical systems documented?",
+    "question_type": "open",
+    "hint": "Even if you don't have a formal system, describe any informal methods used, such as entries in a shared spreadsheet, email notifications, or tickets in a helpdesk system.",
+    "expected_keywords": [
+      "documentation",
+      "logbook",
+      "ticket system",
+      "spreadsheet",
+      "informal log"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that maintenance is consistently documented in a central system. A mid-range score (40-74) suggests inconsistent or fragmented documentation. A low score (0-39) indicates no documentation of maintenance activities. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 40,
+        "max_score": 100,
+        "next_question_id": 67,
+        "note": "Some documentation exists. Assess if a formal remote access process is in place."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "maintenance",
+      "documentation",
+      "logging"
+    ],
+    "task_template_id": "MA-INFORMAL-LOGGING-001",
+    "referenced_by": "NIST CSF v1.1 - PR.MA-1"
+  },
+  {
+    "id": 67,
+    "domain_name": "Maintenance",
+    "related_nist_category": "PR.AC-3",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.6.2.1"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe the general process for how users, including vendors, are granted remote access to your network.",
+    "question_type": "open",
+    "hint": "This is a precursor to remote maintenance. Explain what system is used for remote access (e.g., VPN) and if there is any kind of approval needed.",
+    "expected_keywords": [
+      "remote access",
+      "vpn",
+      "approval",
+      "policy"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal process for granting remote access via a secure channel. A mid-range score (40-74) suggests an informal or inconsistent process. A low score (0-39) indicates no formal remote access process. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 70,
+        "note": "Transitioning from Identity & Access Management to Asset Management."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "maintenance",
+      "remote access"
+    ],
+    "task_template_id": "MA-REMOTE-ACCESS-PROCESS-001",
+    "referenced_by": "NIST CSF v1.1 - PR.AC-3"
+  },
+  {
+    "id": 70,
+    "domain_name": "Protective Technology",
+    "related_nist_category": "PR.PT-1",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.12.4.1",
+      "A.12.4.2",
+      "A.12.4.3"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe your process for determining, documenting, implementing, and reviewing audit and log records in accordance with your policies.",
+    "question_type": "open",
+    "hint": "Explain what types of events you log, how long you keep the logs, who reviews them, and how you ensure the logging system itself is secure from tampering.",
+    "expected_keywords": [
+      "audit logs",
+      "logging",
+      "siem",
+      "log review",
+      "log retention",
+      "tamper-proofing",
+      "event correlation"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, documented logging policy with centralized log management, regular reviews, and protection for log integrity. A mid-range score (40-74) suggests that logging is enabled but reviews are ad-hoc or retention is not well-defined. A low score (0-39) implies inconsistent or non-existent logging practices. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 71,
+        "note": "User has a mature logging process. Assess the protection of communication networks."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 74,
+        "note": "Logging process is inconsistent. Assess a different foundational control like removable media protection."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 75,
+        "note": "Logging process is weak. Assess for any basic controls over removable media."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "protective technology",
+      "logging",
+      "auditing",
+      "siem"
+    ],
+    "task_template_id": "PT-LOGGING-001",
+    "referenced_by": "NIST CSF v1.1 - PR.PT-1"
+  },
+  {
+    "id": 71,
+    "domain_name": "Protective Technology",
+    "related_nist_category": "PR.PT-4",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.13.1.1",
+      "A.13.2.1"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe the mechanisms and policies you have in place to protect your communications and control networks.",
+    "question_type": "open",
+    "hint": "Explain how you secure your network traffic against eavesdropping and modification. Mention technologies like firewalls, network segmentation, and encryption for data in transit (e.g., VPNs, TLS).",
+    "expected_keywords": [
+      "firewall",
+      "network segmentation",
+      "encryption",
+      "vpn",
+      "tls",
+      "ids/ips",
+      "network access control"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a multi-layered network defense strategy with strong segmentation, encryption for all sensitive traffic, and intrusion detection systems. A mid-range score (40-74) suggests basic controls like a perimeter firewall but limited internal segmentation or encryption. A low score (0-39) indicates a flat, unprotected network. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 72,
+        "note": "Network protection is mature. Assess for advanced resilience mechanisms."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 73,
+        "note": "Network protection is weak. Assess the implementation of least functionality."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "protective technology",
+      "network security",
+      "firewall",
+      "encryption"
+    ],
+    "task_template_id": "PT-NETWORK-PROTECTION-001",
+    "referenced_by": "NIST CSF v1.1 - PR.PT-4"
+  },
+  {
+    "id": 72,
+    "domain_name": "Protective Technology",
+    "related_nist_category": "PR.PT-5",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.17.2.1"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe the technical mechanisms you have implemented to achieve system resilience in both normal and adverse situations.",
+    "question_type": "open",
+    "hint": "Explain how your systems are designed to withstand failures. Mention technologies like fail-safe configurations, load balancing, high-availability clusters, or hot-swappable components.",
+    "expected_keywords": [
+      "resilience",
+      "high availability",
+      "ha",
+      "load balancing",
+      "failover",
+      "redundancy",
+      "hot swap"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that resilience is a formal design consideration, with automated failover and load balancing for all critical systems. A mid-range score (40-74) suggests some redundant components exist but failover may be manual or inconsistent. A low score (0-39) indicates single points of failure for critical systems. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 80,
+        "note": "Transitioning from Protective Technology to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "protective technology",
+      "resilience",
+      "high availability"
+    ],
+    "task_template_id": "PT-RESILIENCE-001",
+    "referenced_by": "NIST CSF v1.1 - PR.PT-5"
+  },
+  {
+    "id": 73,
+    "domain_name": "Protective Technology",
+    "related_nist_category": "PR.PT-3",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.9.1.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how the principle of least functionality is incorporated into your systems by configuring them to provide only essential capabilities.",
+    "question_type": "open",
+    "hint": "Explain your process for hardening systems by disabling unnecessary services, ports, and software to reduce the attack surface.",
+    "expected_keywords": [
+      "least functionality",
+      "hardening",
+      "attack surface reduction",
+      "disable services",
+      "port security",
+      "application whitelisting"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal process for system hardening and application whitelisting that is applied to all systems. A mid-range score (40-74) suggests an informal or inconsistent hardening process. A low score (0-39) indicates systems are deployed with default, non-hardened configurations. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 80,
+        "note": "Transitioning from Protective Technology to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "protective technology",
+      "hardening",
+      "least functionality"
+    ],
+    "task_template_id": "PT-LEAST-FUNCTIONALITY-001",
+    "referenced_by": "NIST CSF v1.1 - PR.PT-3"
+  },
+  {
+    "id": 74,
+    "domain_name": "Protective Technology",
+    "related_nist_category": "PR.PT-2",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.8.3.1",
+      "A.11.2.9"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "Describe how removable media is protected and its use restricted according to your policy.",
+    "question_type": "open",
+    "hint": "Explain your rules for using devices like USB flash drives. Mention any technical controls like blocking USB ports, requiring encrypted drives, or scanning media for malware.",
+    "expected_keywords": [
+      "removable media",
+      "usb control",
+      "endpoint security",
+      "policy",
+      "encryption",
+      "malware scanning"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a strictly enforced policy with technical controls to block, scan, or encrypt removable media. A mid-range score (40-74) suggests a policy exists but relies on user compliance without technical enforcement. A low score (0-39) indicates no controls over removable media use. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 71,
+        "note": "Removable media control is strong. Now assess network protection."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 73,
+        "note": "Removable media control is weak. Assess the implementation of least functionality."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "protective technology",
+      "removable media",
+      "usb",
+      "endpoint security"
+    ],
+    "task_template_id": "PT-REMOVABLE-MEDIA-001",
+    "referenced_by": "NIST CSF v1.1 - PR.PT-2"
+  },
+  {
+    "id": 75,
+    "domain_name": "Protective Technology",
+    "related_nist_category": "PR.PT-2",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.8.3.1"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "In what ways, if any, is the use of removable media like USB drives controlled or monitored in your organization?",
+    "question_type": "open",
+    "hint": "Even if you don't have a formal system, describe any informal rules or technical settings, such as disabling USB ports on some computers or having an informal rule to not use personal drives.",
+    "expected_keywords": [
+      "usb drives",
+      "informal policy",
+      "disabled ports",
+      "rules"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that some consistent controls, even if informal, are in place. A mid-range score (40-74) suggests very rare or inconsistent rules. A low score (0-39) indicates a complete absence of controls for removable media. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 40,
+        "max_score": 100,
+        "next_question_id": 73,
+        "note": "Some control exists. Assess the implementation of least functionality."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 80,
+        "note": "Transitioning from Protective Technology to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "protective technology",
+      "removable media",
+      "usb"
+    ],
+    "task_template_id": "PT-INFORMAL-USB-CONTROL-001",
+    "referenced_by": "NIST CSF v1.1 - PR.PT-2"
+  },
+  {
+    "id": 80,
+    "domain_name": "Anomalies & Events",
+    "related_nist_category": "DE.AE-1",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.12.1.1",
+      "A.13.1.1"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe your process for establishing and managing a baseline of normal network operations and expected data flows for your users and systems.",
+    "question_type": "open",
+    "hint": "Explain how you determine what 'normal' activity looks like on your network, so that you can more easily identify suspicious or unusual behavior that could indicate an attack.",
+    "expected_keywords": [
+      "baseline",
+      "normal behavior",
+      "network monitoring",
+      "data flow",
+      "traffic analysis",
+      "anomaly detection"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, documented process for establishing and regularly updating a network baseline using automated tools. A mid-range score (40-74) suggests an informal or outdated baseline exists. A low score (0-39) implies no baseline has been established, making anomaly detection difficult. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 81,
+        "note": "User has a mature baselining process. Assess for advanced event correlation capabilities."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 84,
+        "note": "Baselining process is inconsistent. Assess the fundamental process for analyzing individual events."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 85,
+        "note": "Baselining process is weak. Assess the foundational process for setting alert thresholds."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "anomalies & events",
+      "detection",
+      "baselining",
+      "monitoring"
+    ],
+    "task_template_id": "AE-BASELINING-001",
+    "referenced_by": "NIST CSF v1.1 - DE.AE-1"
+  },
+  {
+    "id": 81,
+    "domain_name": "Anomalies & Events",
+    "related_nist_category": "DE.AE-3",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.12.4.1",
+      "A.16.1.7"
+    ],
+    "maturity_level": 3,
+    "criticality": "high",
+    "question_text": "Describe how your organization collects and correlates event data from multiple sources and sensors to get a comprehensive view of potential security events.",
+    "question_type": "open",
+    "hint": "Explain if you use a central system like a SIEM to gather logs from firewalls, servers, and applications, and how you connect related events to identify complex attacks.",
+    "expected_keywords": [
+      "siem",
+      "log correlation",
+      "event data",
+      "multiple sources",
+      "centralized logging",
+      "threat intelligence"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a centralized logging and correlation system (like a SIEM) is used to analyze data from across the enterprise in near real-time. A mid-range score (40-74) suggests logs are collected but correlation is a manual or inconsistent process. A low score (0-39) indicates logs are not centrally collected or correlated. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 82,
+        "note": "Event correlation is mature. Assess the process for analyzing attack methods."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 83,
+        "note": "Event correlation is weak. Assess the process for determining event impact."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "anomalies & events",
+      "siem",
+      "log correlation",
+      "detection"
+    ],
+    "task_template_id": "AE-CORRELATION-001",
+    "referenced_by": "NIST CSF v1.1 - DE.AE-3"
+  },
+  {
+    "id": 82,
+    "domain_name": "Anomalies & Events",
+    "related_nist_category": "DE.AE-2",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.16.1.4"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe your process for analyzing detected events to understand attack targets and methods.",
+    "question_type": "open",
+    "hint": "Explain what steps your security team takes after an alert is confirmed to understand the attacker's goals, what systems they targeted, and the techniques they used.",
+    "expected_keywords": [
+      "incident analysis",
+      "attack vectors",
+      "threat analysis",
+      "root cause analysis",
+      "tactic, techniques, and procedures",
+      "ttp"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, structured process for deep-dive analysis of security events to identify attacker TTPs and inform defensive improvements. A mid-range score (40-74) suggests analysis is focused only on immediate remediation. A low score (0-39) implies events are not analyzed beyond initial triage. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 90,
+        "note": "Transitioning from Anomalies & Events to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "anomalies & events",
+      "incident analysis",
+      "threat intelligence"
+    ],
+    "task_template_id": "AE-ATTACK-ANALYSIS-001",
+    "referenced_by": "NIST CSF v1.1 - DE.AE-2"
+  },
+  {
+    "id": 83,
+    "domain_name": "Anomalies & Events",
+    "related_nist_category": "DE.AE-4",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.16.1.4"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how you determine the impact of detected cybersecurity events.",
+    "question_type": "open",
+    "hint": "Explain your process for assessing the business impact of an event. For example, how do you determine what data was affected, which systems are impacted, and how it affects business operations?",
+    "expected_keywords": [
+      "impact analysis",
+      "scoping",
+      "business impact",
+      "triage",
+      "prioritization",
+      "incident classification"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal process for quickly assessing and categorizing the impact of events based on predefined criteria. A mid-range score (40-74) suggests an informal or intuitive process for impact assessment. A low score (0-39) indicates no process for determining event impact. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 90,
+        "note": "Transitioning from Anomalies & Events to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "anomalies & events",
+      "impact analysis",
+      "triage"
+    ],
+    "task_template_id": "AE-IMPACT-ANALYSIS-001",
+    "referenced_by": "NIST CSF v1.1 - DE.AE-4"
+  },
+  {
+    "id": 84,
+    "domain_name": "Anomalies & Events",
+    "related_nist_category": "DE.AE-2",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.12.4.1",
+      "A.16.1.7"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe your process for analyzing events from detection systems to determine if they are legitimate security incidents.",
+    "question_type": "open",
+    "hint": "Explain the steps your team takes when an alert is received. For example, how do you investigate an alert, rule out false positives, and escalate a real incident?",
+    "expected_keywords": [
+      "triage",
+      "incident validation",
+      "false positive",
+      "investigation",
+      "soc",
+      "analyst",
+      "escalation"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, documented triage and investigation process with clear escalation paths. A mid-range score (40-74) suggests an informal or inconsistent process. A low score (0-39) indicates that alerts are not investigated systematically. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 81,
+        "note": "Event analysis is strong. Now assess event correlation capabilities."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 85,
+        "note": "Event analysis is weak. Assess the foundational process for setting alert thresholds."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "anomalies & events",
+      "triage",
+      "investigation",
+      "soc"
+    ],
+    "task_template_id": "AE-TRIAGE-001",
+    "referenced_by": "NIST CSF v1.1 - DE.AE-2"
+  },
+  {
+    "id": 85,
+    "domain_name": "Anomalies & Events",
+    "related_nist_category": "DE.AE-5",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.16.1.4"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "Describe how incident alert thresholds are established in your organization.",
+    "question_type": "open",
+    "hint": "Explain how you decide what level of activity is severe enough to trigger an alert for investigation. For example, is it based on risk assessments, system criticality, or vendor recommendations?",
+    "expected_keywords": [
+      "alert thresholds",
+      "tuning",
+      "risk assessment",
+      "criticality",
+      "false positive reduction"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that alert thresholds are formally defined and regularly tuned based on risk and asset criticality. A mid-range score (40-74) suggests that default thresholds are used with some informal tuning. A low score (0-39) indicates that default thresholds are used without review, or there is no formal process. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 40,
+        "max_score": 100,
+        "next_question_id": 83,
+        "note": "Some threshold management exists. Assess the process for determining event impact."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 90,
+        "note": "Transitioning from Anomalies & Events to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "anomalies & events",
+      "alerting",
+      "tuning"
+    ],
+    "task_template_id": "AE-THRESHOLDS-001",
+    "referenced_by": "NIST CSF v1.1 - DE.AE-5"
+  },
+  
+  {
+    "id": 90,
+    "domain_name": "Security Continuous Monitoring",
+    "related_nist_category": "DE.CM-1",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.12.1.2"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe how your organization's network is monitored to detect potential cybersecurity events.",
+    "question_type": "open",
+    "hint": "Explain what tools and processes you use to watch your network traffic for suspicious activity. Mention technologies like Intrusion Detection/Prevention Systems (IDS/IPS), firewalls, and network traffic analysis tools.",
+    "expected_keywords": [
+      "network monitoring",
+      "ids",
+      "ips",
+      "firewall logs",
+      "traffic analysis",
+      "netflow",
+      "soc"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a comprehensive, 24/7 network monitoring program using automated tools and trained analysts. A mid-range score (40-74) suggests some monitoring is in place (e.g., firewall logs are collected) but is not consistently analyzed. A low score (0-39) implies little to no monitoring of network traffic for security events. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 91,
+        "note": "User has mature network monitoring. Assess the vulnerability scanning process."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 94,
+        "note": "Network monitoring is inconsistent. Assess a more specific control like malware detection."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 96,
+        "note": "Network monitoring is weak. Assess an often overlooked area: external provider monitoring."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "security continuous monitoring",
+      "network monitoring",
+      "detection",
+      "ids"
+    ],
+    "task_template_id": "CM-NETWORK-MONITORING-001",
+    "referenced_by": "NIST CSF v1.1 - DE.CM-1"
+  },
+  {
+    "id": 91,
+    "domain_name": "Security Continuous Monitoring",
+    "related_nist_category": "DE.CM-8",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.12.6.1"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe your organization's process for performing vulnerability scans on your systems and networks.",
+    "question_type": "open",
+    "hint": "Explain how often you scan for security weaknesses, what tools you use, and how the results are reported and used to initiate remediation.",
+    "expected_keywords": [
+      "vulnerability scanning",
+      "patch management",
+      "remediation",
+      "risk rating",
+      "cvss",
+      "authenticated scan",
+      "unauthenticated scan"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal program with regular, comprehensive, and authenticated scans, with results integrated into a formal remediation process. A mid-range score (40-74) suggests ad-hoc or infrequent scanning. A low score (0-39) indicates no vulnerability scanning process. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 92,
+        "note": "Vulnerability scanning is mature. Assess monitoring for unauthorized activity."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 93,
+        "note": "Vulnerability scanning is weak. Assess a more foundational control: physical environment monitoring."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "security continuous monitoring",
+      "vulnerability management",
+      "scanning"
+    ],
+    "task_template_id": "CM-VULN-SCANNING-001",
+    "referenced_by": "NIST CSF v1.1 - DE.CM-8"
+  },
+  {
+    "id": 92,
+    "domain_name": "Security Continuous Monitoring",
+    "related_nist_category": "DE.CM-7",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.12.4.1",
+      "A.14.2.7"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe how your organization monitors for unauthorized personnel, connections, devices, and software.",
+    "question_type": "open",
+    "hint": "Explain what technical or procedural controls you use to detect things that shouldn't be on your network, such as rogue Wi-Fi access points, unapproved software installations, or unfamiliar devices.",
+    "expected_keywords": [
+      "unauthorized access",
+      "rogue device",
+      "nac",
+      "network access control",
+      "software inventory",
+      "whitelisting"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates the use of automated tools like Network Access Control (NAC) and software whitelisting to detect and block unauthorized assets. A mid-range score (40-74) suggests manual or periodic checks are performed. A low score (0-39) indicates no process for detecting unauthorized assets. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 100,
+        "note": "Transitioning from Security Continuous Monitoring to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "security continuous monitoring",
+      "nac",
+      "unauthorized access"
+    ],
+    "task_template_id": "CM-UNAUTHORIZED-MONITORING-001",
+    "referenced_by": "NIST CSF v1.1 - DE.CM-7"
+  },
+  {
+    "id": 93,
+    "domain_name": "Security Continuous Monitoring",
+    "related_nist_category": "DE.CM-2",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.11.1.1",
+      "A.11.1.2"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "Describe how the physical environment is monitored to detect potential cybersecurity events.",
+    "question_type": "open",
+    "hint": "Explain how you monitor physical access to sensitive locations like server rooms. Mention controls such as surveillance cameras, door access logs, and environmental sensors (e.g., for temperature or water).",
+    "expected_keywords": [
+      "physical security",
+      "cctv",
+      "surveillance",
+      "access logs",
+      "server room",
+      "environmental sensors"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates comprehensive monitoring of sensitive physical locations with integrated logging and alerting. A mid-range score (40-74) suggests some monitoring is in place but is not centrally managed or reviewed. A low score (0-39) indicates no physical environment monitoring for security purposes. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 100,
+        "note": "Transitioning from Security Continuous Monitoring to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "security continuous monitoring",
+      "physical security",
+      "detection"
+    ],
+    "task_template_id": "CM-PHYSICAL-MONITORING-001",
+    "referenced_by": "NIST CSF v1.1 - DE.CM-2"
+  },
+  {
+    "id": 94,
+    "domain_name": "Security Continuous Monitoring",
+    "related_nist_category": "DE.CM-4",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.12.2.1"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe how malicious code is detected within your organization.",
+    "question_type": "open",
+    "hint": "Explain what tools you use to detect malware. Mention technologies like antivirus/antimalware on endpoints and servers, and network-level sandboxing or analysis.",
+    "expected_keywords": [
+      "malicious code",
+      "malware",
+      "antivirus",
+      "endpoint detection and response",
+      "edr",
+      "sandboxing"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a multi-layered approach with centrally managed and updated endpoint protection (EDR/antivirus) across all assets. A mid-range score (40-74) suggests antivirus is deployed but may not be centrally managed or comprehensive. A low score (0-39) indicates no reliable malware detection tools are in use. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 91,
+        "note": "Malware detection is strong. Assess the vulnerability scanning process."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 95,
+        "note": "Malware detection is weak. Assess the process for monitoring personnel activity."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "security continuous monitoring",
+      "malware",
+      "antivirus",
+      "edr"
+    ],
+    "task_template_id": "CM-MALWARE-DETECTION-001",
+    "referenced_by": "NIST CSF v1.1 - DE.CM-4"
+  },
+  {
+    "id": 95,
+    "domain_name": "Security Continuous Monitoring",
+    "related_nist_category": "DE.CM-3",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.12.4.1",
+      "A.12.4.3"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how personnel activity is monitored to detect potential cybersecurity events.",
+    "question_type": "open",
+    "hint": "Explain how you monitor user actions, especially for those with privileged access. Mention tools like User and Entity Behavior Analytics (UEBA), log reviews of sensitive actions, or privileged access management (PAM) solutions.",
+    "expected_keywords": [
+      "user monitoring",
+      "personnel activity",
+      "ueba",
+      "privileged access management",
+      "pam",
+      "insider threat"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates the use of automated tools like UEBA or PAM to monitor for anomalous user behavior, with a focus on privileged accounts. A mid-range score (40-74) suggests that monitoring relies on manual log reviews. A low score (0-39) indicates no systematic monitoring of personnel activity. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 100,
+        "note": "Transitioning from Security Continuous Monitoring to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "security continuous monitoring",
+      "user monitoring",
+      "insider threat",
+      "ueba"
+    ],
+    "task_template_id": "CM-PERSONNEL-MONITORING-001",
+    "referenced_by": "NIST CSF v1.1 - DE.CM-3"
+  },
+  {
+    "id": 96,
+    "domain_name": "Security Continuous Monitoring",
+    "related_nist_category": "DE.CM-6",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.15.2.1"
+    ],
+    "maturity_level": 2,
+    "criticality": "low",
+    "question_text": "Describe how your organization monitors the activity of external service providers to detect potential cybersecurity events.",
+    "question_type": "open",
+    "hint": "Explain how you maintain visibility into the security of your cloud providers or other key vendors. Mention reviewing their audit reports (e.g., SOC 2), monitoring their access to your systems, or integrating their logs.",
+    "expected_keywords": [
+      "vendor monitoring",
+      "third-party",
+      "soc 2",
+      "audit reports",
+      "log integration",
+      "cloud security"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal program for monitoring external providers, including reviewing audit reports and monitoring their access logs. A mid-range score (40-74) suggests an informal or inconsistent process. A low score (0-39) indicates no monitoring of external service providers. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 40,
+        "max_score": 100,
+        "next_question_id": 97,
+        "note": "Some external monitoring exists. Assess how unauthorized mobile code is detected."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 100,
+        "note": "Transitioning from Security Continuous Monitoring to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "security continuous monitoring",
+      "vendor management",
+      "supply chain"
+    ],
+    "task_template_id": "CM-EXTERNAL-PROVIDER-MONITORING-001",
+    "referenced_by": "NIST CSF v1.1 - DE.CM-6"
+  },
+  {
+    "id": 97,
+    "domain_name": "Security Continuous Monitoring",
+    "related_nist_category": "DE.CM-5",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.12.6.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "low",
+    "question_text": "Describe how unauthorized mobile code is detected within your organization.",
+    "question_type": "open",
+    "hint": "Explain what tools or processes you use to detect and prevent unapproved scripts, macros, or other code from running on your systems, especially within browsers or documents.",
+    "expected_keywords": [
+      "mobile code",
+      "script blocking",
+      "browser security",
+      "macros",
+      "application control"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates the use of automated tools and policies to restrict and monitor mobile code. A mid-range score (40-74) suggests that some controls exist but are not comprehensive. A low score (0-39) indicates no controls for detecting unauthorized mobile code. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 100,
+        "note": "Transitioning from Security Continuous Monitoring to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "security continuous monitoring",
+      "mobile code",
+      "browser security"
+    ],
+    "task_template_id": "CM-MOBILE-CODE-DETECTION-001",
+    "referenced_by": "NIST CSF v1.1 - DE.CM-5"
+  },
+  {
+    "id": 100,
+    "domain_name": "Detection Processes",
+    "related_nist_category": "DE.DP-1",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.6.1.1",
+      "A.7.2.2"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "Describe how roles and responsibilities for detection activities are defined within your organization to ensure accountability.",
+    "question_type": "open",
+    "hint": "Explain who is responsible for monitoring security alerts, who investigates them, and who they report to. Mention if these duties are part of formal job descriptions or a RACI chart.",
+    "expected_keywords": [
+      "roles and responsibilities",
+      "accountability",
+      "soc analyst",
+      "incident responder",
+      "job description",
+      "raci"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that roles and responsibilities for detection are formally documented, assigned, and understood by personnel. A mid-range score (40-74) suggests that roles are informally understood but not formally documented. A low score (0-39) implies a lack of clear roles, leading to confusion and inaction. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 101,
+        "note": "User has well-defined roles. Assess the process for testing detection capabilities."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 104,
+        "note": "Roles are inconsistent. Assess the process for ensuring compliance of detection activities."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 103,
+        "note": "Roles are not defined. Assess the most basic process: communication of events."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "detection processes",
+      "governance",
+      "roles",
+      "soc"
+    ],
+    "task_template_id": "DP-ROLES-001",
+    "referenced_by": "NIST CSF v1.1 - DE.DP-1"
+  },
+  {
+    "id": 101,
+    "domain_name": "Detection Processes",
+    "related_nist_category": "DE.DP-3",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.14.2.8"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how your detection processes and tools are tested to ensure they are effective and performing as intended.",
+    "question_type": "open",
+    "hint": "Explain how you validate your security alerts. Mention activities like penetration testing, breach and attack simulation, or simply triggering test alerts to ensure they are received and handled correctly.",
+    "expected_keywords": [
+      "testing",
+      "penetration test",
+      "breach and attack simulation",
+      "bas",
+      "purple team",
+      "validation",
+      "alert tuning"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, regular testing program for detection capabilities, with results used for tuning and improvement. A mid-range score (40-74) suggests ad-hoc or infrequent testing. A low score (0-39) indicates no testing of detection processes. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 102,
+        "note": "Testing process is mature. Assess the process for continuous improvement."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 103,
+        "note": "Testing process is weak. Assess the process for communicating event information."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "detection processes",
+      "testing",
+      "validation",
+      "purple team"
+    ],
+    "task_template_id": "DP-TESTING-001",
+    "referenced_by": "NIST CSF v1.1 - DE.DP-3"
+  },
+  {
+    "id": 102,
+    "domain_name": "Detection Processes",
+    "related_nist_category": "DE.DP-5",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.16.1.6"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe your process for continuously improving your detection processes.",
+    "question_type": "open",
+    "hint": "Explain how your detection capabilities evolve over time. Mention how you incorporate lessons learned from incidents, results from testing, and new threat intelligence to create new detection rules and refine existing ones.",
+    "expected_keywords": [
+      "continuous improvement",
+      "lessons learned",
+      "threat intelligence",
+      "new detection rules",
+      "tuning",
+      "feedback loop"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, proactive process for improving detection capabilities based on multiple sources of feedback. A mid-range score (40-74) suggests improvements are made reactively after major incidents. A low score (0-39) indicates detection processes are static and rarely updated. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 110,
+        "note": "Transitioning from Detection Processes to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "detection processes",
+      "continuous improvement",
+      "threat intelligence"
+    ],
+    "task_template_id": "DP-IMPROVEMENT-001",
+    "referenced_by": "NIST CSF v1.1 - DE.DP-5"
+  },
+  {
+    "id": 103,
+    "domain_name": "Detection Processes",
+    "related_nist_category": "DE.DP-4",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.16.1.2",
+      "A.16.1.3"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how event detection information is communicated to the appropriate parties within your organization.",
+    "question_type": "open",
+    "hint": "Explain your process for getting the right information to the right people when an event is detected. Mention alerting mechanisms, communication channels (like email, chat, or ticketing systems), and escalation paths.",
+    "expected_keywords": [
+      "communication",
+      "alerting",
+      "notification",
+      "escalation path",
+      "ticketing system",
+      "soc"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, documented communication plan with clear, automated alerting and escalation paths. A mid-range score (40-74) suggests an informal or inconsistent communication process. A low score (0-39) indicates no clear process for communicating detected events. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 110,
+        "note": "Transitioning from Detection Processes to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "detection processes",
+      "communication",
+      "alerting"
+    ],
+    "task_template_id": "DP-COMMUNICATION-001",
+    "referenced_by": "NIST CSF v1.1 - DE.DP-4"
+  },
+  {
+    "id": 104,
+    "domain_name": "Detection Processes",
+    "related_nist_category": "DE.DP-2",
+    "nist_function": "Detect",
+    "iso27001_controls": [
+      "A.18.1.4"
+    ],
+    "maturity_level": 1,
+    "criticality": "low",
+    "question_text": "Describe how you ensure your detection activities comply with all applicable requirements, such as legal, regulatory, and privacy obligations.",
+    "question_type": "open",
+    "hint": "Explain how you balance security monitoring with privacy. Mention any reviews or assessments you conduct to ensure your detection methods do not violate laws or employee privacy expectations.",
+    "expected_keywords": [
+      "compliance",
+      "legal",
+      "regulatory",
+      "privacy",
+      "data protection",
+      "gdpr",
+      "hipaa"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal process for reviewing detection activities against compliance and privacy requirements, often involving legal or privacy teams. A mid-range score (40-74) suggests an informal or ad-hoc awareness of these requirements. A low score (0-39) indicates no consideration for compliance in detection processes. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 101,
+        "note": "Compliance process is strong. Assess the process for testing detection capabilities."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 103,
+        "note": "Compliance process is weak. Assess the process for communicating event information."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "detection processes",
+      "compliance",
+      "privacy",
+      "legal"
+    ],
+    "task_template_id": "DP-COMPLIANCE-001",
+    "referenced_by": "NIST CSF v1.1 - DE.DP-2"
+  },
+  {
+    "id": 110,
+    "domain_name": "Response Planning",
+    "related_nist_category": "RS.RP-1",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.5"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe your organization's response plan and the process for executing it during or after a cybersecurity incident.",
+    "question_type": "open",
+    "hint": "Explain if you have a documented Incident Response (IR) plan that outlines the steps to take, from initial detection to resolution. Mention the phases of your plan (e.g., preparation, detection, containment, eradication, recovery, lessons learned).",
+    "expected_keywords": [
+      "incident response plan",
+      "irp",
+      "playbook",
+      "containment",
+      "eradication",
+      "recovery",
+      "incident handling"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, documented, and regularly updated IR plan that covers the full incident lifecycle. A mid-range score (40-74) suggests an informal or incomplete plan exists. A low score (0-39) implies no documented response plan. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 111,
+        "note": "User has a mature response plan. Assess how the plan is improved."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 114,
+        "note": "Response plan is informal. Assess a key component: analysis and forensics planning."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 117,
+        "note": "Response plan is weak or non-existent. Assess for basic leadership designation."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "response planning",
+      "incident response",
+      "irp"
+    ],
+    "task_template_id": "RP-PLAN-EXECUTION-001",
+    "referenced_by": "NIST CSF v1.1 - RS.RP-1"
+  },
+  {
+    "id": 111,
+    "domain_name": "Response Planning",
+    "related_nist_category": "RS.IM-1",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.6"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe your process for incorporating lessons learned from past incidents or exercises to improve your response plan.",
+    "question_type": "open",
+    "hint": "Explain how you conduct post-incident reviews or after-action reports, and how the findings from these reviews are used to update and strengthen your formal response plan.",
+    "expected_keywords": [
+      "lessons learned",
+      "post-incident review",
+      "after-action report",
+      "continuous improvement",
+      "feedback loop",
+      "plan update"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, mandatory process for conducting post-incident reviews and systematically updating plans based on findings. A mid-range score (40-74) suggests informal or inconsistent reviews. A low score (0-39) indicates no process for learning from past incidents. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 112,
+        "note": "Improvement process is mature. Assess how strategies are updated based on threat intelligence."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 113,
+        "note": "Improvement process is weak. Assess the communications aspect of the response plan."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "response planning",
+      "lessons learned",
+      "improvement"
+    ],
+    "task_template_id": "RP-LESSONS-LEARNED-001",
+    "referenced_by": "NIST CSF v1.1 - RS.IM-1"
+  },
+  {
+    "id": 112,
+    "domain_name": "Response Planning",
+    "related_nist_category": "RS.IM-2",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.6"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe how your response strategies are updated to address changes in the threat landscape and your business environment.",
+    "question_type": "open",
+    "hint": "Explain how new threat intelligence, new technologies, or changes in your business operations trigger reviews and updates to your incident response playbooks and overall strategy.",
+    "expected_keywords": [
+      "threat intelligence",
+      "strategy update",
+      "proactive",
+      "playbook review",
+      "threat landscape"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a proactive process for updating response strategies based on threat intelligence and business changes. A mid-range score (40-74) suggests strategies are updated, but only reactively after a major event. A low score (0-39) indicates that response strategies are static. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 120,
+        "note": "Transitioning from Response Planning to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "response planning",
+      "threat intelligence",
+      "strategy"
+    ],
+    "task_template_id": "RP-STRATEGY-UPDATE-001",
+    "referenced_by": "NIST CSF v1.1 - RS.IM-2"
+  },
+  {
+    "id": 113,
+    "domain_name": "Response Planning",
+    "related_nist_category": "RS.CO-1",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.1"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe how your response plan defines personnel roles and the order of operations for communications during an incident.",
+    "question_type": "open",
+    "hint": "Explain how the plan specifies who is on the incident response team, what each person's role is, and who they need to communicate with (e.g., legal, HR, management, technical teams).",
+    "expected_keywords": [
+      "roles",
+      "responsibilities",
+      "cirt",
+      "csirt",
+      "communications plan",
+      "escalation"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that the response plan contains clearly defined roles, responsibilities, and communication protocols for the incident response team. A mid-range score (40-74) suggests roles are informally understood. A low score (0-39) indicates a lack of defined roles in the plan. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 120,
+        "note": "Transitioning from Response Planning to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "response planning",
+      "communications",
+      "roles"
+    ],
+    "task_template_id": "RP-ROLES-AND-COMMS-001",
+    "referenced_by": "NIST CSF v1.1 - RS.CO-1"
+  },
+  {
+    "id": 114,
+    "domain_name": "Response Planning",
+    "related_nist_category": "RS.AN-3",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.7"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how your response plan addresses the need to perform forensics and analysis to understand the scope and impact of an incident.",
+    "question_type": "open",
+    "hint": "Explain what procedures are included in your plan for collecting evidence, preserving the chain of custody, and analyzing systems to determine the root cause and full extent of an incident.",
+    "expected_keywords": [
+      "forensics",
+      "incident analysis",
+      "evidence collection",
+      "chain of custody",
+      "root cause analysis",
+      "data preservation"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates the response plan includes formal, documented procedures for forensic analysis and evidence preservation. A mid-range score (40-74) suggests an informal understanding of forensic needs. A low score (0-39) indicates forensics is not considered in the response plan. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 115,
+        "note": "Analysis planning is strong. Assess how the overall plan is tested."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 116,
+        "note": "Analysis planning is weak. Assess the foundational process for incident reporting."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "response planning",
+      "forensics",
+      "incident analysis"
+    ],
+    "task_template_id": "RP-FORENSICS-PLANNING-001",
+    "referenced_by": "NIST CSF v1.1 - RS.AN-3"
+  },
+  {
+    "id": 115,
+    "domain_name": "Response Planning",
+    "related_nist_category": "PR.IP-10",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.17.1.3"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe how you test your response plan to ensure its effectiveness.",
+    "question_type": "open",
+    "hint": "Explain the frequency and types of tests you conduct, such as tabletop exercises, walkthroughs, or full-scale simulations, to ensure your plan works as intended.",
+    "expected_keywords": [
+      "testing",
+      "tabletop exercise",
+      "simulation",
+      "incident response test",
+      "walkthrough"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that regular, comprehensive tests of the response plan are conducted, with formal lessons learned used to improve it. A mid-range score (40-74) suggests infrequent or informal testing. A low score (0-39) indicates no testing of the plan. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 120,
+        "note": "Transitioning from Response Planning to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "response planning",
+      "testing",
+      "tabletop"
+    ],
+    "task_template_id": "RP-PLAN-TESTING-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-10"
+  },
+  {
+    "id": 116,
+    "domain_name": "Response Planning",
+    "related_nist_category": "RS.CO-2",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.2"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "Describe the criteria and process defined in your response plan for reporting incidents to relevant stakeholders.",
+    "question_type": "open",
+    "hint": "Explain how the plan specifies what types of incidents need to be reported, to whom (e.g., management, legal, customers, regulators), and within what timeframes.",
+    "expected_keywords": [
+      "incident reporting",
+      "criteria",
+      "stakeholders",
+      "notification",
+      "timeline",
+      "regulatory reporting"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that the plan contains clear criteria and timelines for reporting incidents to all relevant internal and external stakeholders. A mid-range score (40-74) suggests an informal or inconsistent reporting process. A low score (0-39) indicates no defined reporting criteria. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 120,
+        "note": "Transitioning from Response Planning to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "response planning",
+      "reporting",
+      "communications"
+    ],
+    "task_template_id": "RP-REPORTING-CRITERIA-001",
+    "referenced_by": "NIST CSF v1.1 - RS.CO-2"
+  },
+  {
+    "id": 117,
+    "domain_name": "Response Planning",
+    "related_nist_category": "RS.CO-1",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.6.1.1"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe who in your organization is responsible for leading the response to a cybersecurity incident and how this is documented.",
+    "question_type": "open",
+    "hint": "Even if you don't have a full plan, explain if there is a designated 'incident commander' or team lead, and where this responsibility is written down (e.g., a policy or contact list).",
+    "expected_keywords": [
+      "incident commander",
+      "team lead",
+      "responsibility",
+      "documentation",
+      "cirt lead"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a clearly designated and documented incident response lead or team. A mid-range score (40-74) suggests an informal or 'best guess' understanding of who is in charge. A low score (0-39) indicates no designated leadership for incidents. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 40,
+        "max_score": 100,
+        "next_question_id": 118,
+        "note": "Designated leadership exists. Assess if any containment procedures are planned."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 120,
+        "note": "Transitioning from Response Planning to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "response planning",
+      "roles",
+      "governance"
+    ],
+    "task_template_id": "RP-LEADERSHIP-001",
+    "referenced_by": "NIST CSF v1.1 - RS.CO-1"
+  },
+  {
+    "id": 118,
+    "domain_name": "Response Planning",
+    "related_nist_category": "RS.MI-1",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.5"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe any planned or ad-hoc procedures your organization would take to contain an incident and prevent it from spreading.",
+    "question_type": "open",
+    "hint": "Explain the immediate actions you would take to isolate an affected system. For example, would you disconnect a computer from the network, block an IP address, or disable a user account?",
+    "expected_keywords": [
+      "containment",
+      "isolation",
+      "disconnect from network",
+      "block ip",
+      "disable account",
+      "quarantine"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that there are predefined procedures for containment actions. A mid-range score (40-74) suggests containment actions would be ad-hoc and decided at the time of an incident. A low score (0-39) indicates no clear understanding of how to contain an incident. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 120,
+        "note": "Transitioning from Response Planning to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "response planning",
+      "containment",
+      "incident response"
+    ],
+    "task_template_id": "RP-CONTAINMENT-PROCEDURES-001",
+    "referenced_by": "NIST CSF v1.1 - RS.MI-1"
+  },
+  
+  {
+    "id": 120,
+    "domain_name": "Communications (Respond)",
+    "related_nist_category": "RS.CO-1",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.1",
+      "A.6.1.1"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe how your response plan defines personnel roles for communication and the order of operations when a response is needed.",
+    "question_type": "open",
+    "hint": "Explain who is on the incident response team, what each person's role in communication is, and the sequence of who should be notified (e.g., team lead, then department head, then legal).",
+    "expected_keywords": [
+      "roles",
+      "responsibilities",
+      "cirt",
+      "csirt",
+      "communications plan",
+      "escalation path",
+      "order of operations"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that the response plan contains clearly documented communication roles and a defined, sequential notification process. A mid-range score (40-74) suggests roles and processes are informally understood but not formally documented. A low score (0-39) implies a lack of defined roles and communication plans. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 121,
+        "note": "User has well-defined internal communication roles. Assess coordination with external stakeholders."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 124,
+        "note": "Roles are informal. Assess the general process for sharing information during an incident."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 123,
+        "note": "Roles are not defined. Assess the most basic communication process: criteria for reporting."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "communications",
+      "incident response",
+      "roles"
+    ],
+    "task_template_id": "CO-ROLES-AND-OPS-001",
+    "referenced_by": "NIST CSF v1.1 - RS.CO-1"
+  },
+  {
+    "id": 121,
+    "domain_name": "Communications (Respond)",
+    "related_nist_category": "RS.CO-4",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.2",
+      "A.6.1.3"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe how your organization coordinates with external stakeholders, such as law enforcement or external cybersecurity experts, consistent with your response plans.",
+    "question_type": "open",
+    "hint": "Explain what procedures and pre-established contacts you have for engaging with outside help during an incident. Mention any retainers with incident response firms or contact lists for law enforcement.",
+    "expected_keywords": [
+      "external stakeholders",
+      "law enforcement",
+      "incident response firm",
+      "retainer",
+      "coordination",
+      "contact list"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that the response plan includes formal procedures and pre-established contacts for coordinating with key external stakeholders. A mid-range score (40-74) suggests an ad-hoc approach to external coordination. A low score (0-39) indicates no planning for external coordination. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 122,
+        "note": "External coordination is mature. Assess participation in voluntary information sharing."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 123,
+        "note": "External coordination is weak. Assess the foundational criteria for incident reporting."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "communications",
+      "incident response",
+      "law enforcement",
+      "stakeholders"
+    ],
+    "task_template_id": "CO-EXTERNAL-COORDINATION-001",
+    "referenced_by": "NIST CSF v1.1 - RS.CO-4"
+  },
+  {
+    "id": 122,
+    "domain_name": "Communications (Respond)",
+    "related_nist_category": "RS.CO-5",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.6.1.4"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe how your organization participates in voluntary information sharing with external partners (e.g., ISACs, ISAOs) to achieve broader cybersecurity situational awareness.",
+    "question_type": "open",
+    "hint": "Explain if you are a member of any industry sharing groups and how you both contribute information about threats you observe and consume intelligence from the community.",
+    "expected_keywords": [
+      "information sharing",
+      "isac",
+      "isao",
+      "threat intelligence",
+      "situational awareness",
+      "community"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates active membership and both contribution to and consumption from information sharing groups as a formal part of the security program. A mid-range score (40-74) suggests passive membership (consuming but not contributing). A low score (0-39) indicates no participation in information sharing communities. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 130,
+        "note": "Transitioning from Communications (Respond) to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "communications",
+      "information sharing",
+      "isac",
+      "threat intelligence"
+    ],
+    "task_template_id": "CO-INFO-SHARING-001",
+    "referenced_by": "NIST CSF v1.1 - RS.CO-5"
+  },
+  {
+    "id": 123,
+    "domain_name": "Communications (Respond)",
+    "related_nist_category": "RS.CO-2",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.2",
+      "A.6.1.3"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe the criteria defined in your response plan that determine when and to whom incidents are reported.",
+    "question_type": "open",
+    "hint": "Explain how your plan specifies what types of incidents need to be reported to which groups (e.g., management, legal, customers, regulators), and within what required timeframes.",
+    "expected_keywords": [
+      "incident reporting",
+      "criteria",
+      "stakeholders",
+      "notification",
+      "timeline",
+      "regulatory reporting",
+      "breach notification"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that the plan contains clear, documented criteria and timelines for reporting incidents to all relevant stakeholders. A mid-range score (40-74) suggests an informal or inconsistent reporting process. A low score (0-39) indicates no defined reporting criteria. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 130,
+        "note": "Transitioning from Communications (Respond) to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "communications",
+      "incident reporting",
+      "compliance"
+    ],
+    "task_template_id": "CO-REPORTING-CRITERIA-001",
+    "referenced_by": "NIST CSF v1.1 - RS.CO-2"
+  },
+  {
+    "id": 124,
+    "domain_name": "Communications (Respond)",
+    "related_nist_category": "RS.CO-3",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.2",
+      "A.7.4"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how you ensure information about an incident is shared with relevant internal and external stakeholders consistent with your response plans.",
+    "question_type": "open",
+    "hint": "Explain the actual methods you use for communication. For example, do you have pre-drafted notification templates, a status page, or a designated spokesperson?",
+    "expected_keywords": [
+      "information sharing",
+      "notification templates",
+      "spokesperson",
+      "status page",
+      "communication channels"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that the organization uses predefined templates and channels to ensure consistent and timely communication. A mid-range score (40-74) suggests that communication is ad-hoc and drafted at the time of the incident. A low score (0-39) indicates no planning for how to share information. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 121,
+        "note": "Information sharing process is mature. Assess coordination with external stakeholders."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 123,
+        "note": "Information sharing is weak. Assess the foundational criteria for incident reporting."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "communications",
+      "information sharing",
+      "incident response"
+    ],
+    "task_template_id": "CO-SHARING-PROCESS-001",
+    "referenced_by": "NIST CSF v1.1 - RS.CO-3"
+  },
+  
+  {
+    "id": 130,
+    "domain_name": "Incident Analysis",
+    "related_nist_category": "RS.AN-1",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.5"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe your process for investigating notifications from your detection systems to determine if a cybersecurity incident has occurred.",
+    "question_type": "open",
+    "hint": "Explain the initial steps your team takes when an alert is triggered. How do you validate if the alert is a true incident versus a false positive?",
+    "expected_keywords": [
+      "investigation",
+      "triage",
+      "alert validation",
+      "false positive",
+      "soc",
+      "analyst",
+      "initial analysis"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, documented process for investigating every alert with clear criteria for validation. A mid-range score (40-74) suggests an informal or inconsistent investigation process. A low score (0-39) implies that alerts are not systematically investigated or are ignored. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 131,
+        "note": "User has a mature investigation process. Assess the capability for forensic analysis."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 133,
+        "note": "Investigation process is inconsistent. Assess the process for understanding incident impact."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 134,
+        "note": "Investigation process is weak. Assess the process for handling vulnerability disclosures."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "incident analysis",
+      "respond",
+      "investigation",
+      "triage"
+    ],
+    "task_template_id": "AN-INVESTIGATION-001",
+    "referenced_by": "NIST CSF v1.1 - RS.AN-1"
+  },
+  {
+    "id": 131,
+    "domain_name": "Incident Analysis",
+    "related_nist_category": "RS.AN-3",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.7"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe your organization's capability and process for performing forensic analysis of security incidents.",
+    "question_type": "open",
+    "hint": "Explain how you collect and analyze digital evidence from affected systems to determine the root cause and full timeline of an attack. Mention any in-house tools or third-party forensic services you use.",
+    "expected_keywords": [
+      "forensics",
+      "digital forensics",
+      "dfir",
+      "evidence collection",
+      "chain of custody",
+      "root cause analysis",
+      "imaging"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a well-defined forensic process with trained personnel and appropriate tools, whether in-house or through a retainer. A mid-range score (40-74) suggests an ad-hoc approach to forensics. A low score (0-39) indicates no forensic capability. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 132,
+        "note": "Forensics process is mature. Assess how incidents are categorized."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 133,
+        "note": "Forensics process is weak. Assess how incident impact is understood."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "incident analysis",
+      "forensics",
+      "dfir"
+    ],
+    "task_template_id": "AN-FORENSICS-001",
+    "referenced_by": "NIST CSF v1.1 - RS.AN-3"
+  },
+  {
+    "id": 132,
+    "domain_name": "Incident Analysis",
+    "related_nist_category": "RS.AN-4",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.4"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how incidents are categorized consistent with your response plans.",
+    "question_type": "open",
+    "hint": "Explain your classification scheme for incidents. For example, do you categorize them based on severity (e.g., high, medium, low) or by attack type (e.g., malware, phishing, denial-of-service)?",
+    "expected_keywords": [
+      "categorization",
+      "classification",
+      "severity",
+      "priority",
+      "incident type",
+      "taxonomy"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, documented classification scheme that is consistently used to prioritize and handle incidents. A mid-range score (40-74) suggests an informal or inconsistent categorization process. A low score (0-39) indicates incidents are not formally categorized. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 140,
+        "note": "Transitioning from Incident Analysis to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "incident analysis",
+      "categorization",
+      "prioritization"
+    ],
+    "task_template_id": "AN-CATEGORIZATION-001",
+    "referenced_by": "NIST CSF v1.1 - RS.AN-4"
+  },
+  {
+    "id": 133,
+    "domain_name": "Incident Analysis",
+    "related_nist_category": "RS.AN-2",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.4"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe how the impact of an incident is understood and documented.",
+    "question_type": "open",
+    "hint": "Explain your process for assessing the business impact of an incident. How do you determine what data was affected, which systems are impacted, and the overall effect on business operations?",
+    "expected_keywords": [
+      "impact analysis",
+      "scoping",
+      "business impact",
+      "data breach",
+      "containment",
+      "documentation"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal process for quickly assessing and documenting the impact of incidents based on predefined criteria. A mid-range score (40-74) suggests an informal or intuitive process for impact assessment. A low score (0-39) indicates no process for determining and documenting event impact. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 131,
+        "note": "Impact analysis is strong. Assess the forensics process."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 132,
+        "note": "Impact analysis is weak. Assess the process for categorizing incidents."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "incident analysis",
+      "impact analysis",
+      "scoping"
+    ],
+    "task_template_id": "AN-IMPACT-ANALYSIS-001",
+    "referenced_by": "NIST CSF v1.1 - RS.AN-2"
+  },
+  {
+    "id": 134,
+    "domain_name": "Incident Analysis",
+    "related_nist_category": "RS.AN-5",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.12.6.1"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe your process for receiving, analyzing, and responding to vulnerability disclosures from internal or external sources.",
+    "question_type": "open",
+    "hint": "Explain how your organization handles information about security flaws found by employees, security researchers, or security bulletins. Do you have a dedicated contact point (e.g., security@yourcompany.com)?",
+    "expected_keywords": [
+      "vulnerability disclosure",
+      "responsible disclosure",
+      "bug bounty",
+      "security bulletin",
+      "vulnerability intake"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, documented process for handling vulnerability disclosures, including a clear point of contact and an analysis workflow. A mid-range score (40-74) suggests an ad-hoc process. A low score (0-39) indicates no process for handling vulnerability disclosures. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 40,
+        "max_score": 100,
+        "next_question_id": 132,
+        "note": "Some disclosure process exists. Assess the process for categorizing incidents."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 140,
+        "note": "Transitioning from Incident Analysis to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "incident analysis",
+      "vulnerability disclosure",
+      "respond"
+    ],
+    "task_template_id": "AN-VULN-DISCLOSURE-001",
+    "referenced_by": "NIST CSF v1.1 - RS.AN-5"
+  },
+  {
+    "id": 140,
+    "domain_name": "Mitigation",
+    "related_nist_category": "RS.MI-1",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.5",
+      "A.12.2.1"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe your organization's process for containing cybersecurity incidents to prevent them from spreading.",
+    "question_type": "open",
+    "hint": "Explain the immediate actions you take to isolate an affected system or user account. Mention specific techniques like disconnecting a device from the network, blocking IP addresses, or disabling user credentials.",
+    "expected_keywords": [
+      "containment",
+      "isolation",
+      "disconnect from network",
+      "block ip",
+      "disable account",
+      "quarantine",
+      "segmentation"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that formal, documented procedures exist for various containment scenarios, which can be executed quickly. A mid-range score (40-74) suggests an informal, ad-hoc approach to containment. A low score (0-39) implies no clear process or capability for containing an incident. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 141,
+        "note": "User has a mature containment process. Assess the broader process for mitigation and eradication."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 142,
+        "note": "Containment process is inconsistent. Assess the process for handling exploited vulnerabilities."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 141,
+        "note": "Containment process is weak. Ask a broader, more basic question about mitigation actions."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "mitigation",
+      "respond",
+      "containment",
+      "incident response"
+    ],
+    "task_template_id": "MI-CONTAINMENT-001",
+    "referenced_by": "NIST CSF v1.1 - RS.MI-1"
+  },
+  {
+    "id": 141,
+    "domain_name": "Mitigation",
+    "related_nist_category": "RS.MI-2",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.5"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe your process for mitigating the effects of an incident and eradicating the threat from your environment.",
+    "question_type": "open",
+    "hint": "After containing an incident, how do you remove the threat and its artifacts? Explain your procedures for activities like removing malware, rebuilding systems from a known good state, and patching vulnerabilities.",
+    "expected_keywords": [
+      "mitigation",
+      "eradication",
+      "rebuild system",
+      "remove malware",
+      "patching",
+      "threat removal"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal process with documented procedures for eradicating threats and restoring systems to a secure state. A mid-range score (40-74) suggests an informal or inconsistent process for eradication. A low score (0-39) indicates no clear process beyond initial containment. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 142,
+        "note": "Mitigation process is mature. Assess how exploited vulnerabilities are handled post-incident."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 143,
+        "note": "Mitigation process is weak. Assess how forensic analysis informs mitigation."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "mitigation",
+      "eradication",
+      "incident response"
+    ],
+    "task_template_id": "MI-ERADICATION-001",
+    "referenced_by": "NIST CSF v1.1 - RS.MI-2"
+  },
+  {
+    "id": 142,
+    "domain_name": "Mitigation",
+    "related_nist_category": "RS.MI-3",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.12.6.1"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe your process for ensuring that newly identified vulnerabilities that were exploited during an incident are mitigated or documented as accepted risks.",
+    "question_type": "open",
+    "hint": "Explain how you track the root cause vulnerability of an incident and ensure it is either patched across all systems or that a formal risk acceptance decision is made if it cannot be fixed.",
+    "expected_keywords": [
+      "vulnerability mitigation",
+      "patching",
+      "risk acceptance",
+      "remediation",
+      "lessons learned",
+      "root cause"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, tracked process to ensure vulnerabilities from incidents are remediated or formally accepted. A mid-range score (40-74) suggests an informal process that may not track all vulnerabilities to closure. A low score (0-39) indicates vulnerabilities discovered during incidents are not systematically addressed. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 141,
+        "note": "Vulnerability handling is mature. Assess the overall mitigation and eradication process."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 144,
+        "note": "Vulnerability handling is weak. Assess how impact analysis prioritizes mitigation."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "mitigation",
+      "vulnerability management",
+      "risk acceptance"
+    ],
+    "task_template_id": "MI-VULN-HANDLING-001",
+    "referenced_by": "NIST CSF v1.1 - RS.MI-3"
+  },
+  {
+    "id": 143,
+    "domain_name": "Mitigation",
+    "related_nist_category": "RS.AN-3",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.7"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how the results of forensic analysis are used to guide your mitigation activities.",
+    "question_type": "open",
+    "hint": "Explain how findings from your investigation (e.g., identifying all compromised accounts or all systems with malware) directly inform the actions you take to clean up the environment.",
+    "expected_keywords": [
+      "forensics",
+      "analysis",
+      "mitigation",
+      "eradication",
+      "scope",
+      "indicator of compromise",
+      "ioc"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal feedback loop where forensic findings are used to create a comprehensive mitigation plan. A mid-range score (40-74) suggests an informal connection between analysis and mitigation. A low score (0-39) indicates mitigation occurs without being fully informed by analysis. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 150,
+        "note": "Transitioning from Mitigation to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "mitigation",
+      "forensics",
+      "analysis"
+    ],
+    "task_template_id": "MI-FORENSIC-GUIDANCE-001",
+    "referenced_by": "NIST CSF v1.1 - RS.AN-3"
+  },
+  {
+    "id": 144,
+    "domain_name": "Mitigation",
+    "related_nist_category": "RS.AN-2",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.4"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how you analyze the impact of an incident to prioritize your mitigation efforts.",
+    "question_type": "open",
+    "hint": "Explain how you use your understanding of an incident's scope and business impact to decide which systems to fix first and what mitigation actions are most critical.",
+    "expected_keywords": [
+      "impact analysis",
+      "prioritization",
+      "mitigation",
+      "business impact",
+      "triage"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that impact analysis directly and formally drives the prioritization of mitigation actions. A mid-range score (40-74) suggests an informal link between impact and prioritization. A low score (0-39) indicates mitigation efforts are not prioritized based on impact. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 150,
+        "note": "Transitioning from Mitigation to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "mitigation",
+      "impact analysis",
+      "prioritization"
+    ],
+    "task_template_id": "MI-IMPACT-PRIORITIZATION-001",
+    "referenced_by": "NIST CSF v1.1 - RS.AN-2"
+  },
+
+  {
+    "id": 150,
+    "domain_name": "Improvements (Respond)",
+    "related_nist_category": "RS.IM-1",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.6"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe your process for incorporating lessons learned from incidents and exercises into your response plans.",
+    "question_type": "open",
+    "hint": "Explain how you conduct post-incident reviews or after-action reports, and how the findings from these reviews are formally used to update and strengthen your documented response plan.",
+    "expected_keywords": [
+      "lessons learned",
+      "post-incident review",
+      "after-action report",
+      "continuous improvement",
+      "feedback loop",
+      "plan update"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, mandatory process for conducting post-incident reviews and systematically updating plans based on findings. A mid-range score (40-74) suggests an informal or inconsistent review process, where updates may not always happen. A low score (0-39) implies no process for learning from past incidents to improve plans. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 151,
+        "note": "User has a mature lessons learned process. Assess how overall response strategies are updated."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 154,
+        "note": "Lessons learned process is inconsistent. Assess the underlying post-incident review process."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 153,
+        "note": "Lessons learned process is weak. Ask a more basic question about if plans are ever updated."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "improvements",
+      "respond",
+      "lessons learned",
+      "incident response"
+    ],
+    "task_template_id": "IM-LESSONS-LEARNED-001",
+    "referenced_by": "NIST CSF v1.1 - RS.IM-1"
+  },
+  {
+    "id": 151,
+    "domain_name": "Improvements (Respond)",
+    "related_nist_category": "RS.IM-2",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.6"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe how your overall response strategies are updated based on the lessons learned from incidents, new threat intelligence, and changes in the business environment.",
+    "question_type": "open",
+    "hint": "Explain the strategic process for evolving your response capabilities, not just updating a single plan. How do you decide to adopt new tools, engage new partners, or change your fundamental approach to response?",
+    "expected_keywords": [
+      "strategy update",
+      "threat intelligence",
+      "proactive",
+      "playbook review",
+      "threat landscape",
+      "business changes"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a proactive, strategic process for updating response strategies based on multiple inputs like threat intelligence and business changes. A mid-range score (40-74) suggests strategies are updated, but only reactively after a major event or based on a single input. A low score (0-39) indicates that response strategies are static and not updated. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 152,
+        "note": "Strategic update process is mature. Assess how improvements are measured and tracked."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 153,
+        "note": "Strategic update process is weak. Assess the documentation and communication of plan changes."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "improvements",
+      "strategy",
+      "threat intelligence"
+    ],
+    "task_template_id": "IM-STRATEGY-UPDATE-001",
+    "referenced_by": "NIST CSF v1.1 - RS.IM-2"
+  },
+  {
+    "id": 152,
+    "domain_name": "Improvements (Respond)",
+    "related_nist_category": "Section 4.0",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.9.3"
+    ],
+    "maturity_level": 3,
+    "criticality": "low",
+    "question_text": "Describe how you measure and track the effectiveness of the improvements made to your response plans and strategies over time.",
+    "question_type": "open",
+    "hint": "How do you know that your changes are making a difference? Explain if you use metrics like reduction in incident response time, faster containment, or improved performance in exercises to validate your improvements.",
+    "expected_keywords": [
+      "metrics",
+      "kpi",
+      "effectiveness",
+      "measurement",
+      "tracking",
+      "mean time to respond",
+      "mttr"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that formal metrics are used to measure the impact of improvements to the response program. A mid-range score (40-74) suggests an informal or anecdotal understanding of effectiveness. A low score (0-39) indicates no measurement of improvements. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 160,
+        "note": "Transitioning from Improvements (Respond) to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "improvements",
+      "metrics",
+      "effectiveness"
+    ],
+    "task_template_id": "IM-METRICS-001",
+    "referenced_by": "NIST CSF v1.1 - Section 4.0"
+  },
+  {
+    "id": 153,
+    "domain_name": "Improvements (Respond)",
+    "related_nist_category": "RS.IM-1",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.5.1.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how updates and improvements to the response plan are documented, approved, and communicated to the incident response team and other stakeholders.",
+    "question_type": "open",
+    "hint": "Explain your process for version control of your response plan, how changes get formally approved, and how you ensure everyone on the response team is aware of the latest version.",
+    "expected_keywords": [
+      "documentation",
+      "version control",
+      "approval",
+      "communication",
+      "change management"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal change management process for the response plan, including version control and communication. A mid-range score (40-74) suggests an informal update process. A low score (0-39) indicates plan updates are not documented or communicated. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 160,
+        "note": "Transitioning from Improvements (Respond) to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "improvements",
+      "documentation",
+      "change management"
+    ],
+    "task_template_id": "IM-PLAN-UPDATE-COMM-001",
+    "referenced_by": "NIST CSF v1.1 - RS.IM-1"
+  },
+  {
+    "id": 154,
+    "domain_name": "Improvements (Respond)",
+    "related_nist_category": "RS.AN",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.16.1.6"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe your process for conducting post-incident reviews or after-action reports.",
+    "question_type": "open",
+    "hint": "Explain who participates in these reviews, what questions are typically asked (e.g., 'what went well?', 'what could be improved?'), and what the final output or report looks like.",
+    "expected_keywords": [
+      "post-incident review",
+      "after-action report",
+      "root cause analysis",
+      "timeline analysis",
+      "blameless postmortem"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, mandatory process for conducting post-incident reviews with all relevant stakeholders, resulting in a documented report. A mid-range score (40-74) suggests informal reviews happen for major incidents only. A low score (0-39) indicates no post-incident review process. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 151,
+        "note": "Review process is strong. Assess how overall response strategies are updated."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 155,
+        "note": "Review process is weak. Assess how remediation actions are tracked."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "improvements",
+      "post-incident review",
+      "lessons learned"
+    ],
+    "task_template_id": "IM-POST-INCIDENT-REVIEW-001",
+    "referenced_by": "NIST CSF v1.1 - RS.AN"
+  },
+  {
+    "id": 155,
+    "domain_name": "Improvements (Respond)",
+    "related_nist_category": "RS.MI-3",
+    "nist_function": "Respond",
+    "iso27001_controls": [
+      "A.12.6.1"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe how you track the remediation of vulnerabilities or process gaps that are identified as action items during an incident response.",
+    "question_type": "open",
+    "hint": "Explain what system you use (e.g., a ticketing system, a spreadsheet) to assign ownership and track the status of corrective actions that result from a security incident.",
+    "expected_keywords": [
+      "remediation tracking",
+      "action items",
+      "ticketing system",
+      "jira",
+      "corrective action",
+      "vulnerability management"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal system for tracking all corrective actions to completion with assigned ownership and due dates. A mid-range score (40-74) suggests an informal tracking method like email or spreadsheets. A low score (0-39) indicates no systematic tracking of remediation actions. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 160,
+        "note": "Transitioning from Improvements (Respond) to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "improvements",
+      "remediation",
+      "tracking"
+    ],
+    "task_template_id": "IM-REMEDIATION-TRACKING-001",
+    "referenced_by": "NIST CSF v1.1 - RS.MI-3"
+  },
+  
+  {
+    "id": 160,
+    "domain_name": "Recovery Planning",
+    "related_nist_category": "RC.RP-1",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.16.1.5",
+      "A.17.1.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe your organization's recovery plan and the process for executing it to restore systems or assets after a cybersecurity incident.",
+    "question_type": "open",
+    "hint": "Explain if you have a documented Disaster Recovery (DR) or Business Continuity Plan (BCP) that outlines the steps, resources, and personnel required to restore operations.",
+    "expected_keywords": [
+      "recovery plan",
+      "disaster recovery plan",
+      "drp",
+      "business continuity plan",
+      "bcp",
+      "restoration",
+      "order of operations"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, documented, and comprehensive recovery plan that is maintained and accessible. A mid-range score (40-74) suggests an informal or incomplete plan exists. A low score (0-39) implies no documented recovery plan. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 161,
+        "note": "User has a mature recovery plan. Assess how the plan is improved."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 164,
+        "note": "Recovery plan is informal. Assess the foundational backup process that enables recovery."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 167,
+        "note": "Recovery plan is weak. Assess for basic understanding of resilience requirements."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "recovery planning",
+      "recover",
+      "disaster recovery",
+      "bcp"
+    ],
+    "task_template_id": "RP-PLAN-EXECUTION-RECOVERY-001",
+    "referenced_by": "NIST CSF v1.1 - RC.RP-1"
+  },
+  {
+    "id": 161,
+    "domain_name": "Recovery Planning",
+    "related_nist_category": "RC.IM-1",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.16.1.6"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe your process for incorporating lessons learned from past incidents or exercises to improve your recovery plan.",
+    "question_type": "open",
+    "hint": "Explain how you conduct post-mortem reviews after a recovery effort or test, and how the findings are used to formally update and strengthen your documented recovery plans.",
+    "expected_keywords": [
+      "lessons learned",
+      "post-mortem",
+      "after-action report",
+      "continuous improvement",
+      "recovery test",
+      "plan update"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, mandatory process for conducting post-recovery reviews and systematically updating plans based on findings. A mid-range score (40-74) suggests an informal or inconsistent review process. A low score (0-39) indicates no process for learning from past recovery efforts. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 162,
+        "note": "Improvement process is mature. Assess how recovery strategies are updated."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 163,
+        "note": "Improvement process is weak. Assess communications during recovery."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "recovery planning",
+      "improvements",
+      "lessons learned"
+    ],
+    "task_template_id": "RP-RECOVERY-IMPROVEMENT-001",
+    "referenced_by": "NIST CSF v1.1 - RC.IM-1"
+  },
+  {
+    "id": 162,
+    "domain_name": "Recovery Planning",
+    "related_nist_category": "RC.IM-2",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.16.1.6"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe how your recovery strategies are updated to address changes in business requirements, technology, and the threat landscape.",
+    "question_type": "open",
+    "hint": "Explain the strategic process for evolving your recovery capabilities. How do you decide to adopt new recovery technologies, change RTOs/RPOs, or alter your approach based on business changes?",
+    "expected_keywords": [
+      "strategy update",
+      "business impact analysis",
+      "bia",
+      "rto",
+      "rpo",
+      "technology refresh"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a proactive process for updating recovery strategies based on regular BIAs and technology reviews. A mid-range score (40-74) suggests strategies are updated, but only reactively. A low score (0-39) indicates that recovery strategies are static. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 170,
+        "note": "Transitioning from Recovery Planning to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "recovery planning",
+      "strategy",
+      "bia"
+    ],
+    "task_template_id": "RP-STRATEGY-UPDATE-RECOVERY-001",
+    "referenced_by": "NIST CSF v1.1 - RC.IM-2"
+  },
+  {
+    "id": 163,
+    "domain_name": "Recovery Planning",
+    "related_nist_category": "RC.CO-3",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.7.4"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how recovery activities are communicated to internal and external stakeholders, as well as executive and management teams.",
+    "question_type": "open",
+    "hint": "Explain your communications plan during a recovery effort. How do you keep staff, management, and customers informed about the status of the recovery and expected timelines?",
+    "expected_keywords": [
+      "communications plan",
+      "stakeholder communication",
+      "status updates",
+      "executive briefing",
+      "customer notification"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal communications plan with pre-defined templates and channels for updating all stakeholders during recovery. A mid-range score (40-74) suggests an ad-hoc communication process. A low score (0-39) indicates no planning for communications during recovery. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 170,
+        "note": "Transitioning from Recovery Planning to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "recovery planning",
+      "communications"
+    ],
+    "task_template_id": "RP-RECOVERY-COMMS-001",
+    "referenced_by": "NIST CSF v1.1 - RC.CO-3"
+  },
+  {
+    "id": 164,
+    "domain_name": "Recovery Planning",
+    "related_nist_category": "PR.IP-4",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.12.3.1"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe your process for conducting, maintaining, and testing backups of your information, which are essential for recovery.",
+    "question_type": "open",
+    "hint": "Explain how often you back up critical data, where backups are stored (e.g., off-site, cloud), how long they are kept, and how you test them to ensure you can successfully restore data when needed.",
+    "expected_keywords": [
+      "backups",
+      "restore test",
+      "rpo",
+      "rto",
+      "off-site storage",
+      "3-2-1 rule"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal backup policy with a regular schedule, secure off-site storage, and periodic, documented restore tests. A mid-range score (40-74) suggests backups are performed but testing is inconsistent or undocumented. A low score (0-39) indicates no reliable backup process. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 165,
+        "note": "Backup process is mature. Assess how the overall recovery plan is tested."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 166,
+        "note": "Backup process is weak. Assess how public relations are managed post-incident."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "recovery planning",
+      "backups",
+      "data protection"
+    ],
+    "task_template_id": "RP-BACKUP-PROCESS-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-4"
+  },
+  {
+    "id": 165,
+    "domain_name": "Recovery Planning",
+    "related_nist_category": "PR.IP-10",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.17.1.3"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe how you test your recovery plan to ensure its effectiveness.",
+    "question_type": "open",
+    "hint": "Explain the frequency and types of tests you conduct, such as tabletop exercises, full disaster recovery (DR) tests to an alternate site, or walkthroughs of the plan.",
+    "expected_keywords": [
+      "disaster recovery test",
+      "dr test",
+      "tabletop exercise",
+      "simulation",
+      "walkthrough"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that regular, comprehensive DR tests are conducted, with formal lessons learned used to improve the plan. A mid-range score (40-74) suggests infrequent or partial testing (e.g., tabletop only). A low score (0-39) indicates no testing of the recovery plan. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 170,
+        "note": "Transitioning from Recovery Planning to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "recovery planning",
+      "testing",
+      "disaster recovery"
+    ],
+    "task_template_id": "RP-RECOVERY-TESTING-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-10"
+  },
+  {
+    "id": 166,
+    "domain_name": "Recovery Planning",
+    "related_nist_category": "RC.CO-1",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.6.1.4"
+    ],
+    "maturity_level": 1,
+    "criticality": "low",
+    "question_text": "Describe how your organization plans to manage public relations and external communications after a significant incident.",
+    "question_type": "open",
+    "hint": "Explain if you have a plan for communicating with the media, customers, or the public. Mention if you have a designated spokesperson or pre-drafted statements.",
+    "expected_keywords": [
+      "public relations",
+      "pr",
+      "media",
+      "spokesperson",
+      "crisis communications"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal crisis communications plan with designated spokespeople and pre-approved messaging. A mid-range score (40-74) suggests an informal understanding of how PR would be handled. A low score (0-39) indicates no planning for public relations. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 170,
+        "note": "Transitioning from Recovery Planning to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "recovery planning",
+      "communications",
+      "public relations"
+    ],
+    "task_template_id": "RP-PUBLIC-RELATIONS-001",
+    "referenced_by": "NIST CSF v1.1 - RC.CO-1"
+  },
+  {
+    "id": 167,
+    "domain_name": "Recovery Planning",
+    "related_nist_category": "ID.BE-5",
+    "nist_function": "Identify",
+    "iso27001_controls": [
+      "A.17.1.1"
+    ],
+    "maturity_level": 1,
+    "criticality": "high",
+    "question_text": "Describe how your organization determines its resilience requirements, such as Recovery Time Objectives (RTOs) and Recovery Point Objectives (RPOs) for critical services.",
+    "question_type": "open",
+    "hint": "RTO is how quickly you need to be back up and running. RPO is how much data you can afford to lose. Explain how you decide on these timelines for your important systems.",
+    "expected_keywords": [
+      "recovery time objective",
+      "rto",
+      "recovery point objective",
+      "rpo",
+      "business impact analysis",
+      "bia",
+      "resilience"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that RTOs and RPOs are formally defined for all critical systems, based on a Business Impact Analysis (BIA). A mid-range score (40-74) suggests an informal or intuitive understanding of recovery timelines. A low score (0-39) indicates that RTOs and RPOs have not been defined. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 40,
+        "max_score": 100,
+        "next_question_id": 168,
+        "note": "Some understanding of requirements exists. Assess how reputation is repaired."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 170,
+        "note": "Transitioning from Recovery Planning to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "recovery planning",
+      "rto",
+      "rpo",
+      "bia"
+    ],
+    "task_template_id": "RP-REQUIREMENTS-DEFINITION-001",
+    "referenced_by": "NIST CSF v1.1 - ID.BE-5"
+  },
+  {
+    "id": 168,
+    "domain_name": "Recovery Planning",
+    "related_nist_category": "RC.CO-2",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.7.4"
+    ],
+    "maturity_level": 2,
+    "criticality": "low",
+    "question_text": "Describe any planned or ad-hoc procedures your organization would take to repair its reputation after a significant incident.",
+    "question_type": "open",
+    "hint": "Explain how you would work to rebuild trust with customers, partners, and the public after a breach. Mention activities like offering credit monitoring, being transparent about the incident, or public outreach.",
+    "expected_keywords": [
+      "reputation management",
+      "trust",
+      "transparency",
+      "customer outreach",
+      "credit monitoring"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that reputation management is a formal part of the recovery plan with pre-defined actions. A mid-range score (40-74) suggests an informal or reactive approach to reputation repair. A low score (0-39) indicates no consideration for repairing reputation. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 170,
+        "note": "Transitioning from Recovery Planning to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "recovery planning",
+      "reputation",
+      "communications"
+    ],
+    "task_template_id": "RP-REPUTATION-REPAIR-001",
+    "referenced_by": "NIST CSF v1.1 - RC.CO-2"
+  },
+  
+  {
+    "id": 170,
+    "domain_name": "Improvements (Recovery)",
+    "related_nist_category": "RC.IM-1",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.16.1.6"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe your process for incorporating lessons learned from recovery exercises and actual incidents into your recovery plans.",
+    "question_type": "open",
+    "hint": "Explain how you conduct post-mortem reviews after a recovery effort or test, and how the findings from these reviews are formally used to update and strengthen your documented recovery plans.",
+    "expected_keywords": [
+      "lessons learned",
+      "post-mortem",
+      "after-action report",
+      "continuous improvement",
+      "recovery test",
+      "plan update"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal, mandatory process for conducting post-recovery reviews and systematically updating plans based on findings. A mid-range score (40-74) suggests an informal or inconsistent review process, where updates may not always happen. A low score (0-39) implies no process for learning from past recovery efforts to improve plans. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 171,
+        "note": "User has a mature lessons learned process. Assess how overall recovery strategies are updated."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 174,
+        "note": "Lessons learned process is inconsistent. Assess the underlying process for testing the recovery plan."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 173,
+        "note": "Lessons learned process is weak. Ask a more basic question about if plans are ever updated."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "improvements",
+      "recover",
+      "lessons learned",
+      "recovery planning"
+    ],
+    "task_template_id": "IM-RECOVERY-LESSONS-LEARNED-001",
+    "referenced_by": "NIST CSF v1.1 - RC.IM-1"
+  },
+  {
+    "id": 171,
+    "domain_name": "Improvements (Recovery)",
+    "related_nist_category": "RC.IM-2",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.16.1.6"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe how your overall recovery strategies are updated based on lessons learned, new technologies, and changes in business requirements.",
+    "question_type": "open",
+    "hint": "Explain the strategic process for evolving your recovery capabilities. How do you decide to adopt new recovery technologies, change RTOs/RPOs, or alter your approach based on business changes?",
+    "expected_keywords": [
+      "strategy update",
+      "business impact analysis",
+      "bia",
+      "rto",
+      "rpo",
+      "technology refresh",
+      "proactive"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a proactive, strategic process for updating recovery strategies based on multiple inputs like BIAs and technology reviews. A mid-range score (40-74) suggests strategies are updated, but only reactively after a major event. A low score (0-39) indicates that recovery strategies are static and not updated. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 172,
+        "note": "Strategic update process is mature. Assess how improvements are measured and tracked."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 173,
+        "note": "Strategic update process is weak. Assess the documentation and communication of plan changes."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "improvements",
+      "strategy",
+      "bia",
+      "recover"
+    ],
+    "task_template_id": "IM-RECOVERY-STRATEGY-UPDATE-001",
+    "referenced_by": "NIST CSF v1.1 - RC.IM-2"
+  },
+  {
+    "id": 172,
+    "domain_name": "Improvements (Recovery)",
+    "related_nist_category": "Section 4.0",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.9.3"
+    ],
+    "maturity_level": 3,
+    "criticality": "low",
+    "question_text": "Describe how you measure and track the effectiveness of the improvements made to your recovery plans and strategies over time.",
+    "question_type": "open",
+    "hint": "How do you know that your changes are making a difference? Explain if you use metrics like reduction in actual Recovery Time Objective (RTO) during tests, or improved success rates of restore tests.",
+    "expected_keywords": [
+      "metrics",
+      "kpi",
+      "effectiveness",
+      "measurement",
+      "tracking",
+      "rto",
+      "restore test success"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that formal metrics (e.g., RTO/RPO adherence in tests) are used to measure the impact of improvements to the recovery program. A mid-range score (40-74) suggests an informal or anecdotal understanding of effectiveness. A low score (0-39) indicates no measurement of improvements. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 180,
+        "note": "Transitioning from Improvements (Recovery) to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "improvements",
+      "metrics",
+      "effectiveness",
+      "rto"
+    ],
+    "task_template_id": "IM-RECOVERY-METRICS-001",
+    "referenced_by": "NIST CSF v1.1 - Section 4.0"
+  },
+  {
+    "id": 173,
+    "domain_name": "Improvements (Recovery)",
+    "related_nist_category": "RC.IM-1",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.5.1.2"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how updates and improvements to the recovery plan are documented, approved, and communicated to the recovery team.",
+    "question_type": "open",
+    "hint": "Explain your process for version control of your recovery plan, how changes get formally approved, and how you ensure everyone on the recovery team is aware of and trained on the latest version.",
+    "expected_keywords": [
+      "documentation",
+      "version control",
+      "approval",
+      "communication",
+      "change management",
+      "training"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal change management process for the recovery plan, including version control and communication to all stakeholders. A mid-range score (40-74) suggests an informal update process. A low score (0-39) indicates plan updates are not documented or communicated. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 180,
+        "note": "Transitioning from Improvements (Recovery) to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "improvements",
+      "documentation",
+      "change management"
+    ],
+    "task_template_id": "IM-RECOVERY-PLAN-UPDATE-COMM-001",
+    "referenced_by": "NIST CSF v1.1 - RC.IM-1"
+  },
+  {
+    "id": 174,
+    "domain_name": "Improvements (Recovery)",
+    "related_nist_category": "PR.IP-10",
+    "nist_function": "Protect",
+    "iso27001_controls": [
+      "A.17.1.3"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe how you test your recovery plan to generate lessons learned and identify areas for improvement.",
+    "question_type": "open",
+    "hint": "Explain the frequency and types of tests you conduct, such as tabletop exercises or full DR tests. How do you ensure the results of these tests are formally captured as lessons learned?",
+    "expected_keywords": [
+      "disaster recovery test",
+      "dr test",
+      "tabletop exercise",
+      "simulation",
+      "lessons learned",
+      "after-action report"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that regular, comprehensive DR tests are conducted specifically to find gaps, with a formal process for capturing lessons learned. A mid-range score (40-74) suggests infrequent testing or an informal process for capturing lessons. A low score (0-39) indicates no testing of the recovery plan. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 171,
+        "note": "Testing process is mature. Assess how overall recovery strategies are updated."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 175,
+        "note": "Testing process is weak. Assess how communications are reviewed for improvement."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "improvements",
+      "testing",
+      "disaster recovery"
+    ],
+    "task_template_id": "IM-RECOVERY-TESTING-001",
+    "referenced_by": "NIST CSF v1.1 - PR.IP-10"
+  },
+  {
+    "id": 175,
+    "domain_name": "Improvements (Recovery)",
+    "related_nist_category": "RC.CO-3",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.7.4"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe how stakeholder communications during a recovery effort are reviewed for potential improvements.",
+    "question_type": "open",
+    "hint": "After a recovery test or real event, how do you assess whether communications to staff, management, and customers were effective, timely, and accurate? How does this feedback improve your communications plan?",
+    "expected_keywords": [
+      "communications plan",
+      "lessons learned",
+      "stakeholder feedback",
+      "review",
+      "improvement"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that communication effectiveness is a formal part of post-recovery reviews and is used to update templates and plans. A mid-range score (40-74) suggests an informal review process. A low score (0-39) indicates communications are not reviewed for improvement. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 180,
+        "note": "Transitioning from Improvements (Recovery) to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "improvements",
+      "communications",
+      "recover"
+    ],
+    "task_template_id": "IM-RECOVERY-COMMS-IMPROVEMENT-001",
+    "referenced_by": "NIST CSF v1.1 - RC.CO-3"
+  },
+  
+  {
+    "id": 180,
+    "domain_name": "Communications (Recovery)",
+    "related_nist_category": "RC.CO-1",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.6.1.4"
+    ],
+    "maturity_level": 1,
+    "criticality": "medium",
+    "question_text": "Describe how your organization plans to manage public relations and external communications after a significant cybersecurity incident.",
+    "question_type": "open",
+    "hint": "Explain if you have a plan for communicating with the media, customers, or the public. Mention if you have a designated spokesperson, pre-drafted statements, or a relationship with a PR firm.",
+    "expected_keywords": [
+      "public relations",
+      "pr",
+      "media",
+      "spokesperson",
+      "crisis communications",
+      "press release"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal crisis communications plan with designated spokespeople and pre-approved messaging templates. A mid-range score (40-74) suggests an informal or reactive approach to PR. A low score (0-39) indicates no planning for public relations. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 181,
+        "note": "User has a mature PR plan. Assess the process for repairing reputation."
+      },
+      {
+        "min_score": 40,
+        "max_score": 74,
+        "next_question_id": 182,
+        "note": "PR plan is informal. Assess the broader process for communicating recovery activities to all stakeholders."
+      },
+      {
+        "min_score": 0,
+        "max_score": 39,
+        "next_question_id": 182,
+        "note": "PR plan is weak. Ask a more basic question about stakeholder communication."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "communications",
+      "recover",
+      "public relations",
+      "crisis management"
+    ],
+    "task_template_id": "CO-RECOVERY-PR-001",
+    "referenced_by": "NIST CSF v1.1 - RC.CO-1"
+  },
+  {
+    "id": 181,
+    "domain_name": "Communications (Recovery)",
+    "related_nist_category": "RC.CO-2",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.7.4"
+    ],
+    "maturity_level": 2,
+    "criticality": "medium",
+    "question_text": "Describe your process for repairing the organization's reputation after an incident.",
+    "question_type": "open",
+    "hint": "Explain the specific actions you would take to rebuild trust with customers and the public. Mention activities like offering identity theft protection, providing transparent updates, or engaging in public outreach campaigns.",
+    "expected_keywords": [
+      "reputation management",
+      "rebuild trust",
+      "transparency",
+      "customer outreach",
+      "credit monitoring",
+      "goodwill"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that reputation management is a formal part of the recovery plan with pre-defined actions and a dedicated budget. A mid-range score (40-74) suggests a reactive approach to reputation repair. A low score (0-39) indicates no consideration for repairing reputation after an incident. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 182,
+        "note": "Reputation repair process is mature. Assess ongoing stakeholder communications during recovery."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 183,
+        "note": "Reputation repair process is weak. Assess how communications are reviewed for improvement."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "communications",
+      "reputation",
+      "pr",
+      "recover"
+    ],
+    "task_template_id": "CO-REPUTATION-REPAIR-001",
+    "referenced_by": "NIST CSF v1.1 - RC.CO-2"
+  },
+  {
+    "id": 182,
+    "domain_name": "Communications (Recovery)",
+    "related_nist_category": "RC.CO-3",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.7.4"
+    ],
+    "maturity_level": 2,
+    "criticality": "high",
+    "question_text": "Describe how recovery activities are communicated to internal and external stakeholders, as well as executive and management teams.",
+    "question_type": "open",
+    "hint": "Explain your communications plan during a recovery effort. How do you keep staff, management, and customers informed about the status of the recovery, expected timelines, and what actions they may need to take?",
+    "expected_keywords": [
+      "communications plan",
+      "stakeholder communication",
+      "status updates",
+      "executive briefing",
+      "customer notification",
+      "internal communication"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates a formal communications plan with pre-defined templates, channels, and frequencies for updating all stakeholder groups. A mid-range score (40-74) suggests an ad-hoc or inconsistent communication process. A low score (0-39) indicates no planning for communications during recovery. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 75,
+        "max_score": 100,
+        "next_question_id": 181,
+        "note": "Stakeholder communication is mature. Assess the process for reputation repair."
+      },
+      {
+        "min_score": 0,
+        "max_score": 74,
+        "next_question_id": 183,
+        "note": "Stakeholder communication is weak. Assess how communications are reviewed for improvement."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "communications",
+      "stakeholder management",
+      "recover"
+    ],
+    "task_template_id": "CO-RECOVERY-STAKEHOLDER-COMMS-001",
+    "referenced_by": "NIST CSF v1.1 - RC.CO-3"
+  },
+  {
+    "id": 183,
+    "domain_name": "Communications (Recovery)",
+    "related_nist_category": "RC.IM-1",
+    "nist_function": "Recover",
+    "iso27001_controls": [
+      "A.16.1.6"
+    ],
+    "maturity_level": 3,
+    "criticality": "medium",
+    "question_text": "Describe how communications from past recovery efforts are reviewed to identify areas for improvement.",
+    "question_type": "open",
+    "hint": "After a recovery test or real event, how do you assess whether communications to staff, management, and customers were effective, timely, and accurate? How does this feedback improve your crisis communications plan?",
+    "expected_keywords": [
+      "communications review",
+      "lessons learned",
+      "stakeholder feedback",
+      "improvement",
+      "post-mortem"
+    ],
+    "llm_scoring_instructions": "Evaluate the user's response and assign a numerical score from 0 to 100. A high score (75+) indicates that communication effectiveness is a formal part of post-recovery reviews and is used to systematically update communication templates and plans. A mid-range score (40-74) suggests an informal or inconsistent review process. A low score (0-39) indicates communications are not reviewed for improvement. Return only a single number.",
+    "followup_rules": [
+      {
+        "min_score": 0,
+        "max_score": 100,
+        "next_question_id": 190,
+        "note": "Transitioning from Communications (Recovery) to the next domain."
+      }
+    ],
+    "situational": false,
+    "tags": [
+      "communications",
+      "improvements",
+      "lessons learned",
+      "recover"
+    ],
+    "task_template_id": "CO-RECOVERY-COMMS-IMPROVEMENT-001",
+    "referenced_by": "NIST CSF v1.1 - RC.IM-1"
+  },
+
+
+
+
+
+
+
+  {
     "id": 999,
     "domain_name": "Sector Classification",
     "related_nist_category": "",
