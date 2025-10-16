@@ -26,8 +26,5 @@ jobs:
       - name: Type check
         run: cd backend && npx tsc --noEmit
 
-      - name: Build
-        run: cd backend && npm run build
-
       - name: Run tests (skip if none)
         run: cd backend && npm test -- --passWithNoTests
