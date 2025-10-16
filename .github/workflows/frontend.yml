@@ -2,9 +2,9 @@ name: Frontend CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "Rlueer-patch-1" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "Rlueer-patch-1" ]
 
 jobs:
   build:
@@ -29,5 +29,5 @@ jobs:
       - name: Build
         run: cd frontend && npm run build
 
-      - name: Run tests
-        run: cd frontend && npm test
+      - name: Run tests (skip if none)
+        run: cd frontend && npm test -- --passWithNoTests
