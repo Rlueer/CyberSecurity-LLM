@@ -1,11 +1,10 @@
-﻿name: Frontend CI
+name: Frontend CI
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
-    paths:
-      - 'frontend/**'
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -19,10 +18,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
+          cache: 'npm'
 
       - name: Install dependencies
-        run: cd frontend && npm install
+        run: cd frontend && npm ci
 
       - name: Type check
         run: cd frontend && npx tsc --noEmit
 
+      - name: Build
+        run: cd frontend && npm run build
+
+      - name: Run tests
+        run: cd frontend && npm test
