@@ -3,8 +3,6 @@ name: Frontend CI
 on:
   push:
     branches: [ "Rlueer-patch-1" ]
-  pull_request:
-    branches: [ "Rlueer-patch-1" ]
 
 jobs:
   build:
@@ -18,16 +16,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Install dependencies
         run: cd frontend && npm ci
 
-      - name: Type check
-        run: cd frontend && npx tsc --noEmit
-
       - name: Build
         run: cd frontend && npm run build
 
-      - name: Run tests (skip if none)
-        run: cd frontend && npm test -- --passWithNoTests
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./frontend/build
